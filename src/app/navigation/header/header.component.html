@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+    <button mat-icon-button (click)="onToggleSidenav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+  <div>
+    <a routerLink="/"><img height="40" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 5px"></a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="1em" fxHide.xs>
+    <a routerLink="/signup">Signup</a>
+    <a routerLink="/login">Login</a>
+    <a routerLink="/sprint">Sprint</a>
+    <a routerLink="/">Logout</a>
+  </div>
+</mat-toolbar>

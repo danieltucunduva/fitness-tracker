@@ -1,0 +1,56 @@
+<section>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10px"
+    name="signupForm"
+    #ngFormRef="ngForm"
+    (ngSubmit)="onSubmitSignupForm(ngFormRef)">
+    <mat-form-field>
+        <input
+          type="email"
+          matInput
+          placeholder="Email"
+          ngModel
+          name="email"
+          email
+          required
+          #emailInputRef="ngModel">
+        <mat-error *ngIf="emailInputRef.hasError('required')">Required</mat-error>
+        <mat-hint *ngIf="!emailInputRef.valid && !emailInputRef.hasError('required')">Invalid email</mat-hint>
+        <mat-hint *ngIf="emailInputRef.valid" align="end">✔</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="password"
+        matInput placeholder="Your password"
+        ngModel
+        name="password"
+        required
+        minlength="6"
+        #passwordInputRef="ngModel">
+      <mat-error *ngIf="passwordInputRef.hasError('required')">Required</mat-error>
+      <mat-hint *ngIf="passwordInputRef.hasError('minlength')">At least 6 characters long</mat-hint>
+      <mat-hint align="end">{{ passwordInputRef.valid ? '✔' : passwordInputRef.value?.length + '/6' }} </mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        matInput
+        #datepickerInputRef
+        placeholder="Your birthdate"
+        [matDatepicker]="datepickerRef"
+        [(ngModel)]="date"
+        name="birthdate"
+        [max]="maxDate"
+        [min]="minDate"
+        required>
+      <mat-datepicker-toggle matSuffix [for]="datepickerRef"></mat-datepicker-toggle>
+      <mat-datepicker #datepickerRef></mat-datepicker>
+      <mat-hint *ngIf="invalidDatepicker(datepickerInputRef)">Invalid date</mat-hint>
+      <mat-hint  align="end" *ngIf="validDatepicker(datepickerInputRef)">✔</mat-hint>
+      <mat-error *ngIf="emptyDatepicker(datepickerInputRef)">Required</mat-error>
+    </mat-form-field>
+    <mat-checkbox ngModel name="agree" color="primary" required>Agree to Terms and Conditions</mat-checkbox>
+    <button [disabled]="!ngFormRef.valid" type="submit" mat-raised-button color="primary">Submit</button>
+  </form>
+</section>
