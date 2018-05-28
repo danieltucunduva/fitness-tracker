@@ -17,6 +17,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
+import { AuthenticationService } from './auth/authentication.service';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,9 @@ import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-d
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    AuthenticationService
+  ],
   bootstrap: [AppComponent],
   entryComponents: [StopSprintDialogComponent]
 })

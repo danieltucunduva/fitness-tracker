@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
   <div fxHide.gt-xs>
     <button mat-icon-button (click)="onToggleSidenav()">
-      <mat-icon>menu</mat-icon>
+      <img class="logo" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 6px;">
     </button>
   </div>
   <div>
-    <a routerLink="/"><img height="40" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 5px"></a>
+    <a routerLink="/" fxHide.xs><img class="logo" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 12px;"></a>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="1em" fxHide.xs>
     <a routerLink="/signup">Signup</a>
