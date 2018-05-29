@@ -4,9 +4,8 @@
     <form (ngSubmit)="onSubmitNewSprintForm()" [formGroup]="newSprintForm">
       <mat-card-content fxLayoutAlign="center">
         <mat-form-field>
-          <mat-select [(value)]="selected" placeholder="Choose type" formControlName="selectedExercise">
-            <mat-option value="option1">Short (5min)</mat-option>
-            <mat-option value="option2">Pomodoro (20min)</mat-option>
+          <mat-select [(value)]="selected" placeholder="Choose type" formControlName="selectedSprint">
+            <mat-option *ngFor="let sprint of sprints" value="{{ sprint.id }}">{{ sprint.name }}</mat-option>
             <mat-option value="option3">Other...</mat-option>
           </mat-select>
         </mat-form-field>

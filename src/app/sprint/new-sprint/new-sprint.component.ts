@@ -1,5 +1,7 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SprintService } from '../sprint.service';
+import { ISprint } from '../sprint.model';
 
 @Component({
   selector: 'app-new-sprint',
@@ -8,18 +10,18 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class NewSprintComponent implements OnInit {
   newSprintForm = new FormGroup({
-    selectedExercise: new FormControl('', { validators: [Validators.required] })
+    selectedSprint: new FormControl('', { validators: [Validators.required] })
   });
+  sprints: ISprint[] = [];
 
-  @Output() sprintStart = new EventEmitter<void>();
-
-  constructor() { }
+  constructor(private sprintService: SprintService) { }
 
   ngOnInit() {
+    this.sprints = this.sprintService.getAvailableSprints();
   }
 
   onSubmitNewSprintForm() {
-    this.sprintStart.emit();
+    this.sprintService.startSprint(this.newSprintForm.value.selectedSprint);
   }
 
 }

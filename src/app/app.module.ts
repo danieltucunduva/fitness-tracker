@@ -19,6 +19,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
+import { SprintService } from './sprint/sprint.service';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms
     ReactiveFormsModule
   ],
   providers: [
-    AuthenticationService
+    AuthenticationService,
+    SprintService
   ],
   bootstrap: [AppComponent],
   entryComponents: [StopSprintDialogComponent, TermsDialogComponent]
