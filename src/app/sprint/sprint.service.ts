@@ -20,14 +20,39 @@ export class SprintService {
         },
         {
             id: 'pomodoro',
-            name: 'Pomodoro (recommended)',
+            name: 'Pomodoro',
             description: 'A standard 20min pomodoro sprint',
             duration: 20,
             status: 'default'
         }
     ];
     private runningSprint: ISprint;
-    private pastSprints: ISprint[] = [];
+    private pastSprints: ISprint[] = [
+        {
+            id: 'instant',
+            name: 'Instant',
+            description: 'A very short 1min sprint',
+            duration: 1,
+            startedAt: new Date(),
+            status: 'completed'
+        },
+        {
+            id: 'short',
+            name: 'Short',
+            description: 'A short 5min sprint',
+            duration: 5,
+            startedAt: new Date(),
+            status: 'cancelled'
+        },
+        {
+            id: 'pomodoro',
+            name: 'Pomodoro',
+            description: 'A standard 20min pomodoro sprint',
+            duration: 20,
+            startedAt: new Date(),
+            status: 'completed'
+        }
+    ];
 
     getAvailableSprints(): ISprint[] {
         return this.sprints.slice();
@@ -70,11 +95,7 @@ export class SprintService {
     }
 
     getPastSprints() {
-        return this.pastSprints
-            .filter(sprint => {
-                return (sprint.status === 'completed' || sprint.status === 'cancelled');
-            })
-            .slice();
+        return this.pastSprints.slice();
     }
 
 }
