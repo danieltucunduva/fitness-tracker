@@ -2,7 +2,7 @@
   <form
     fxLayout="column"
     fxLayoutAlign="center center"
-    fxLayoutGap="10px"
+    fxLayoutGap="1em"
     name="signupForm"
     #ngFormRef="ngForm"
     (ngSubmit)="onSubmitSignupForm(ngFormRef)">
@@ -50,7 +50,7 @@
       <mat-hint  align="end" *ngIf="validDatepicker(datepickerInputRef)">✔</mat-hint>
       <mat-error *ngIf="emptyDatepicker(datepickerInputRef)">Required</mat-error>
     </mat-form-field>
-    <mat-checkbox ngModel name="agree" color="primary" required>Agree to Terms and Conditions</mat-checkbox>
-    <button [disabled]="!ngFormRef.valid" type="submit" mat-raised-button color="primary">Submit</button>
+    <mat-checkbox ngModel name="agree" color="primary" required>Agree to <span class="terms-and-conditions" (click)="onClickTermsAndConditions()">Terms and Conditions</span></mat-checkbox>
+    <button [disabled]="!ngFormRef.valid" type="submit" mat-raised-button color="primary">Signup</button>
   </form>
 </section>

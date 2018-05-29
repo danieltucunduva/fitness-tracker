@@ -3,19 +3,19 @@
       <mat-icon> home </mat-icon>
       <span class="nav-caption">Home</span>
     </a>
-    <a mat-list-item routerLink="/signup" (click)="onClickNavListItem()">
+    <a *ngIf="!isAuthenticated" mat-list-item routerLink="/signup" (click)="onClickNavListItem()">
       <mat-icon> account_box </mat-icon>
       <span class="nav-caption">Signup</span>
     </a>
-    <a mat-list-item routerLink="/login" (click)="onClickNavListItem()">
+    <a *ngIf="!isAuthenticated" mat-list-item routerLink="/login" (click)="onClickNavListItem()">
       <mat-icon> exit_to_app </mat-icon>
       <span class="nav-caption">Login</span>
     </a>
-    <a mat-list-item routerLink="/sprint" (click)="onClickNavListItem()">
+    <a *ngIf="isAuthenticated" mat-list-item routerLink="/sprint" (click)="onClickNavListItem()">
       <mat-icon> av_timer </mat-icon>
       <span class="nav-caption">Sprints</span>
     </a>
-    <mat-list-item (click)="onClickNavListItem()">
+    <mat-list-item *ngIf="isAuthenticated" (click)="onClickLogout()">
       <button mat-icon-button>
         <mat-icon>keyboard_return</mat-icon>
         <span class="nav-caption">Logout</span>

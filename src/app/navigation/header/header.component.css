@@ -12,3 +12,7 @@ a:active {
     height: 30px;
     padding-left: 10px;
 }
+
+mat-toolbar {
+    margin-bottom: 20px;
+}

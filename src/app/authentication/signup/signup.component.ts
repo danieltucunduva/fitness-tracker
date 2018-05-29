@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Form } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { Moment } from 'moment';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
+import { AuthenticationService } from '../authentication.service';
+import { MatDialog } from '@angular/material';
+import { TermsDialogComponent } from './terms-dialog/terms-dialog.component';
 
 @Component({
   selector: 'app-signup',
@@ -14,7 +17,7 @@ export class SignupComponent implements OnInit {
   maxDate: Date;
   minDate: Date;
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.maxDate = new Date();
@@ -40,8 +43,15 @@ export class SignupComponent implements OnInit {
     return !this.emptyDatepicker(input) && !this.invalidDatepicker(input);
   }
 
-  onSubmitSignupForm(form: Form) {
-    console.log(form);
+  onClickTermsAndConditions() {
+    this.dialog.open(TermsDialogComponent);
+  }
+
+  onSubmitSignupForm(form: NgForm) {
+    this.authenticationService.registerUser({
+      email: form.value.email,
+      password: form.value.password
+    });
   }
 
 }

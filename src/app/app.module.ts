@@ -6,8 +6,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
-import { SignupComponent } from './auth/signup/signup.component';
-import { LoginComponent } from './auth/login/login.component';
+import { SignupComponent } from './authentication/signup/signup.component';
+import { LoginComponent } from './authentication/login/login.component';
 import { SprintComponent } from './sprint/sprint.component';
 import { CurrentSprintComponent } from './sprint/current-sprint/current-sprint.component';
 import { NewSprintComponent } from './sprint/new-sprint/new-sprint.component';
@@ -17,7 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
-import { AuthenticationService } from './auth/authentication.service';
+import { AuthenticationService } from './authentication/authentication.service';
+import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { AuthenticationService } from './auth/authentication.service';
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopSprintDialogComponent
+    StopSprintDialogComponent,
+    TermsDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -46,6 +48,6 @@ import { AuthenticationService } from './auth/authentication.service';
     AuthenticationService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [StopSprintDialogComponent]
+  entryComponents: [StopSprintDialogComponent, TermsDialogComponent]
 })
 export class AppModule { }
