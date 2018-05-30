@@ -10,8 +10,6 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./past-sprints.component.css']
 })
 export class PastSprintsComponent implements OnInit, AfterViewInit {
-
-  pastSprintsFilterForm = new FormGroup({ 'filter': new FormControl() });
   dataSource = new MatTableDataSource<ISprint>();
   displayedColumns = ['name', 'spacing', 'description', 'spacing', 'startedAt', 'spacing', 'status'];
 
@@ -22,7 +20,6 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.dataSource.data = this.sprintService.getPastSprints();
-    console.log(this.paginator);
   }
 
   onApplyPastSprintsTableFilter(filterValue: string): void {
@@ -30,7 +27,6 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.paginator);
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
   }

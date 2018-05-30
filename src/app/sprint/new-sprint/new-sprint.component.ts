@@ -14,7 +14,9 @@ export class NewSprintComponent implements OnInit {
   });
   sprints: ISprint[] = [];
 
-  constructor(private sprintService: SprintService) { }
+  constructor(
+    private sprintService: SprintService,
+  ) { }
 
   ngOnInit() {
     this.sprints = this.sprintService.getAvailableSprints();

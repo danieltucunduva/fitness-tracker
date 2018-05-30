@@ -20,6 +20,7 @@ import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-d
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
 import { SprintService } from './sprint/sprint.service';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { SprintService } from './sprint/sprint.service';
     AppRoutingModule,
     FlexLayoutModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     AuthenticationService,
