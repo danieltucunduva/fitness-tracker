@@ -27,8 +27,4 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  test() {
-    console.log(this.loginForm.get('email').valid);
-  }
-
 }

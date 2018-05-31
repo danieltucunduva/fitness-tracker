@@ -20,15 +20,19 @@ export class CurrentSprintComponent implements OnInit {
   }
 
   startOrResumeProgressTimer() {
+    const shortSprint = this.sprintService.getRunningSprint().duration < 120 ? true : false;
+    const percentStepSize = shortSprint ? 1 : 0.1;
+    const timeFactor = shortSprint ? 10 : 1;
+
     this.timer = window.setInterval(
       () => {
         if (this.progressSpinnerValue >= 100) {
           this.sprintService.completeSprint();
           clearInterval(this.timer);
         } else {
-          this.progressSpinnerValue = this.progressSpinnerValue + 1;
+          this.progressSpinnerValue = Number.parseFloat((this.progressSpinnerValue + percentStepSize).toFixed(1));
         }
-      }, this.sprintService.getRunningSprint().duration * 60 * (1000 / 100)
+      }, this.sprintService.getRunningSprint().duration * timeFactor
     );
   }
 

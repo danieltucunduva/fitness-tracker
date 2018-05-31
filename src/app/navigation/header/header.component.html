@@ -1,16 +1,23 @@
 <mat-toolbar color="primary">
-  <div fxHide.gt-xs>
-    <button mat-icon-button (click)="onToggleSidenav()">
-      <img class="logo" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 6px;">
-    </button>
+  <div style="width: 50%">
+    <div fxHide.gt-xs>
+      <button mat-icon-button (click)="onToggleSidenav()">
+        <img class="logo" alt="Sprints Logo" src="assets/logo.png">
+      </button>
+    </div>
+    <div fxHide.xs>
+      <button mat-icon-button style="cursor:default">
+        <img class="logo" alt="Sprints Logo" src="assets/logo.png">
+      </button>
+    </div>
   </div>
-  <div>
-    <a routerLink="/" fxHide.xs><img class="logo" alt="Sprints Logo" src="assets/logo.png" style="padding-top: 12px;"></a>
-  </div>
-  <div fxFlex fxLayout fxLayoutAlign="flex-end" fxLayoutGap="1em" fxHide.xs>
-    <a *ngIf="!isAuthenticated" routerLink="/signup">Signup</a>
-    <a *ngIf="!isAuthenticated" routerLink="/login">Login</a>
-    <a *ngIf="isAuthenticated" routerLink="/sprint">Sprint</a>
-    <a *ngIf="isAuthenticated" style="cursor: pointer" (click)="onClickLogout()">Logout</a>
+  <div fxFlex fxLayout style="width: 50%">
+    <a class='app-name'>≡Sprint</a>
+    <div fxLayout fxLayoutAlign="flex-end" fxLayoutGap="1em">
+      <a *ngIf="!isAuthenticated" routerLink="/signup" fxHide.xs>Signup</a>
+      <a *ngIf="!isAuthenticated" routerLink="/login" fxHide.xs>Login</a>
+      <a *ngIf="isAuthenticated" routerLink="/sprint" fxHide.xs>Sprints</a>
+      <a *ngIf="isAuthenticated" style="cursor: pointer" (click)="onClickLogout()" fxHide.xs>Logout</a>
+    </div>
   </div>
 </mat-toolbar>

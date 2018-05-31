@@ -23,4 +23,14 @@ export class SprintComponent implements OnInit {
     });
   }
 
+  sprintStop() {
+    setTimeout(function () {
+      this.ongoingSprint = false;
+    }, 5000);
+  }
+
+  selectedTab(): number {
+    return this.sprintService.getHasPastSprints() ? 1 : 0;
+  }
+
 }

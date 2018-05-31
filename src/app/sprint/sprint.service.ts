@@ -1,70 +1,44 @@
-import { ISprint } from './sprint.model';
-import { Subject } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Http } from '@angular/http';
+import { Identifiers } from '@angular/compiler';
+import { PARAMETERS } from '@angular/core/src/util/decorators';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
+import { ISprint } from './sprint.model';
+import { User } from '../authentication/user.model';
+import { AuthenticationService } from '../authentication/authentication.service';
+
+@Injectable({
+    providedIn: 'root'
+})
 export class SprintService {
     sprintChanged = new Subject<ISprint>();
-    private sprints: ISprint[] = [
-        {
-            id: 'instant',
-            name: 'Instant',
-            description: 'A very short 1min sprint',
-            duration: 1,
-            status: 'default'
-        },
-        {
-            id: 'short',
-            name: 'Short',
-            description: 'A short 5min sprint',
-            duration: 5,
-            status: 'default'
-        },
-        {
-            id: 'pomodoro',
-            name: 'Pomodoro',
-            description: 'A standard 20min pomodoro sprint',
-            duration: 20,
-            status: 'default'
-        }
-    ];
-    private runningSprint: ISprint;
-    private pastSprints: ISprint[] = [
-        {
-            id: 'instant',
-            name: 'Instant',
-            description: 'A very short 1min sprint',
-            duration: 1,
-            startedAt: new Date(),
-            status: 'completed'
-        },
-        {
-            id: 'short',
-            name: 'Short',
-            description: 'A short 5min sprint',
-            duration: 5,
-            startedAt: new Date(),
-            status: 'cancelled'
-        },
-        {
-            id: 'pomodoro',
-            name: 'Pomodoro',
-            description: 'A standard 20min pomodoro sprint',
-            duration: 20,
-            startedAt: new Date(),
-            status: 'completed'
-        }
-    ];
+    private sprints: ISprint[] = [];
 
-    getAvailableSprints(): ISprint[] {
-        return this.sprints.slice();
-    }
+    private runningSprint: ISprint;
+    private pastSprints: ISprint[] = [];
+
+    constructor(
+        private http: Http,
+        private router: Router,
+        private authenticationService: AuthenticationService) { }
 
     startSprint(selectedId: string) {
-        const sprintSelected = this.sprints.find(sprint => sprint.id === selectedId);
-        this.runningSprint = {
-            ...(sprintSelected),
-            startedAt: new Date()
-        };
-        this.sprintChanged.next({ ...this.runningSprint });
+        this.http
+            .get(`http://localhost:3000/api/sprints/${selectedId}`)
+            .pipe(map((response) => response.json()))
+            .subscribe((response) => {
+                const sprintSelected = response;
+                this.runningSprint = {
+                    ...(sprintSelected),
+                    startedDate: new Date(),
+                };
+                this.runningSprint._id = null;
+                this.runningSprint.status = 'running';
+                this.sprintChanged.next({ ...this.runningSprint });
+            });
     }
 
     getRunningSprint(): ISprint {
@@ -72,30 +46,45 @@ export class SprintService {
     }
 
     completeSprint(): void {
-        // log sprint
-        this.pastSprints.push({
-            ...this.runningSprint,
-            status: 'completed',
-            completedAt: new Date()
-        });
-        this.runningSprint = null;
-        this.sprintChanged.next(null);
+        this.runningSprint.completedDate = new Date();
+        this.runningSprint.status = 'completed';
+        this.runningSprint.user = this.authenticationService.getUserId();
+        this.runningSprint.durationCompleted = this.runningSprint.duration;
+        this.http
+            .post('http://localhost:3000/api/sprints', this.runningSprint)
+            .subscribe((response) => {
+                if (response.ok) {
+                    this.runningSprint = null;
+                    setTimeout(() => {
+                        this.sprintChanged.next(null);
+                        this.router.navigate(['sprint']);
+                    }, 5000);
+                }
+            });
     }
 
     cancelRunningSprint(progress: number): void {
-        // log sprint
-        this.pastSprints.push({
-            ...this.runningSprint,
-            status: 'cancelled',
-            cancelledAt: new Date(),
-            durationCompleted: this.runningSprint.duration * progress / 100
+        // TODO set the duration completed
+        this.runningSprint.cancelledDate = new Date();
+        this.runningSprint.status = 'cancelled';
+        this.http.post(`http://localhost:3000/api/sprints`, this.runningSprint).subscribe((response) => {
+            if (response.ok) {
+                this.runningSprint = null;
+                this.sprintChanged.next(null);
+                this.router.navigate(['sprint']);
+            }
         });
-        this.runningSprint = null;
-        this.sprintChanged.next(null);
     }
 
-    getPastSprints() {
-        return this.pastSprints.slice();
+    getAvailableSprints(_id: string): Observable<any> {
+        return this.http.post('http://localhost:3000/api/available-sprints', _id);
     }
 
+    getPastSprints(): Observable<any> {
+        return this.http.get('http://localhost:3000/api/past-sprints');
+    }
+
+    getHasPastSprints(): boolean {
+        return true;
+    }
 }

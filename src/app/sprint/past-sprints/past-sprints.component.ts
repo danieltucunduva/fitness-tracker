@@ -3,6 +3,7 @@ import { ISprint } from '../sprint.model';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SprintService } from '../sprint.service';
 import { FormGroup, FormControl } from '@angular/forms';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-past-sprints',
@@ -11,15 +12,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 })
 export class PastSprintsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<ISprint>();
-  displayedColumns = ['name', 'spacing', 'description', 'spacing', 'startedAt', 'spacing', 'status'];
+  displayedColumns = ['name', 'spacing', 'status', 'spacing', 'startedDate', 'spacing', 'description'];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sprintService: SprintService) { }
+  constructor(private sprintService: SprintService) {
+  }
 
   ngOnInit(): void {
-    this.dataSource.data = this.sprintService.getPastSprints();
+    this.sprintService.getPastSprints()
+      .pipe(map(response => response.json()))
+      .subscribe(response => this.dataSource.data = response);
   }
 
   onApplyPastSprintsTableFilter(filterValue: string): void {

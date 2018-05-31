@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { SprintService } from '../sprint.service';
 import { ISprint } from '../sprint.model';
+import { map } from 'rxjs/operators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-new-sprint',
@@ -16,10 +18,13 @@ export class NewSprintComponent implements OnInit {
 
   constructor(
     private sprintService: SprintService,
+    private authenticationService: AuthenticationService,
   ) { }
 
   ngOnInit() {
-    this.sprints = this.sprintService.getAvailableSprints();
+    this.sprintService.getAvailableSprints(this.authenticationService.getUserId())
+      .pipe(map(response => response.json()))
+      .subscribe(response => this.sprints = response);
   }
 
   onSubmitNewSprintForm() {

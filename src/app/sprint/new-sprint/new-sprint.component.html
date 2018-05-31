@@ -5,7 +5,7 @@
       <mat-card-content fxLayoutAlign="center">
         <mat-form-field>
           <mat-select [(value)]="selected" placeholder="Choose type" formControlName="selectedSprint">
-            <mat-option *ngFor="let sprint of sprints" value="{{ sprint.id }}">{{ sprint.name }}</mat-option>
+            <mat-option *ngFor="let sprint of sprints" value="{{ sprint._id }}">{{ sprint.name }}</mat-option>
             <!-- <mat-option value="option3">Other...</mat-option> -->
           </mat-select>
         </mat-form-field>

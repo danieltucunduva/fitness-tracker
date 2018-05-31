@@ -3,9 +3,10 @@ mat-form-field {
 }
 
 mat-checkbox {
-    padding-bottom: 1em;
+    padding-right: 0.5em;
 }
 
 .terms-and-conditions {
     text-decoration: underline;
+    cursor: pointer;
 }

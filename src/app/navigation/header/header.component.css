@@ -1,18 +1,28 @@
 a {
-    text-decoration: none;
-    color: white;
+  text-decoration: none;
+  color: white;
 }
 
 a:hover,
 a:active {
-    color: lightgray;
+  color: lightgray;
 }
 
 .logo {
-    height: 30px;
-    padding-left: 10px;
+  height: 36px;
+  padding-left: 5px;
 }
 
 mat-toolbar {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
 }
+
+.app-name {
+    cursor: default;
+    text-align: left;
+    font-family: monospace;
+    font-size: 115%;
+    width: 100%;
+    font-style: oblique;
+    height: 36px;
+  }
