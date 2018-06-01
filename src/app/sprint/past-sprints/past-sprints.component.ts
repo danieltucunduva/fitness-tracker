@@ -12,7 +12,10 @@ import { map } from 'rxjs/operators';
 })
 export class PastSprintsComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<ISprint>();
-  displayedColumns = ['name', 'spacing', 'status', 'spacing', 'startedDate', 'spacing', 'description'];
+  displayedColumns = [
+    'name', 'spacing', 'status', 'spacing', 'startedDate', 'spacing',
+    'startedTime', 'spacing', 'finishedTime', 'spacing', 'description'
+  ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,6 +36,12 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+  }
+
+  getStatus(sprint: ISprint) {
+    const status: string = sprint.status.charAt(0).toUpperCase() + sprint.status.slice(1);
+    const progress: string = sprint.status === 'completed' ? '' : ' (at ' + sprint.progress + '%)';
+    return status + progress;
   }
 
 }

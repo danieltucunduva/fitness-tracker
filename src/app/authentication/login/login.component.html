@@ -14,7 +14,7 @@
         required>
       <mat-error *ngIf="loginForm.get('email').hasError('required')">Required</mat-error>
       <mat-hint *ngIf="loginForm.get('email').hasError('email')">Invalid email</mat-hint>
-      <mat-hint *ngIf="loginForm.get('email').valid" align="end">✔</mat-hint>
+      <mat-hint *ngIf="loginForm.get('email').valid" align="end">Looks okay ✔</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input
@@ -25,8 +25,8 @@
         formControlName="password"
         required>
       <mat-error *ngIf="loginForm.get('password').hasError('required')">Required</mat-error>
-      <mat-hint *ngIf="">At least 6 characters long</mat-hint>
-      <mat-hint align="end" *ngIf="loginForm.get('password').valid">✔</mat-hint>
+      <mat-hint *ngIf="loginForm.get('password').hasError('minlength')">At least 6 characters long</mat-hint>
+      <mat-hint align="end" *ngIf="loginForm.get('password').valid">Looks okay ✔</mat-hint>
     </mat-form-field>
     <button [disabled]="loginForm.invalid" type="submit" mat-raised-button color="primary">Login</button>
   </form>

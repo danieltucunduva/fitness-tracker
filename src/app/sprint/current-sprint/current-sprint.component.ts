@@ -27,7 +27,7 @@ export class CurrentSprintComponent implements OnInit {
     this.timer = window.setInterval(
       () => {
         if (this.progressSpinnerValue >= 100) {
-          this.sprintService.completeSprint();
+          this.sprintService.finishSprint(true, this.progressSpinnerValue);
           clearInterval(this.timer);
         } else {
           this.progressSpinnerValue = Number.parseFloat((this.progressSpinnerValue + percentStepSize).toFixed(1));
@@ -41,7 +41,7 @@ export class CurrentSprintComponent implements OnInit {
     const dialogRef = this.dialog.open(StopSprintDialogComponent);
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.sprintService.cancelRunningSprint(this.progressSpinnerValue);
+        this.sprintService.finishSprint(false, this.progressSpinnerValue);
       } else {
         this.startOrResumeProgressTimer();
       }

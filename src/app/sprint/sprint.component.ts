@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SprintService } from './sprint.service';
+import { ISprint } from './sprint.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sprint',
@@ -10,6 +13,8 @@ import { SprintService } from './sprint.service';
 export class SprintComponent implements OnInit {
   ongoingSprint = false;
   sprintSubscription: Subscription;
+  tabIndex = 0;
+  pastSprintsSubscription: Subscription;
 
   constructor(private sprintService: SprintService) { }
 
@@ -21,16 +26,18 @@ export class SprintComponent implements OnInit {
         this.ongoingSprint = false;
       }
     });
+    this.pastSprintsSubscription = this.sprintService.pastSprintsChanged.subscribe(sprint => {
+      if (sprint) {
+        this.tabIndex = 0;
+      } else {
+        this.tabIndex = 1;
+      }
+    });
+    this.sprintService.checkOnePastSprint();
   }
 
   sprintStop() {
-    setTimeout(function () {
-      this.ongoingSprint = false;
-    }, 5000);
-  }
-
-  selectedTab(): number {
-    return this.sprintService.getHasPastSprints() ? 1 : 0;
+    this.ongoingSprint = false;
   }
 
 }

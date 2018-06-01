@@ -14,7 +14,7 @@
     </mat-form-field>
     <mat-form-field>
       <input matInput #datepickerInputRef placeholder="Your birthdate" [matDatepicker]="datepickerRef" [(ngModel)]="date" name="birthdate"
-        [max]="maxDate" [min]="minDate" required>
+        [max]="maxDate" [min]="minDate">
       <mat-datepicker-toggle matSuffix [for]="datepickerRef"></mat-datepicker-toggle>
       <mat-datepicker #datepickerRef></mat-datepicker>
       <mat-hint *ngIf="invalidDatepicker(datepickerInputRef)">Invalid date</mat-hint>
@@ -23,7 +23,7 @@
     </mat-form-field>
     <div fxLayoutAlign="center center">
       <mat-checkbox ngModel name="agree" color="primary" required></mat-checkbox>
-      <span>Agree to
+      <span>* Agree to
         <span class="terms-and-conditions" (click)="onClickTermsAndConditions()">Terms and Conditions</span>
       </span>
     </div>

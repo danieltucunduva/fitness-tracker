@@ -1,13 +1,12 @@
 export interface ISprint {
     _id: string;
-    user?: string;
+    user?: string; // _id of user
     name: string;
     description?: string;
-    duration: number;
+    duration: number; // in seconds
     status: 'default' | 'custom' | 'running' | 'completed' | 'cancelled';
-    durationCompleted?: number;
+    progress?: number; // as a percentage
     creationDate?: Date;
     startedDate?: Date;
-    completedDate?: Date;
-    cancelledDate?: Date;
+    finishedDate?: Date;
 }

@@ -29,24 +29,52 @@ function runServer() {
 }
 
 
-/*
- requests and routes
+// requests and routes ////////////////////////////////////////////////////////////////////////
+
+
+/**
+ * Finds one past sprint of user, if any
  */
-server.get('/api/past-sprints', (req, res) => {
+server.post('/api/one-past-sprint', (req, res) => {
   connection
     .then(response => {
+      const userId = req.body;
+      const responseDB = response.db(settings.database);
+      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      return sprintCollection.findOne({
+        status: {
+          $in: ['completed', 'cancelled']
+        },
+        user: userId
+      })
+    }).then(response => res.json(response))
+    .catch(error => console.error(error));
+});
+
+
+/**
+ * Finds all past sprints of user
+ */
+server.post('/api/past-sprints', (req, res) => {
+  connection
+    .then(response => {
+      const userId = req.body;
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       return sprintCollection.find({
         status: {
           $in: ['completed', 'cancelled']
-        }
+        },
+        user: userId
       }).toArray();
     }).then(response => res.json(response))
     .catch(error => console.error(error));
 });
 
 
+/**
+ * Finds all sprint types available for a user
+ */
 server.post('/api/available-sprints', (req, res) => {
   connection
     .then(response => {
@@ -65,6 +93,10 @@ server.post('/api/available-sprints', (req, res) => {
     .catch(error => console.error(error));
 });
 
+
+/**
+ * Finds a sprint
+ */
 server.get('/api/sprints/:id', (req, res) => {
   const objectID = req.params.id;
   connection
@@ -77,6 +109,10 @@ server.get('/api/sprints/:id', (req, res) => {
     .catch(error => console.error(error));
 });
 
+
+/**
+ * Creates a new sprint
+ */
 server.post('/api/sprints', (req, res) => {
   connection
     .then(response => {
@@ -89,6 +125,10 @@ server.post('/api/sprints', (req, res) => {
     .catch(error => console.error(error));
 });
 
+
+/**
+ * Creates a new user
+ */
 server.post('/api/users', (req, res) => {
   connection
     .then(response => {
@@ -101,6 +141,10 @@ server.post('/api/users', (req, res) => {
     .catch(error => console.error(error));
 });
 
+
+/**
+ * User login
+ */
 server.post('/api/login', (req, res) => {
   connection
     .then(response => {

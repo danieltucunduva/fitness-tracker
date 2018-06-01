@@ -15,6 +15,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 })
 export class SprintService {
     sprintChanged = new Subject<ISprint>();
+    pastSprintsChanged = new Subject<boolean>();
     private sprints: ISprint[] = [];
 
     private runningSprint: ISprint;
@@ -45,46 +46,43 @@ export class SprintService {
         return { ...this.runningSprint };
     }
 
-    completeSprint(): void {
-        this.runningSprint.completedDate = new Date();
-        this.runningSprint.status = 'completed';
+    finishSprint(completed: boolean, progress: number): void {
+        this.runningSprint.finishedDate = new Date();
+        this.runningSprint.status = completed ? 'completed' : 'cancelled';
         this.runningSprint.user = this.authenticationService.getUserId();
-        this.runningSprint.durationCompleted = this.runningSprint.duration;
+        this.runningSprint.progress = progress;
         this.http
             .post('http://localhost:3000/api/sprints', this.runningSprint)
             .subscribe((response) => {
                 if (response.ok) {
                     this.runningSprint = null;
-                    setTimeout(() => {
-                        this.sprintChanged.next(null);
-                        this.router.navigate(['sprint']);
-                    }, 5000);
+                    this.sprintChanged.next(null);
+                    this.pastSprintsChanged.next(true);
+                    this.router.navigate(['sprint']);
                 }
             });
     }
 
-    cancelRunningSprint(progress: number): void {
-        // TODO set the duration completed
-        this.runningSprint.cancelledDate = new Date();
-        this.runningSprint.status = 'cancelled';
-        this.http.post(`http://localhost:3000/api/sprints`, this.runningSprint).subscribe((response) => {
-            if (response.ok) {
-                this.runningSprint = null;
-                this.sprintChanged.next(null);
-                this.router.navigate(['sprint']);
-            }
-        });
-    }
-
-    getAvailableSprints(_id: string): Observable<any> {
-        return this.http.post('http://localhost:3000/api/available-sprints', _id);
+    getAvailableSprints(): Observable<any> {
+        return this.http.post('http://localhost:3000/api/available-sprints', this.authenticationService.getUserId());
     }
 
     getPastSprints(): Observable<any> {
-        return this.http.get('http://localhost:3000/api/past-sprints');
+        return this.http.post('http://localhost:3000/api/past-sprints', this.authenticationService.getUserId());
     }
 
-    getHasPastSprints(): boolean {
-        return true;
+    checkOnePastSprint(): void {
+        this.http
+            .post('http://localhost:3000/api/one-past-sprint', this.authenticationService.getUserId())
+            .pipe(map((response) => response.json()))
+            .subscribe((response) => {
+                console.log(response);
+                if (response) {
+                    this.pastSprintsChanged.next(true);
+                } else {
+                    this.pastSprintsChanged.next(false);
+                }
+                this.router.navigate(['sprint']);
+            });
     }
 }

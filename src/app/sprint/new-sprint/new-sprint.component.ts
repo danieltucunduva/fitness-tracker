@@ -22,7 +22,7 @@ export class NewSprintComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sprintService.getAvailableSprints(this.authenticationService.getUserId())
+    this.sprintService.getAvailableSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => this.sprints = response);
   }
