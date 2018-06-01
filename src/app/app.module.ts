@@ -17,7 +17,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
+import { SprintDialogComponent } from './sprint/sprint-dialog/sprint-dialog.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
 import { SprintService } from './sprint/sprint.service';
@@ -36,7 +36,7 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    StopSprintDialogComponent,
+    SprintDialogComponent,
     TermsDialogComponent,
     LoggedUserNameComponent
   ],
@@ -55,6 +55,6 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
     SprintService
   ],
   bootstrap: [AppComponent],
-  entryComponents: [StopSprintDialogComponent, TermsDialogComponent]
+  entryComponents: [SprintDialogComponent, TermsDialogComponent]
 })
 export class AppModule { }

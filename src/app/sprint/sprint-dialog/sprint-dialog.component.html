@@ -1,0 +1,17 @@
+<span>
+  <h1 mat-dialog-title fxLayoutAlign="center center">{{ dialogTitle }}</h1>
+  <div class="finished-text" fxLayout="column" fxLayoutAlign="center center" *ngIf="dialogTextPresent">
+    <h3>
+      Good job!
+    </h3>
+    Sprint type: {{ sprintName }}
+    <br> Started: {{ sprintStart.getHours() }}h{{ sprintStart.getMinutes() }}min{{ sprintStart.getSeconds() }}s
+    <br> Completed: {{ sprintFinish.getHours() }}h{{ sprintFinish.getMinutes() }}min{{ sprintFinish.getSeconds() }}s
+    <br>
+    <br>
+  </div>
+  <mat-dialog-actions fxLayoutAlign="center center">
+    <button *ngIf="yesButtonPresent" mat-raised-button [mat-dialog-close]="true" color="accent">{{ yesButtonText }}</button>
+    <button *ngIf="noButtonPresent" mat-raised-button [mat-dialog-close]="false" color="primary">{{ noButtonText }}</button>
+  </mat-dialog-actions>
+</span>

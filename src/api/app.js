@@ -7,6 +7,7 @@ const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 const MongoClient = require('mongodb').MongoClient;
 const ObjectID = require('mongodb').ObjectID;
+const notifier = require('node-notifier');
 
 const server = restify.createServer();
 
@@ -119,6 +120,32 @@ server.post('/api/sprints', (req, res) => {
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       const newSprint = req.body;
+      console.log(newSprint);
+      if (newSprint.status === 'completed' && newSprint.notify === true) {
+        notifier.notify(
+          {
+            icon: '../assets/logo_square.png',
+            title: '≡Sprint',
+            message: 'Your sprint is finished.',
+            wait: true,
+            icon: '../assets/logo_square.png',
+            sound: true,
+            timeout: 120,
+            closeLabel: 'Ok'
+          },
+          function(err, data) {
+            // Will also wait until notification is closed.
+            console.log('Waited');
+            console.log(err, data);
+          }
+        );
+        notifier.on('timeout', function() {
+          // console.log('Notification timed out!');
+        });
+        notifier.on('click', function() {
+          // console.log('Notification clicked!');
+        });
+      }
       return sprintCollection.insertOne(newSprint);
     })
     .then(response => res.json(response))

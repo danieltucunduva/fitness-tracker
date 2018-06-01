@@ -40,6 +40,10 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
   }
 
+  getSprintFullName(sprint: ISprint): string {
+    return this.sprintService.getFullName(sprint);
+  }
+
   getStatus(sprint: ISprint) {
     const status: string = sprint.status.charAt(0).toUpperCase() + sprint.status.slice(1);
     const progress: string = sprint.status === 'completed' ? '' : ' (at ' + sprint.progress + '%)';

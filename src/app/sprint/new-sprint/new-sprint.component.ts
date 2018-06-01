@@ -12,7 +12,9 @@ import { AuthenticationService } from '../../authentication/authentication.servi
 })
 export class NewSprintComponent implements OnInit {
   newSprintForm = new FormGroup({
-    selectedSprint: new FormControl('', { validators: [Validators.required] })
+    selectedSprint: new FormControl('', { validators: [Validators.required] }),
+    notify: new FormControl('', {}),
+    description: new FormControl('', {})
   });
   sprints: ISprint[] = [];
 
@@ -27,8 +29,15 @@ export class NewSprintComponent implements OnInit {
       .subscribe(response => this.sprints = response);
   }
 
+  getSprintFullName(sprint: ISprint): string {
+    return this.sprintService.getFullName(sprint);
+  }
+
   onSubmitNewSprintForm() {
-    this.sprintService.startSprint(this.newSprintForm.value.selectedSprint);
+    if (!this.newSprintForm.value.notify) {
+      this.newSprintForm.value.notify = false;
+    }
+    this.sprintService.startSprint(this.newSprintForm.value.selectedSprint, this.newSprintForm.value.notify, this.newSprintForm.value.description);
   }
 
 }

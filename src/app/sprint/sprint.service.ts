@@ -26,7 +26,8 @@ export class SprintService {
         private router: Router,
         private authenticationService: AuthenticationService) { }
 
-    startSprint(selectedId: string) {
+    startSprint(selectedId: string, notify: boolean, description: string) {
+        console.log(notify);
         this.http
             .get(`http://localhost:3000/api/sprints/${selectedId}`)
             .pipe(map((response) => response.json()))
@@ -35,11 +36,22 @@ export class SprintService {
                 this.runningSprint = {
                     ...(sprintSelected),
                     startedDate: new Date(),
+                    description: description,
+                    notify: notify
                 };
                 this.runningSprint._id = null;
                 this.runningSprint.status = 'running';
                 this.sprintChanged.next({ ...this.runningSprint });
             });
+    }
+
+    getFullName(sprint: ISprint): string {
+        if (sprint.status === 'custom' && !sprint.duration) {
+            return sprint.name + '...';
+        }
+        return sprint.duration < 120 ?
+            sprint.name + ' (' + (sprint.duration || '') + 's)' :
+            sprint.name + ' (' + (sprint.duration / 60 || '') + 'min)';
     }
 
     getRunningSprint(): ISprint {
@@ -76,7 +88,6 @@ export class SprintService {
             .post('http://localhost:3000/api/one-past-sprint', this.authenticationService.getUserId())
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
-                console.log(response);
                 if (response) {
                     this.pastSprintsChanged.next(true);
                 } else {

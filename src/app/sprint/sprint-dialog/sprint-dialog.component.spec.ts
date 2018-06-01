@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StopSprintDialogComponent } from './stop-sprint-dialog.component';
+import { SprintDialogComponent } from './sprint-dialog.component';
 
 describe('StopSprintDialogComponent', () => {
-  let component: StopSprintDialogComponent;
-  let fixture: ComponentFixture<StopSprintDialogComponent>;
+  let component: SprintDialogComponent;
+  let fixture: ComponentFixture<SprintDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [StopSprintDialogComponent]
+      declarations: [SprintDialogComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StopSprintDialogComponent);
+    fixture = TestBed.createComponent(SprintDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
