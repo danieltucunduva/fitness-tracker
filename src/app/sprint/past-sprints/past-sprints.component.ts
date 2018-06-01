@@ -4,6 +4,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 import { SprintService } from '../sprint.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import { map } from 'rxjs/operators';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-past-sprints',
@@ -20,8 +21,9 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private sprintService: SprintService) {
-  }
+  constructor(
+    private sprintService: SprintService,
+    private authenticationService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.sprintService.getPastSprints()

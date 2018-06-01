@@ -22,6 +22,7 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
 import { SprintService } from './sprint/sprint.service';
 import { environment } from '../environments/environment';
+import { LoggedUserNameComponent } from './authentication/logged-user-name/logged-user-name.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     SidenavListComponent,
     StopSprintDialogComponent,
-    TermsDialogComponent
+    TermsDialogComponent,
+    LoggedUserNameComponent
   ],
   imports: [
     BrowserModule,

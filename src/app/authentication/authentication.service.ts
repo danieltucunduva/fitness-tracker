@@ -65,6 +65,10 @@ export class AuthenticationService {
         return { ...this.user }._id;
     }
 
+    getUserName(): string {
+        return { ...this.user }.email;
+    }
+
     isAuthenticated(): boolean {
         return this.user != null;
     }

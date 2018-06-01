@@ -1,9 +1,11 @@
 <mat-tab-group *ngIf="!ongoingSprint" [selectedIndex]="tabIndex">
   <mat-tab label="Past Sprints">
     <app-past-sprints></app-past-sprints>
+    <app-logged-user-name></app-logged-user-name>
   </mat-tab>
   <mat-tab label="New Sprint">
     <app-new-sprint></app-new-sprint>
+    <app-logged-user-name></app-logged-user-name>
   </mat-tab>
 </mat-tab-group>
 <app-current-sprint (sprintStop)="sprintStop()" *ngIf="ongoingSprint"></app-current-sprint>
