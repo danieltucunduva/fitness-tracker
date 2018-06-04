@@ -27,7 +27,6 @@ export class SprintService {
         private authenticationService: AuthenticationService) { }
 
     startSprint(selectedId: string, notify: boolean, description: string) {
-        console.log(notify);
         this.http
             .get(`http://localhost:3000/api/sprints/${selectedId}`)
             .pipe(map((response) => response.json()))

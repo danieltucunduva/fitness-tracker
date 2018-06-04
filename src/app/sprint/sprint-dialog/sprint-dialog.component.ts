@@ -18,6 +18,7 @@ export class SprintDialogComponent implements OnInit {
 
   yesButtonText: string;
   yesButtonPresent: boolean;
+  yesButtonColor = 0; // 0 => accent, 1 => warn
 
   noButtonText: string;
   noButtonPresent: boolean;
@@ -46,6 +47,16 @@ export class SprintDialogComponent implements OnInit {
       this.noButtonText = '✔';
       this.noButtonPresent = true;
       this.yesButtonPresent = false;
+    }
+
+    if (this.data.type === 'delete-user') {
+      this.dialogTitle = 'Deletion is irreversible. Are you sure?';
+      this.yesButtonText = 'Yes';
+      this.yesButtonPresent = true;
+      this.noButtonText = 'No';
+      this.noButtonPresent = true;
+      this.dialogTextPresent = false;
+      this.yesButtonColor = 1;
     }
   }
 

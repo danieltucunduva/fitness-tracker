@@ -1,10 +1,10 @@
 <section>
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" name="signupForm" #ngFormRef="ngForm" (ngSubmit)="onSubmitSignupForm(ngFormRef)">
     <mat-form-field>
-      <input type="email" matInput placeholder="Your email" ngModel name="email" email required #emailInputRef="ngModel">
-      <mat-error *ngIf="emailInputRef.hasError('required')">Required</mat-error>
-      <mat-hint *ngIf="!emailInputRef.valid && !emailInputRef.hasError('required')">Invalid email</mat-hint>
-      <mat-hint *ngIf="emailInputRef.valid" align="end">✔</mat-hint>
+      <input type="username" matInput placeholder="Create a username" ngModel name="username" required minlength="3" #usernameInputRef="ngModel">
+      <mat-error *ngIf="usernameInputRef.hasError('required')">Required</mat-error>
+      <mat-hint *ngIf="usernameInputRef.hasError('minlength')">At least 3 characters long</mat-hint>
+      <mat-hint align="end">{{ usernameInputRef.valid ? '✔' : usernameInputRef.value?.length + '/3' }} </mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input type="password" matInput placeholder="Create a password" ngModel name="password" required minlength="6" #passwordInputRef="ngModel">
@@ -30,4 +30,4 @@
     <button [disabled]="!ngFormRef.valid" type="submit" mat-raised-button color="primary">Signup</button>
   </form>
 </section>
-<footer [hidden]="usernameAvailable">That email is already registered</footer>
+<footer [hidden]="usernameAvailable">That username is already registered</footer>

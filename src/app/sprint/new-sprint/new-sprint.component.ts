@@ -14,7 +14,7 @@ export class NewSprintComponent implements OnInit {
   newSprintForm = new FormGroup({
     selectedSprint: new FormControl('', { validators: [Validators.required] }),
     notify: new FormControl('', {}),
-    description: new FormControl('', {})
+    description: new FormControl('', { validators: [Validators.required] })
   });
   sprints: ISprint[] = [];
 
@@ -29,7 +29,6 @@ export class NewSprintComponent implements OnInit {
       .pipe(map(response => response.json()))
       .subscribe(response => {
         this.sprints = response;
-        console.log(response);
         const recommendedSprint = response.find(element => {
           return element.name === 'Pomodoro';
         });

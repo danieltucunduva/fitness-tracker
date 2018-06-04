@@ -4,6 +4,9 @@ import { map } from 'rxjs/operators';
 import { SprintService } from './sprint.service';
 import { ISprint } from './sprint.model';
 import { Router } from '@angular/router';
+import { AuthenticationService } from '../authentication/authentication.service';
+import { MatDialog } from '@angular/material';
+import { SprintDialogComponent } from './sprint-dialog/sprint-dialog.component';
 
 @Component({
   selector: 'app-sprint',
@@ -16,7 +19,11 @@ export class SprintComponent implements OnInit {
   tabIndex = 0;
   pastSprintsSubscription: Subscription;
 
-  constructor(private sprintService: SprintService) { }
+  constructor(
+    private sprintService: SprintService,
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.sprintSubscription = this.sprintService.sprintChanged.subscribe(sprint => {
@@ -38,6 +45,15 @@ export class SprintComponent implements OnInit {
 
   sprintStop() {
     this.ongoingSprint = false;
+  }
+
+  onClickDeleteUser() {
+    const dialogRef = this.dialog.open(SprintDialogComponent, { data: { type: 'delete-user' } });
+    dialogRef.afterClosed().subscribe(response => {
+      if (response) {
+        this.authenticationService.deleteLoggedUser();
+      }
+    });
   }
 
 }

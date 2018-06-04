@@ -10,7 +10,7 @@ import { AuthenticationService } from '../authentication.service';
 })
 export class LoginComponent implements OnInit {
   loginForm = new FormGroup({
-    email: new FormControl('', { validators: [Validators.required, Validators.email] }),
+    username: new FormControl('', { validators: [Validators.required, Validators.minLength(3)] }),
     password: new FormControl('', { validators: [Validators.required, Validators.minLength(6)] })
   });
   invalidLogin = false;
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
 
   onSubmitLoginForm() {
     this.authenticationService.login({
-      email: this.loginForm.value.email,
+      username: this.loginForm.value.username,
       password: this.loginForm.value.password
     });
   }

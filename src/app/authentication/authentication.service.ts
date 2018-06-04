@@ -22,14 +22,14 @@ export class AuthenticationService {
 
     registerUser(authenticationData: AuthenticationData): void {
         this.http
-            .post('http://localhost:3000/api/users/check', authenticationData.email)
+            .post('http://localhost:3000/api/users/check', authenticationData.username)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 if (response) {
                     this.usernameAvailableChange.next(true);
                     this.user = {
                         _id: null,
-                        email: authenticationData.email,
+                        username: authenticationData.username,
                         password: authenticationData.password
                     };
                     this.http.post('http://localhost:3000/api/users', this.user).subscribe((signupResponse) => {
@@ -46,7 +46,7 @@ export class AuthenticationService {
     login(authenticationData: AuthenticationData): void {
         this.user = {
             _id: null,
-            email: authenticationData.email,
+            username: authenticationData.username,
             password: authenticationData.password
         };
         this.http
@@ -54,7 +54,7 @@ export class AuthenticationService {
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 if (response.length === 1
-                    && response[0].email === this.user.email
+                    && response[0].username === this.user.username
                     && response[0].password === this.user.password
                 ) {
                     this.invalidLoginChange.next(false);
@@ -81,10 +81,26 @@ export class AuthenticationService {
     }
 
     getUserName(): string {
-        return { ...this.user }.email;
+        return { ...this.user }.username;
     }
 
     isAuthenticated(): boolean {
         return this.user != null;
+    }
+
+    deleteLoggedUser(): void {
+        if (this.user === null) {
+            return;
+        } else {
+            this.http
+                .post('http://localhost:3000/api/delete-user', this.user)
+                .pipe(map(response => response.json()))
+                .subscribe(response => {
+                    if (response.n === 1) {
+                        this.authenticationChange.next(false);
+                        this.router.navigate(['signup']);
+                    }
+                });
+        }
     }
 }

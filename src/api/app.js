@@ -100,12 +100,12 @@ server.post('/api/available-sprints', (req, res) => {
  * Finds a sprint
  */
 server.get('/api/sprints/:id', (req, res) => {
-  const objectID = req.params.id;
+  const objectId = req.params.id;
   connection
     .then(response => {
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
-      return sprintCollection.findOne(ObjectID(objectID));
+      return sprintCollection.findOne(ObjectID(objectId));
     })
     .then(response => res.json(response))
     .catch(error => console.error(error));
@@ -116,7 +116,6 @@ server.get('/api/sprints/:id', (req, res) => {
  * Returns the default sprint
  */
 server.get('/api/sprints/default-sprint', (req, res) => {
-  const objectID = req.params.id;
   connection
     .then(response => {
       const responseDB = response.db(settings.database);
@@ -138,7 +137,6 @@ server.post('/api/sprints', (req, res) => {
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       const newSprint = req.body;
-      console.log(newSprint);
       if (newSprint.status === 'completed' && newSprint.notify === true) {
         notifier.notify({
             icon: '../assets/logo_square.png',
@@ -152,8 +150,8 @@ server.post('/api/sprints', (req, res) => {
           },
           function (err, data) {
             // Will also wait until notification is closed.
-            console.log('Waited');
-            console.log(err, data);
+            // console.log('Waited');
+            // console.log(err, data);
           }
         );
         notifier.on('timeout', function () {
@@ -177,22 +175,19 @@ server.post('/api/users/check', (req, res) => {
   connection
     .then(response => {
       const responseDB = response.db(settings.database);
-      const sprintCollection = responseDB.collection(settings.user_collection);
+      const userCollection = responseDB.collection(settings.user_collection);
       const username = req.body;
-      const userExists = sprintCollection.findOne({
-        email: username
-      });
-      if (userExists) {
-        return false;
-      } else {
-        return true;
-      }
+      return userCollection.findOne({
+          username: username
+        }).then(response => {
+          if (response) {
+            res.json(false);
+          } else {
+            res.json(true);
+          }
+        })
+        .catch(error => console.error(error));
     })
-    .then(response => res.json(response))
-    .catch(error => {
-      console.error(error);
-      res.json(error)
-    });
 });
 
 
@@ -222,14 +217,40 @@ server.post('/api/login', (req, res) => {
   connection
     .then(response => {
       const responseDB = response.db(settings.database);
-      const sprintCollection = responseDB.collection(settings.user_collection);
+      const userCollection = responseDB.collection(settings.user_collection);
       const user = req.body;
-      return sprintCollection.find({
-        email: user.email,
+      return userCollection.find({
+        username: user.username,
         password: user.password,
       }).toArray();
     }).then(response => res.json(response))
     .catch(error => console.error(error));
 });
+
+
+/**
+ * Delete user
+ */
+server.post('/api/delete-user', (req, res) => {
+  connection
+    .then(response => {
+      const responseDB = response.db(settings.database);
+      const userCollection = responseDB.collection(settings.user_collection);
+      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      const user = req.body;
+      return userCollection
+        .deleteOne({
+          _id: ObjectID(user._id),
+          username: user.username
+        }).then(response => {
+          sprintCollection.deleteMany({
+            user: user._id
+          });
+          res.json(response);
+        })
+        .catch(error => console.error(error));
+    });
+});
+
 
 runServer();

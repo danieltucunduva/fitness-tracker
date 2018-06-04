@@ -12,9 +12,10 @@
           <mat-error *ngIf="newSprintForm.get('selectedSprint').hasError('required')">Required</mat-error>
         </mat-form-field>
         <mat-form-field fxLayoutAlign="center">
-          <textarea matInput placeholder="Description" formControlName="description"></textarea>
-          <mat-hint *ngIf="newSprintForm.get('description').value === ''">What will you be doing? (optional)</mat-hint>
+          <textarea matInput placeholder="Description*" formControlName="description"></textarea>
+          <mat-hint *ngIf="newSprintForm.get('description').value === ''">What will you be doing?</mat-hint>
           <mat-hint *ngIf="newSprintForm.get('description').value != ''" align="end">✔</mat-hint>
+          <mat-error *ngIf="newSprintForm.get('description').hasError('required')">Required</mat-error>
         </mat-form-field>
       </mat-card-content>
       <mat-checkbox fxLayoutAlign="center" name="notify" color="primary" formControlName="notify">

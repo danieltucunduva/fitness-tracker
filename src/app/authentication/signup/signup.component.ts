@@ -18,7 +18,9 @@ export class SignupComponent implements OnInit {
   minDate: Date;
   usernameAvailable = true;
 
-  constructor(private authenticationService: AuthenticationService, private dialog: MatDialog) { }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.maxDate = new Date();
@@ -57,7 +59,7 @@ export class SignupComponent implements OnInit {
 
   onSubmitSignupForm(form: NgForm) {
     this.authenticationService.registerUser({
-      email: form.value.email,
+      username: form.value.username,
       password: form.value.password
     });
   }

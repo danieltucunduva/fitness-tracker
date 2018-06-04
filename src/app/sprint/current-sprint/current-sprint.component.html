@@ -1,4 +1,5 @@
 <section fxLayout="column" fxLayoutAlign="center center" class="current-sprint">
+  <h1>Progress</h1>
   <mat-progress-spinner mode="determinate" [value]="progressSpinnerValue"></mat-progress-spinner>
   <h1>{{ progressSpinnerValue }}%</h1>
   <p *ngIf="progressSpinnerValue < 100">Keep going!</p>

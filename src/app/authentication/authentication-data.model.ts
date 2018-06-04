@@ -1,4 +1,4 @@
 export class AuthenticationData {
-    email: string;
+    username: string;
     password: string;
 }
