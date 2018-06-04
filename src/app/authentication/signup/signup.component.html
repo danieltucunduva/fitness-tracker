@@ -1,13 +1,13 @@
 <section>
   <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="1em" name="signupForm" #ngFormRef="ngForm" (ngSubmit)="onSubmitSignupForm(ngFormRef)">
     <mat-form-field>
-      <input type="email" matInput placeholder="Email" ngModel name="email" email required #emailInputRef="ngModel">
+      <input type="email" matInput placeholder="Your email" ngModel name="email" email required #emailInputRef="ngModel">
       <mat-error *ngIf="emailInputRef.hasError('required')">Required</mat-error>
       <mat-hint *ngIf="!emailInputRef.valid && !emailInputRef.hasError('required')">Invalid email</mat-hint>
       <mat-hint *ngIf="emailInputRef.valid" align="end">✔</mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <input type="password" matInput placeholder="Your password" ngModel name="password" required minlength="6" #passwordInputRef="ngModel">
+      <input type="password" matInput placeholder="Create a password" ngModel name="password" required minlength="6" #passwordInputRef="ngModel">
       <mat-error *ngIf="passwordInputRef.hasError('required')">Required</mat-error>
       <mat-hint *ngIf="passwordInputRef.hasError('minlength')">At least 6 characters long</mat-hint>
       <mat-hint align="end">{{ passwordInputRef.valid ? '✔' : passwordInputRef.value?.length + '/6' }} </mat-hint>
@@ -21,7 +21,7 @@
       <mat-hint align="end" *ngIf="validDatepicker(datepickerInputRef)">✔</mat-hint>
       <mat-error *ngIf="emptyDatepicker(datepickerInputRef)">Required</mat-error>
     </mat-form-field>
-    <div fxLayoutAlign="center center">
+    <div fxLayoutAlign="center center" class="checkbox-row">
       <mat-checkbox ngModel name="agree" color="primary" required></mat-checkbox>
       <span>* Agree to
         <span class="terms-and-conditions" (click)="onClickTermsAndConditions()">Terms and Conditions</span>
@@ -30,3 +30,4 @@
     <button [disabled]="!ngFormRef.valid" type="submit" mat-raised-button color="primary">Signup</button>
   </form>
 </section>
+<footer [hidden]="usernameAvailable">That email is already registered</footer>

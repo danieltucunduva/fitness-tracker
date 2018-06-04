@@ -1,23 +1,23 @@
-<section fxLayout fxLayoutAlign="center" class="new-sprint">
-  <form (ngSubmit)="onSubmitNewSprintForm()" [formGroup]="newSprintForm">
-    <mat-card fxFlex="20em">
+<section fxLayout fxLayoutAlign="center center" class="new-sprint">
+  <form (ngSubmit)="onSubmitNewSprintForm()" [formGroup]="newSprintForm" fxLayoutAlign="center center">
+    <mat-card fxFlex="20em" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="1em">
       <mat-card-title fxLayoutAlign="center">Time to start a sprint!</mat-card-title>
-
-      <mat-card-content fxLayoutAlign="center">
+      <mat-card-content fxLayoutAlign="center" fxLayout="column">
         <mat-form-field>
-          <mat-select [(value)]="selected" placeholder="Choose type" formControlName="selectedSprint">
+          <mat-select [(value)]="selected" placeholder="Choose length *" formControlName="selectedSprint">
             <mat-option *ngFor="let sprint of sprints" value="{{ sprint._id }}"> {{ getSprintFullName(sprint) }}</mat-option>
             <!-- <mat-option value="option3">Other...</mat-option> -->
           </mat-select>
+          <mat-hint *ngIf="newSprintForm.get('selectedSprint').valid" align="end">✔</mat-hint>
+          <mat-error *ngIf="newSprintForm.get('selectedSprint').hasError('required')">Required</mat-error>
+        </mat-form-field>
+        <mat-form-field fxLayoutAlign="center">
+          <textarea matInput placeholder="Description" formControlName="description"></textarea>
+          <mat-hint *ngIf="newSprintForm.get('description').value === ''">What will you be doing? (optional)</mat-hint>
+          <mat-hint *ngIf="newSprintForm.get('description').value != ''" align="end">✔</mat-hint>
         </mat-form-field>
       </mat-card-content>
-      <mat-form-field fxLayoutAlign="center">
-        <textarea matInput placeholder="What will you be doing?" formControlName="description"></textarea>
-        <mat-hint>Optional</mat-hint>
-      </mat-form-field>
-      <br>
-      <br>
-      <mat-checkbox fxLayoutAlign="center" name="notify" color="primary" checked="true" formControlName="notify">
+      <mat-checkbox fxLayoutAlign="center" name="notify" color="primary" formControlName="notify">
         Notify when completed
       </mat-checkbox>
       <mat-card-actions fxLayoutAlign="center">

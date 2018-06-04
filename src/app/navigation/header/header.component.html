@@ -1,19 +1,24 @@
 <mat-toolbar color="primary">
-  <div style="width: 50%">
-    <div fxHide.gt-xs>
+  <div fxFlex fxLayoutAlign="start">
+    <div fxHide.gt-xs style="width: 100%">
       <button mat-icon-button (click)="onToggleSidenav()">
         <img class="logo" alt="Sprints Logo" src="assets/logo.png">
       </button>
     </div>
-    <div fxHide.xs>
+    <div fxHide.xs style="width: 100%">
       <button mat-icon-button style="cursor:default">
         <img class="logo" alt="Sprints Logo" src="assets/logo.png">
       </button>
     </div>
   </div>
-  <div fxFlex fxLayout style="width: 50%">
-    <a class='app-name'>≡Sprint</a>
-    <div fxLayout fxLayoutAlign="flex-end" fxLayoutGap="1em">
+  <div fxHide.xs fxFlex fxLayout fxLayoutAlign="center center">
+    <a class='app-name' routerLink="/">≡Sprint</a>
+  </div>
+  <div fxHide.gt-xs fxFlex fxLayout fxLayoutAlign="center center">
+      <a class='app-name' style="cursor: default">≡Sprint</a>
+    </div>
+  <div fxFlex fxLayout fxLayoutAlign="end">
+    <div fxLayout fxLayoutAlign="flex-end">
       <a *ngIf="!isAuthenticated" routerLink="/signup" fxHide.xs>Signup</a>
       <a *ngIf="!isAuthenticated" routerLink="/login" fxHide.xs>Login</a>
       <a *ngIf="isAuthenticated" routerLink="/sprint" fxHide.xs>Sprints</a>

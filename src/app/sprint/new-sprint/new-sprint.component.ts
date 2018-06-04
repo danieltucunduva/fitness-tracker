@@ -24,9 +24,17 @@ export class NewSprintComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.newSprintForm.get('notify').setValue(true);
     this.sprintService.getAvailableSprints()
       .pipe(map(response => response.json()))
-      .subscribe(response => this.sprints = response);
+      .subscribe(response => {
+        this.sprints = response;
+        console.log(response);
+        const recommendedSprint = response.find(element => {
+          return element.name === 'Pomodoro';
+        });
+        this.newSprintForm.get('selectedSprint').setValue(recommendedSprint._id);
+      });
   }
 
   getSprintFullName(sprint: ISprint): string {
@@ -37,7 +45,10 @@ export class NewSprintComponent implements OnInit {
     if (!this.newSprintForm.value.notify) {
       this.newSprintForm.value.notify = false;
     }
-    this.sprintService.startSprint(this.newSprintForm.value.selectedSprint, this.newSprintForm.value.notify, this.newSprintForm.value.description);
+    this.sprintService.startSprint(
+      this.newSprintForm.value.selectedSprint,
+      this.newSprintForm.value.notify,
+      this.newSprintForm.value.description);
   }
 
 }

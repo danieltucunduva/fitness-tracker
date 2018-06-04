@@ -16,6 +16,7 @@ export class SignupComponent implements OnInit {
   date: Date;
   maxDate: Date;
   minDate: Date;
+  usernameAvailable = true;
 
   constructor(private authenticationService: AuthenticationService, private dialog: MatDialog) { }
 
@@ -25,6 +26,13 @@ export class SignupComponent implements OnInit {
 
     this.minDate = new Date();
     this.minDate.setFullYear(this.maxDate.getFullYear() - 120);
+
+    this.authenticationService.usernameAvailableChange.subscribe(usernameAvailable => {
+      this.usernameAvailable = usernameAvailable;
+      setTimeout(() => {
+        this.usernameAvailable = true;
+      }, 10 * 1000);
+    });
   }
 
   emptyDatepicker(input: HTMLInputElement): boolean {
@@ -44,7 +52,7 @@ export class SignupComponent implements OnInit {
   }
 
   onClickTermsAndConditions() {
-    this.dialog.open(TermsDialogComponent);
+    this.dialog.open(TermsDialogComponent, { maxWidth: '25em' });
   }
 
   onSubmitSignupForm(form: NgForm) {

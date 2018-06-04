@@ -1,3 +1,16 @@
 mat-form-field {
-    width: 300px;
+  width: 300px;
+}
+
+button {
+  margin-top: 0.5em;
+}
+
+footer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  font-style: italic;
+  font-size: 12pt;
+  color: red;
 }

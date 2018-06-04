@@ -9,7 +9,7 @@
       <input
         type="email"
         matInput
-        placeholder="Your email"
+        placeholder="Email"
         formControlName="email"
         required>
       <mat-error *ngIf="loginForm.get('email').hasError('required')">Required</mat-error>
@@ -21,7 +21,7 @@
         type="password"
         matInput
         #passwordInputRef
-        placeholder="Your password"
+        placeholder="Password"
         formControlName="password"
         required>
       <mat-error *ngIf="loginForm.get('password').hasError('required')">Required</mat-error>
@@ -31,3 +31,4 @@
     <button [disabled]="loginForm.invalid" type="submit" mat-raised-button color="primary">Login</button>
   </form>
 </section>
+<footer [hidden]="!invalidLogin">Invalid email or password</footer>

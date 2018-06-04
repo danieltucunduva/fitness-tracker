@@ -1,7 +1,8 @@
 /*
-MongoDB Windows PowerShell commands
+Windows PowerShell commands
 mongod --config="C:\MongoDB\mongo.config"
 mongo --port 27017 --host localhost
+node ./src/api/app.js
  */
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
@@ -112,6 +113,23 @@ server.get('/api/sprints/:id', (req, res) => {
 
 
 /**
+ * Returns the default sprint
+ */
+server.get('/api/sprints/default-sprint', (req, res) => {
+  const objectID = req.params.id;
+  connection
+    .then(response => {
+      const responseDB = response.db(settings.database);
+      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      return sprintCollection.find({
+        recommended: true
+      }).toArray();
+    }).then(response => res.json(response))
+    .catch(error => console.error(error));
+});
+
+
+/**
  * Creates a new sprint
  */
 server.post('/api/sprints', (req, res) => {
@@ -122,8 +140,7 @@ server.post('/api/sprints', (req, res) => {
       const newSprint = req.body;
       console.log(newSprint);
       if (newSprint.status === 'completed' && newSprint.notify === true) {
-        notifier.notify(
-          {
+        notifier.notify({
             icon: '../assets/logo_square.png',
             title: '≡Sprint',
             message: 'Your sprint is finished.',
@@ -133,16 +150,16 @@ server.post('/api/sprints', (req, res) => {
             timeout: 120,
             closeLabel: 'Ok'
           },
-          function(err, data) {
+          function (err, data) {
             // Will also wait until notification is closed.
             console.log('Waited');
             console.log(err, data);
           }
         );
-        notifier.on('timeout', function() {
+        notifier.on('timeout', function () {
           // console.log('Notification timed out!');
         });
-        notifier.on('click', function() {
+        notifier.on('click', function () {
           // console.log('Notification clicked!');
         });
       }
@@ -150,6 +167,32 @@ server.post('/api/sprints', (req, res) => {
     })
     .then(response => res.json(response))
     .catch(error => console.error(error));
+});
+
+
+/**
+ * Checks if a username is free
+ */
+server.post('/api/users/check', (req, res) => {
+  connection
+    .then(response => {
+      const responseDB = response.db(settings.database);
+      const sprintCollection = responseDB.collection(settings.user_collection);
+      const username = req.body;
+      const userExists = sprintCollection.findOne({
+        email: username
+      });
+      if (userExists) {
+        return false;
+      } else {
+        return true;
+      }
+    })
+    .then(response => res.json(response))
+    .catch(error => {
+      console.error(error);
+      res.json(error)
+    });
 });
 
 
@@ -165,7 +208,10 @@ server.post('/api/users', (req, res) => {
       return sprintCollection.insertOne(newUser);
     })
     .then(response => res.json(response))
-    .catch(error => console.error(error));
+    .catch(error => {
+      console.error(error);
+      res.json(error)
+    });
 });
 
 

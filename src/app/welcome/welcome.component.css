@@ -1,0 +1,24 @@
+section {
+    padding: 30px;
+    padding-top: 3em;
+}
+
+mat-card-title {
+  padding: 0.5em;
+}
+
+p {
+  font-size: 120%;
+  line-height: 1.5em
+}
+
+a {
+    color: inherit;
+}
+
+footer {
+  padding-top: 50px;
+  text-align: center;
+  font-style: italic;
+  font-size: 12pt;
+}

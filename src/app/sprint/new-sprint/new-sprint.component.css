@@ -2,6 +2,6 @@
     padding: 30px;
 }
 
-mat-checkbox {
-    padding-bottom: 1em;
+mat-form-field, mat-checkbox{
+    padding-bottom: 0.5em;
 }

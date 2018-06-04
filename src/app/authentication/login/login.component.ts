@@ -13,11 +13,18 @@ export class LoginComponent implements OnInit {
     email: new FormControl('', { validators: [Validators.required, Validators.email] }),
     password: new FormControl('', { validators: [Validators.required, Validators.minLength(6)] })
   });
+  invalidLogin = false;
 
   constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
+    this.authenticationService.invalidLoginChange.subscribe(invalidLogin => {
+      this.invalidLogin = invalidLogin;
+      setTimeout(() => {
+        this.invalidLogin = false;
+      }, 10 * 1000);
+    });
   }
 
   onSubmitLoginForm() {

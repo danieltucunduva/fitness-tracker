@@ -11,23 +11,36 @@ import { Http } from '@angular/http';
 @Injectable()
 export class AuthenticationService {
     authenticationChange = new Subject<boolean>();
+    usernameAvailableChange = new Subject<boolean>();
+    invalidLoginChange = new Subject<boolean>();
     private user: User = null;
 
     constructor(
         private http: Http,
         private router: Router) { }
 
+
     registerUser(authenticationData: AuthenticationData): void {
-        this.user = {
-            _id: null,
-            email: authenticationData.email,
-            password: authenticationData.password
-        };
-        this.http.post('http://localhost:3000/api/users', this.user).subscribe((response) => {
-            if (response.ok) {
-                return this.login(authenticationData);
-            }
-        });
+        this.http
+            .post('http://localhost:3000/api/users/check', authenticationData.email)
+            .pipe(map(response => response.json()))
+            .subscribe(response => {
+                if (response) {
+                    this.usernameAvailableChange.next(true);
+                    this.user = {
+                        _id: null,
+                        email: authenticationData.email,
+                        password: authenticationData.password
+                    };
+                    this.http.post('http://localhost:3000/api/users', this.user).subscribe((signupResponse) => {
+                        if (signupResponse.ok) {
+                            this.login(authenticationData);
+                        }
+                    });
+                } else {
+                    this.usernameAvailableChange.next(false);
+                }
+            });
     }
 
     login(authenticationData: AuthenticationData): void {
@@ -44,10 +57,12 @@ export class AuthenticationService {
                     && response[0].email === this.user.email
                     && response[0].password === this.user.password
                 ) {
+                    this.invalidLoginChange.next(false);
                     this.user = response[0];
                     this.authenticationChange.next(true);
                     this.router.navigate(['sprint']);
                 } else {
+                    this.invalidLoginChange.next(true);
                     this.user = null;
                     this.authenticationChange.next(false);
                 }

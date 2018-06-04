@@ -96,4 +96,8 @@ export class SprintService {
                 this.router.navigate(['sprint']);
             });
     }
+
+    getDefaultSprint(): Observable<any> {
+        return this.http.get('http://localhost:3000/api/sprints/default-sprint');
+    }
 }

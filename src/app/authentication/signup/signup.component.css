@@ -1,12 +1,29 @@
 mat-form-field {
-    width: 300px;
+  width: 300px;
 }
 
 mat-checkbox {
-    padding-right: 0.3em;
+  padding-right: 0.3em;
 }
 
 .terms-and-conditions {
-    text-decoration: underline;
-    cursor: pointer;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.checkbox-row {
+  padding-bottom: 0.5em;
+}
+
+button {
+  margin-top: 0.5em;
+}
+
+footer {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  font-style: italic;
+  font-size: 12pt;
+  color: red;
 }
