@@ -23,12 +23,22 @@ export class NewSprintComponent implements OnInit {
     private authenticationService: AuthenticationService,
   ) { }
 
+  compareSprintDuration(sprintA, sprintB): number {
+    if (sprintA.duration < sprintB.duration) {
+      return -1;
+    }
+    if (sprintA.duration > sprintB.duration) {
+      return 1;
+    }
+    return 0;
+  }
+
   ngOnInit() {
     this.newSprintForm.get('notify').setValue(true);
     this.sprintService.getAvailableSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => {
-        this.sprints = response;
+        this.sprints = response.sort(this.compareSprintDuration);
         const recommendedSprint = response.find(element => {
           return element.name === 'Pomodoro';
         });

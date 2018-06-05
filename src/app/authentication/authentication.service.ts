@@ -30,7 +30,8 @@ export class AuthenticationService {
                     this.user = {
                         _id: null,
                         username: authenticationData.username,
-                        password: authenticationData.password
+                        password: authenticationData.password,
+                        creationDate: new Date()
                     };
                     this.http.post('http://localhost:3000/api/users', this.user).subscribe((signupResponse) => {
                         if (signupResponse.ok) {

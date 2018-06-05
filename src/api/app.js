@@ -18,7 +18,7 @@ const notificationOptions = {
   title: '≡Sprint',
   message: 'Your sprint is finished.',
   wait: true,
-  icon: 'C:/Dev/GitHub/sprints-angular/src/assets/logo_square.png',
+  icon: 'C:/Dev/GitHub/sprints/src/assets/logo_square.png',
   sound: true,
   timeout: 120,
   closeLabel: 'Ok'
