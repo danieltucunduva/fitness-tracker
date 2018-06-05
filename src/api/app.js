@@ -5,10 +5,25 @@ mongo --port 27017 --host localhost
 node ./src/api/app.js
  */
 const restify = require('restify');
+
 const corsMiddleware = require('restify-cors-middleware');
+
 const MongoClient = require('mongodb').MongoClient;
+
 const ObjectID = require('mongodb').ObjectID;
+
 const notifier = require('node-notifier');
+
+const notificationOptions = {
+  title: '≡Sprint',
+  message: 'Your sprint is finished.',
+  wait: true,
+  icon: 'C:/Dev/GitHub/sprints-angular/src/assets/logo_square.png',
+  sound: true,
+  timeout: 120,
+  closeLabel: 'Ok'
+};
+
 
 const server = restify.createServer();
 
@@ -138,16 +153,7 @@ server.post('/api/sprints', (req, res) => {
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       const newSprint = req.body;
       if (newSprint.status === 'completed' && newSprint.notify === true) {
-        notifier.notify({
-            icon: '../assets/logo_square.png',
-            title: '≡Sprint',
-            message: 'Your sprint is finished.',
-            wait: true,
-            icon: '../assets/logo_square.png',
-            sound: true,
-            timeout: 120,
-            closeLabel: 'Ok'
-          },
+        notifier.notify(notificationOptions,
           function (err, data) {
             // Will also wait until notification is closed.
             // console.log('Waited');
@@ -178,14 +184,14 @@ server.post('/api/users/check', (req, res) => {
       const userCollection = responseDB.collection(settings.user_collection);
       const username = req.body;
       return userCollection.findOne({
-          username: username
-        }).then(response => {
-          if (response) {
-            res.json(false);
-          } else {
-            res.json(true);
-          }
-        })
+        username: username
+      }).then(response => {
+        if (response) {
+          res.json(false);
+        } else {
+          res.json(true);
+        }
+      })
         .catch(error => console.error(error));
     })
 });
