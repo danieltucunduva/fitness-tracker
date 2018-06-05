@@ -1,0 +1,12 @@
+.new-sprint-template {
+  padding: 30px;
+}
+
+mat-form-field,
+mat-checkbox {
+  padding-bottom: 1em;
+}
+
+button {
+  margin-top: 0.5em;
+}

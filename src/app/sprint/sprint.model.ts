@@ -10,4 +10,5 @@ export interface ISprint {
     startedDate?: Date;
     finishedDate?: Date;
     notify?: boolean;
+    users?: string[];
 }

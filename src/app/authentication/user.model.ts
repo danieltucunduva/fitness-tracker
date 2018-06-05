@@ -4,4 +4,5 @@ export class User {
     password: string;
     birthdate?: Date;
     creationDate?: Date;
+    shared_sprints?: string[];
 }

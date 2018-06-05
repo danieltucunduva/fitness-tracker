@@ -99,4 +99,20 @@ export class SprintService {
     getDefaultSprint(): Observable<any> {
         return this.http.get('http://localhost:3000/api/sprints/default-sprint');
     }
+
+    createSharedSprintTemplate(userId: string, name: string, duration: number): void {
+        const newSprint: ISprint = {
+            _id: null,
+            user: userId,
+            name: name,
+            description: 'template',
+            status: 'custom',
+            duration: duration,
+        };
+        this.http.post('http://localhost:3000/api/sprints/create-template', newSprint)
+            .pipe(map((response) => response.json()))
+            .subscribe((response) => {
+                console.log(response);
+            });
+    }
 }

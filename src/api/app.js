@@ -185,14 +185,14 @@ server.post('/api/users/check', (req, res) => {
       const userCollection = responseDB.collection(settings.user_collection);
       const username = req.body;
       return userCollection.findOne({
-        username: username
-      }).then(response => {
-        if (response) {
-          res.json(false);
-        } else {
-          res.json(true);
-        }
-      })
+          username: username
+        }).then(response => {
+          if (response) {
+            res.json(false);
+          } else {
+            res.json(true);
+          }
+        })
         .catch(error => console.error(error));
     })
 });
@@ -251,9 +251,38 @@ server.post('/api/delete-user', (req, res) => {
           username: user.username
         }).then(response => {
           sprintCollection.deleteMany({
-            user: user._id
+            user: ObjectID(user._id)
           });
           res.json(response);
+        })
+        .catch(error => console.error(error));
+    });
+});
+
+
+/**
+ * Create new sprint template
+ */
+server.post('/api/sprints/create-template', (req, res) => {
+  connection
+    .then(response => {
+      const responseDB = response.db(settings.database);
+      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      const userCollection = responseDB.collection(settings.user_collection);
+      const newSprintTemplate = req.body;
+      const userObjectID = ObjectID(newSprintTemplate.user);
+      newSprintTemplate.user = userObjectID;
+      newSprintTemplate.users = [userObjectID];
+      return sprintCollection
+        .insertOne(newSprintTemplate)
+        .then(response => {
+          userCollection.updateOne({
+            _id: ObjectID(newSprintTemplate.user)
+          }, {
+            $push: {
+              shared_sprints: response.ops[0]._id
+            }
+          }).then(response => res.json(response));
         })
         .catch(error => console.error(error));
     });
