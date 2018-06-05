@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="2229e1130c000644a1c5b53c060390b34ffaf819" datatype="html">
+        <source>
+  <x id="START_TAG_FORM" ctype="x-form" equiv-text="&lt;form&gt;"/>
+    <x id="START_TAG_MAT-FORM-FIELD" ctype="x-mat-form-field" equiv-text="&lt;mat-form-field&gt;"/>
+      <x id="TAG_INPUT" ctype="x-input" equiv-text="&lt;input/&gt;"/>
+      <x id="START_TAG_MAT-ERROR" ctype="x-mat-error" equiv-text="&lt;mat-error&gt;"/>Required<x id="CLOSE_TAG_MAT-ERROR" ctype="x-mat-error" equiv-text="&lt;/mat-error&gt;"/>
+      <x id="START_TAG_MAT-HINT" ctype="x-mat-hint" equiv-text="&lt;mat-hint&gt;"/>At least 3 characters long<x id="CLOSE_TAG_MAT-HINT" ctype="x-mat-hint" equiv-text="&lt;/mat-hint&gt;"/>
+      <x id="START_TAG_MAT-HINT_1" ctype="x-mat-hint" equiv-text="&lt;mat-hint&gt;"/>Looks okay ✔<x id="CLOSE_TAG_MAT-HINT" ctype="x-mat-hint" equiv-text="&lt;/mat-hint&gt;"/>
+    <x id="CLOSE_TAG_MAT-FORM-FIELD" ctype="x-mat-form-field" equiv-text="&lt;/mat-form-field&gt;"/>
+    <x id="START_TAG_MAT-FORM-FIELD" ctype="x-mat-form-field" equiv-text="&lt;mat-form-field&gt;"/>
+      <x id="TAG_INPUT_1" ctype="x-input" equiv-text="&lt;input/&gt;"/>
+      <x id="START_TAG_MAT-ERROR_1" ctype="x-mat-error" equiv-text="&lt;mat-error&gt;"/>Required<x id="CLOSE_TAG_MAT-ERROR" ctype="x-mat-error" equiv-text="&lt;/mat-error&gt;"/>
+      <x id="START_TAG_MAT-HINT_2" ctype="x-mat-hint" equiv-text="&lt;mat-hint&gt;"/>At least 6 characters long<x id="CLOSE_TAG_MAT-HINT" ctype="x-mat-hint" equiv-text="&lt;/mat-hint&gt;"/>
+      <x id="START_TAG_MAT-HINT_3" ctype="x-mat-hint" equiv-text="&lt;mat-hint&gt;"/>Looks okay ✔<x id="CLOSE_TAG_MAT-HINT" ctype="x-mat-hint" equiv-text="&lt;/mat-hint&gt;"/>
+    <x id="CLOSE_TAG_MAT-FORM-FIELD" ctype="x-mat-form-field" equiv-text="&lt;/mat-form-field&gt;"/>
+    <x id="START_TAG_BUTTON" ctype="x-button" equiv-text="&lt;button&gt;"/>Login<x id="CLOSE_TAG_BUTTON" ctype="x-button" equiv-text="&lt;/button&gt;"/>
+  <x id="CLOSE_TAG_FORM" ctype="x-form" equiv-text="&lt;/form&gt;"/>
+</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">app/authentication/login/login.component.ts</context>
+          <context context-type="linenumber">1</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

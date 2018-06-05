@@ -4,7 +4,7 @@
       <mat-card-title fxLayoutAlign="center">Time to start a sprint!</mat-card-title>
       <mat-card-content fxLayoutAlign="center" fxLayout="column">
         <mat-form-field>
-          <mat-select [(value)]="selected" placeholder="Choose length *" formControlName="selectedSprint">
+          <mat-select placeholder="Choose length *" formControlName="selectedSprint">
             <mat-option *ngFor="let sprint of sprints" value="{{ sprint._id }}"> {{ getSprintFullName(sprint) }}</mat-option>
             <!-- <mat-option value="option3">Other...</mat-option> -->
           </mat-select>

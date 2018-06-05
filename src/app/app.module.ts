@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { Http, HttpModule } from '@angular/http';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -23,6 +23,10 @@ import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms
 import { SprintService } from './sprint/sprint.service';
 import { environment } from '../environments/environment';
 import { LoggedUserNameComponent } from './authentication/logged-user-name/logged-user-name.component';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr');
 
 @NgModule({
   declarations: [
@@ -52,7 +56,8 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
   ],
   providers: [
     AuthenticationService,
-    SprintService
+    SprintService,
+    { provide: LOCALE_ID, useValue: 'fr' }
   ],
   bootstrap: [AppComponent],
   entryComponents: [SprintDialogComponent, TermsDialogComponent]
