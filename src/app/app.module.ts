@@ -26,6 +26,7 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { SprintTemplateComponent } from './sprint/sprint-template/sprint-template.component';
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
@@ -42,7 +43,8 @@ registerLocaleData(localeFr, 'fr');
     SidenavListComponent,
     SprintDialogComponent,
     TermsDialogComponent,
-    LoggedUserNameComponent
+    LoggedUserNameComponent,
+    SprintTemplateComponent
   ],
   imports: [
     BrowserModule,

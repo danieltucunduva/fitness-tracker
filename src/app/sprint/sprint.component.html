@@ -10,5 +10,9 @@
     <app-new-sprint></app-new-sprint>
     <app-logged-user-name></app-logged-user-name>
   </mat-tab>
+  <mat-tab label="Shared templates">
+    <app-sprint-template></app-sprint-template>
+    <app-logged-user-name></app-logged-user-name>
+  </mat-tab>
 </mat-tab-group>
 <app-current-sprint (sprintStop)="sprintStop()" *ngIf="ongoingSprint"></app-current-sprint>

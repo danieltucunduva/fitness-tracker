@@ -1,5 +1,6 @@
 /*
 Windows PowerShell commands
+
 mongod --config="C:\MongoDB\mongo.config"
 mongo --port 27017 --host localhost
 node ./src/api/app.js
