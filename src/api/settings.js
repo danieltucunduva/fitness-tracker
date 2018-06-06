@@ -4,6 +4,7 @@ const settings = {
     database: 'db_sprint',
     user_collection: 'users',
     sprint_collection: 'sprints',
+    past_sprints_collection: 'past_sprints',
     useNewUrlParser: true
 };
 

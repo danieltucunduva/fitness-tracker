@@ -11,10 +11,9 @@ export class AuthenticationGuard implements CanActivate {
         if (this.authenticationService.isAuthenticated()) {
             return true;
         } else {
-            // return true here to shortcircuit authentication
-            return true;
-            // this.router.navigate(['login']);
-            // return false;
+            // return true here to shortcircuit route guard
+            this.router.navigate(['login']);
+            return false;
         }
     }
 

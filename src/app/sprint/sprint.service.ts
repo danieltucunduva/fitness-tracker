@@ -61,7 +61,7 @@ export class SprintService {
     finishSprint(completed: boolean, progress: number): void {
         this.runningSprint.finishedDate = new Date();
         this.runningSprint.status = completed ? 'completed' : 'cancelled';
-        this.runningSprint.user = this.runningSprint.user ? this.authenticationService.getUserId() : null;
+        this.runningSprint.user = this.authenticationService.getUserId();
         this.runningSprint.progress = progress;
         this.http
             .post('http://localhost:3000/api/sprints', this.runningSprint)

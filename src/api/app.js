@@ -1,6 +1,19 @@
 /*
 Windows PowerShell commands
 
+use express for api
+
+use layers for backend
+
+login security
+
+logging:
+winston
+morgan
+
+express 'javadoc'
+swagger
+
 mongod --config="C:\MongoDB\mongo.config"
 mongo --port 27017 --host localhost
 node ./src/api/app.js
@@ -58,7 +71,7 @@ server.post('/api/one-past-sprint', (req, res) => {
     .then(response => {
       const userId = req.body;
       const responseDB = response.db(settings.database);
-      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      const sprintCollection = responseDB.collection(settings.past_sprints_collection);
       return sprintCollection.findOne({
         status: {
           $in: ['completed', 'cancelled']
@@ -78,7 +91,7 @@ server.post('/api/past-sprints', (req, res) => {
     .then(response => {
       const userId = req.body;
       const responseDB = response.db(settings.database);
-      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      const sprintCollection = responseDB.collection(settings.past_sprints_collection);
       return sprintCollection.find({
         status: {
           $in: ['completed', 'cancelled']
@@ -151,13 +164,13 @@ server.get('/api/sprints/default-sprint', (req, res) => {
 
 
 /**
- * Creates a new sprint
+ * Creates a new past sprint
  */
 server.post('/api/sprints', (req, res) => {
   connection
     .then(response => {
       const responseDB = response.db(settings.database);
-      const sprintCollection = responseDB.collection(settings.sprint_collection);
+      const sprintCollection = responseDB.collection(settings.past_sprints_collection);
       const newSprint = req.body;
       newSprint.user = ObjectID(newSprint.user);
       if (newSprint.status === 'completed' && newSprint.notify === true) {
