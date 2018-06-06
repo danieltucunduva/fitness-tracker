@@ -1,5 +1,5 @@
 <section fxLayout fxLayoutAlign="center center" class="new-sprint-template">
-  <form (ngSubmit)="onSubmitNewSprintTemplateForm()" [formGroup]="newSprintTemplateForm" fxLayoutAlign="center center">
+  <form (ngSubmit)="onSubmitNewSprintTemplateForm(formDirective)" [formGroup]="newSprintTemplateForm" #formDirective="ngForm" fxLayoutAlign="center center">
     <mat-card fxFlex="20em" fxLayoutAlign="center center" fxLayout="column" fxLayoutGap="1em">
       <mat-card-title fxLayoutAlign="center">Create a shared template</mat-card-title>
       <mat-card-content fxLayoutAlign="center" fxLayout="column">

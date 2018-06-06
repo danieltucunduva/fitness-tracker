@@ -20,7 +20,7 @@ export class CurrentSprintComponent implements OnInit {
   }
 
   startOrResumeProgressTimer() {
-    const shortSprint = this.sprintService.getRunningSprint().duration < 120 ? true : false;
+    const shortSprint = this.sprintService.getRunningSprint().duration < 180 ? true : false;
     const percentStepSize = shortSprint ? 1 : 0.1;
     const timeFactor = shortSprint ? 10 : 1;
 
@@ -35,8 +35,6 @@ export class CurrentSprintComponent implements OnInit {
               sprint: this.sprintService.getRunningSprint()
             }
           });
-          // dialogRef.afterClosed().subscribe(response => {
-          // });
         } else {
           this.progressSpinnerValue = Number.parseFloat((this.progressSpinnerValue + percentStepSize).toFixed(1));
         }

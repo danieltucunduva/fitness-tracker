@@ -1,12 +1,13 @@
 <span>
   <h1 mat-dialog-title fxLayoutAlign="center center">{{ dialogTitle }}</h1>
-  <div class="finished-text" fxLayout="column" fxLayoutAlign="center center" *ngIf="dialogTextPresent">
+  <div fxLayout="column" fxLayoutAlign="center center" *ngIf="dialogTextPresent">
     <h3>
-      Good job!
+      {{ sprintName }}
     </h3>
-    Length: {{ sprintName }}
-    <br> Started: {{ sprintStart.getHours() }}h{{ sprintStart.getMinutes() }}min{{ sprintStart.getSeconds() }}s
-    <br> Completed: {{ sprintFinish.getHours() }}h{{ sprintFinish.getMinutes() }}min{{ sprintFinish.getSeconds() }}s
+    <span class="finished-text">
+      Started: {{ sprintStart.getHours() }}h{{ sprintStart.getMinutes() }}min{{ sprintStart.getSeconds() }}s <br>
+      Completed: {{ sprintFinish.getHours() }}h{{ sprintFinish.getMinutes() }}min{{ sprintFinish.getSeconds() }}s
+    </span>
     <br>
     <br>
   </div>

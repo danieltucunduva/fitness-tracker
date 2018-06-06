@@ -16,6 +16,7 @@ import { AuthenticationService } from '../authentication/authentication.service'
 export class SprintService {
     sprintChanged = new Subject<ISprint>();
     pastSprintsChanged = new Subject<boolean>();
+    availableSprintsChanged = new Subject<boolean>();
     private sprints: ISprint[] = [];
 
     private runningSprint: ISprint;
@@ -60,7 +61,7 @@ export class SprintService {
     finishSprint(completed: boolean, progress: number): void {
         this.runningSprint.finishedDate = new Date();
         this.runningSprint.status = completed ? 'completed' : 'cancelled';
-        this.runningSprint.user = this.authenticationService.getUserId();
+        this.runningSprint.user = this.runningSprint.user ? this.authenticationService.getUserId() : null;
         this.runningSprint.progress = progress;
         this.http
             .post('http://localhost:3000/api/sprints', this.runningSprint)
@@ -112,7 +113,7 @@ export class SprintService {
         this.http.post('http://localhost:3000/api/sprints/create-template', newSprint)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
-                console.log(response);
+                this.availableSprintsChanged.next(true);
             });
     }
 }

@@ -18,23 +18,25 @@ export class NewSprintComponent implements OnInit {
   });
   sprints: ISprint[] = [];
 
+
   constructor(
     private sprintService: SprintService,
     private authenticationService: AuthenticationService,
   ) { }
 
-  compareSprintDuration(sprintA, sprintB): number {
-    if (sprintA.duration < sprintB.duration) {
-      return -1;
-    }
-    if (sprintA.duration > sprintB.duration) {
-      return 1;
-    }
-    return 0;
-  }
 
   ngOnInit() {
     this.newSprintForm.get('notify').setValue(true);
+    this.getAvailableSprints();
+    this.sprintService.availableSprintsChanged.subscribe(changed => {
+      if (changed) {
+        this.getAvailableSprints();
+      }
+    });
+  }
+
+
+  private getAvailableSprints() {
     this.sprintService.getAvailableSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => {
@@ -46,9 +48,22 @@ export class NewSprintComponent implements OnInit {
       });
   }
 
+
+  private compareSprintDuration(sprintA, sprintB): number {
+    if (sprintA.duration < sprintB.duration) {
+      return -1;
+    }
+    if (sprintA.duration > sprintB.duration) {
+      return 1;
+    }
+    return 0;
+  }
+
+
   getSprintFullName(sprint: ISprint): string {
     return this.sprintService.getFullName(sprint);
   }
+
 
   onSubmitNewSprintForm() {
     if (!this.newSprintForm.value.notify) {
@@ -59,5 +74,6 @@ export class NewSprintComponent implements OnInit {
       this.newSprintForm.value.notify,
       this.newSprintForm.value.description);
   }
+
 
 }

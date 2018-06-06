@@ -6,7 +6,6 @@
         <mat-form-field>
           <mat-select placeholder="Choose length *" formControlName="selectedSprint">
             <mat-option *ngFor="let sprint of sprints" value="{{ sprint._id }}"> {{ getSprintFullName(sprint) }}</mat-option>
-            <!-- <mat-option value="option3">Other...</mat-option> -->
           </mat-select>
           <mat-hint *ngIf="newSprintForm.get('selectedSprint').valid" align="end">✔</mat-hint>
           <mat-error *ngIf="newSprintForm.get('selectedSprint').hasError('required')">Required</mat-error>

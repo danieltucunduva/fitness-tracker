@@ -18,6 +18,7 @@ export class SprintComponent implements OnInit {
   sprintSubscription: Subscription;
   tabIndex = 0;
   pastSprintsSubscription: Subscription;
+  availableSprintsSubscription: Subscription;
 
   constructor(
     private sprintService: SprintService,
@@ -41,6 +42,11 @@ export class SprintComponent implements OnInit {
       }
     });
     this.sprintService.checkOnePastSprint();
+    this.availableSprintsSubscription = this.sprintService.availableSprintsChanged.subscribe(changed => {
+      if (changed) {
+        this.tabIndex = 1;
+      }
+    });
   }
 
   sprintStop() {

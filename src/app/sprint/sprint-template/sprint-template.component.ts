@@ -25,11 +25,15 @@ export class SprintTemplateComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmitNewSprintTemplateForm(): void {
+  onSubmitNewSprintTemplateForm(formDirective: any): void {
+    const duration = Number((this.newSprintTemplateForm.value.length * 60).toFixed(0));
     this.sprintService.createSharedSprintTemplate(
       this.authenticationService.getUserId(),
       this.newSprintTemplateForm.value.name,
-      this.newSprintTemplateForm.value.length);
+      duration
+    );
+    formDirective.resetForm();
+    this.newSprintTemplateForm.reset();
   }
 }
 

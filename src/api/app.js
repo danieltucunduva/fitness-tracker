@@ -83,7 +83,7 @@ server.post('/api/past-sprints', (req, res) => {
         status: {
           $in: ['completed', 'cancelled']
         },
-        user: userId
+        user: ObjectID(userId)
       }).toArray();
     }).then(response => res.json(response))
     .catch(error => console.error(error));
@@ -100,12 +100,18 @@ server.post('/api/available-sprints', (req, res) => {
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       return sprintCollection.find({
-        status: {
-          $in: ['default', 'custom']
-        },
-        user: {
-          $in: [null, userId]
-        },
+        $or: [{
+            status: {
+              $in: ['default', 'custom']
+            },
+            user: {
+              $in: [null, ObjectID(userId)]
+            }
+          },
+          {
+            users: ObjectID(userId)
+          }
+        ]
       }).toArray();
     }).then(response => res.json(response))
     .catch(error => console.error(error));
@@ -153,6 +159,7 @@ server.post('/api/sprints', (req, res) => {
       const responseDB = response.db(settings.database);
       const sprintCollection = responseDB.collection(settings.sprint_collection);
       const newSprint = req.body;
+      newSprint.user = ObjectID(newSprint.user);
       if (newSprint.status === 'completed' && newSprint.notify === true) {
         notifier.notify(notificationOptions,
           function (err, data) {
