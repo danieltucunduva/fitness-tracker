@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { SprintService } from '../sprint.service';
+import { ISprint } from '../sprint.model';
 
 @Component({
   selector: 'app-sprint-dialog',
@@ -23,6 +24,12 @@ export class SprintDialogComponent implements OnInit {
   noButtonText: string;
   noButtonPresent: boolean;
 
+  submitButtonPresent = false;
+  submitButtonText: string;
+
+  templateTablePresent = false;
+  // sprintTemplates: ISprint[] = [];
+  sprintTemplates = [1, 2, 3];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -30,6 +37,7 @@ export class SprintDialogComponent implements OnInit {
 
   ngOnInit() {
     if (this.data.type === 'cancel-sprint') {
+      this.templateTablePresent = false;
       this.dialogTitle = 'Do you want to cancel the sprint?';
       this.yesButtonText = 'Yes';
       this.yesButtonPresent = true;
@@ -39,6 +47,7 @@ export class SprintDialogComponent implements OnInit {
     }
 
     if (this.data.type === 'sprint-finished') {
+      this.templateTablePresent = false;
       this.dialogTitle = 'Sprint finished';
       this.sprintName = this.sprintService.getFullName(this.data.sprint);
       this.sprintStart = this.data.sprint.startedDate;
@@ -50,6 +59,7 @@ export class SprintDialogComponent implements OnInit {
     }
 
     if (this.data.type === 'delete-user') {
+      this.templateTablePresent = false;
       this.dialogTitle = 'Deletion is irreversible. Are you sure?';
       this.yesButtonText = 'Yes';
       this.yesButtonPresent = true;
@@ -57,6 +67,18 @@ export class SprintDialogComponent implements OnInit {
       this.noButtonPresent = true;
       this.dialogTextPresent = false;
       this.yesButtonColor = 1;
+    }
+
+    if (this.data.type === 'import-sprint-template') {
+      // this.sprintService.getTemplatesToImport(); this.templates =
+      this.noButtonPresent = false;
+      this.yesButtonPresent = false;
+      this.dialogTitle = 'List of templates created by other users:';
+      this.noButtonPresent = false;
+      this.dialogTextPresent = false;
+      this.templateTablePresent = true;
+      this.submitButtonPresent = true;
+      this.submitButtonText = 'Import';
     }
   }
 

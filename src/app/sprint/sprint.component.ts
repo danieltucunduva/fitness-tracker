@@ -62,4 +62,8 @@ export class SprintComponent implements OnInit {
     });
   }
 
+  onClickImportSprintTemplate() {
+    const dialogRef = this.dialog.open(SprintDialogComponent, { data: { type: 'import-sprint-template' } });
+  }
+
 }
