@@ -16,7 +16,7 @@ swagger
 
 mongod --config="C:\MongoDB\mongo.config"
 mongo --port 27017 --host localhost
-node ./src/api/app.js
+node server_restify/app.js
  */
 const restify = require('restify');
 
