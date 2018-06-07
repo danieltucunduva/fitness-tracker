@@ -1,4 +1,4 @@
-var sprint = require('../models/sprint.model')
+var pastSprint = require('../models/past-sprint.model')
 
 _this = this
 
@@ -9,7 +9,7 @@ exports.getSprints = async function(query, page, limit){
         limit
     }
     try {
-        var todos = await sprint.paginate(query, options)
+        var todos = await pastSprint.paginate(query, options)
         return todos;
     } catch (e) {
         throw Error('Error while Paginating Todos')
@@ -18,7 +18,7 @@ exports.getSprints = async function(query, page, limit){
 
 exports.createSprint = async function(todo){
 
-    var newTodo = new sprint({
+    var newTodo = new pastSprint({
         title: todo.title,
         description: todo.description,
         date: new Date(),
@@ -37,7 +37,7 @@ exports.updateSprint = async function(todo){
     var id = todo.id
 
     try{
-        var oldTodo = await sprint.findById(id);
+        var oldTodo = await pastSprint.findById(id);
     }catch(e){
         throw Error("Error occured while Finding the Todo")
     }
@@ -66,7 +66,7 @@ exports.updateSprint = async function(todo){
 exports.deleteTodo = async function(id){
     
     try{
-        var deleted = await sprint.remove({_id: id})
+        var deleted = await pastSprint.remove({_id: id})
         if(deleted.result.n === 0){
             throw Error("Todo Could not be deleted")
         }

@@ -1,18 +1,7 @@
 /*
-Windows PowerShell commands
+THIS SERVER IS DEPRECATED
 
-use express for api
-
-use layers for backend
-
-login security
-
-logging:
-winston
-morgan
-
-express 'javadoc'
-swagger
+Code being kept for documentation sake
 
 mongod --config="C:\MongoDB\mongo.config"
 mongo --port 27017 --host localhost
