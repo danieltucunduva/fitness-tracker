@@ -1,4 +1,5 @@
 var userModel = require('../models/user.model')
+var pastSprintModel = require('../models/past-sprint.model')
 
 _this = this
 
@@ -89,8 +90,10 @@ exports.deleteUser = async function (id) {
     });
     if (deleted.result.n === 0) {
       throw Error("Delete user: user could not be deleted")
+    } else {
+      var deleteAllPastSprints = await pastSprintModel.deleteMany({user: id});
+      return deleted;
     }
-    return deleted;
   } catch (e) {
     throw Error("Delete user: failure")
   }

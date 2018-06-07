@@ -50,8 +50,8 @@ export class SprintDialogComponent implements OnInit {
       this.templateTablePresent = false;
       this.dialogTitle = 'Sprint finished';
       this.sprintName = this.sprintService.getFullName(this.data.sprint);
-      this.sprintStart = this.data.sprint.startedDate;
-      this.sprintFinish = this.data.sprint.finishedDate;
+      this.sprintStart = this.data.sprint.startedAt;
+      this.sprintFinish = this.data.sprint.finishedAt;
       this.dialogTextPresent = true;
       this.noButtonText = '✔';
       this.noButtonPresent = true;

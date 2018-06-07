@@ -28,7 +28,7 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.sprintService.getPastSprints()
       .pipe(map(response => response.json()))
-      .subscribe(response => this.dataSource.data = response);
+      .subscribe(response => this.dataSource.data = response.data.docs);
   }
 
   onApplyPastSprintsTableFilter(filterValue: string): void {

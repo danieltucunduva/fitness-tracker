@@ -29,13 +29,13 @@ export class SprintService {
 
     startSprint(selectedId: string, notify: boolean, description: string) {
         this.http
-            .get(`http://localhost:3000/api/sprints/${selectedId}`)
+            .get(`http://localhost:3000/api/sprint-templates/${selectedId}`)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
-                const sprintSelected = response;
+                const sprintSelected = response.data;
                 this.runningSprint = {
                     ...(sprintSelected),
-                    startedDate: new Date(),
+                    startedAt: new Date(),
                     description: description,
                     notify: notify
                 };
@@ -58,13 +58,18 @@ export class SprintService {
         return { ...this.runningSprint };
     }
 
+    /**
+     * Creates a new pastSprint (finished or cancelled)
+     * @param completed
+     * @param progress
+     */
     finishSprint(completed: boolean, progress: number): void {
-        this.runningSprint.finishedDate = new Date();
+        this.runningSprint.finishedAt = new Date();
         this.runningSprint.status = completed ? 'completed' : 'cancelled';
         this.runningSprint.user = this.authenticationService.getUserId();
         this.runningSprint.progress = progress;
         this.http
-            .post('http://localhost:3000/api/sprints', this.runningSprint)
+            .post('http://localhost:3000/api/past-sprints/new', this.runningSprint)
             .subscribe((response) => {
                 if (response.ok) {
                     this.runningSprint = null;
@@ -76,25 +81,15 @@ export class SprintService {
     }
 
     getAvailableSprints(): Observable<any> {
-        return this.http.post('http://localhost:3000/api/available-sprints', this.authenticationService.getUserId());
+        return this.http.get('http://localhost:3000/api/sprint-templates/', this.authenticationService.getUserId());
     }
 
+    /**
+     * Retrieves past sprints of logged user
+     */
     getPastSprints(): Observable<any> {
-        return this.http.post('http://localhost:3000/api/past-sprints', this.authenticationService.getUserId());
-    }
-
-    checkOnePastSprint(): void {
-        this.http
-            .post('http://localhost:3000/api/one-past-sprint', this.authenticationService.getUserId())
-            .pipe(map((response) => response.json()))
-            .subscribe((response) => {
-                if (response) {
-                    this.pastSprintsChanged.next(true);
-                } else {
-                    this.pastSprintsChanged.next(false);
-                }
-                this.router.navigate(['sprint']);
-            });
+        console.log(this.authenticationService.getUserId());
+        return this.http.post('http://localhost:3000/api/past-sprints/', { userId: this.authenticationService.getUserId() });
     }
 
     getDefaultSprint(): Observable<any> {

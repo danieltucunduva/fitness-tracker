@@ -6,7 +6,13 @@ var pastSprintSchema = new mongoose.Schema({
     name: String,
     duration: Number,
     status: String,
-    description: String
+    progress: Number,
+    description: String,
+    notify: Boolean,
+    user: String,
+    createdAt: Date,
+    startedAt: Date,
+    finishedAt: Date
 })
 
 pastSprintSchema.plugin(mongoosePaginate);

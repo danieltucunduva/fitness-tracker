@@ -6,9 +6,9 @@ export interface ISprint {
     duration?: number; // in seconds
     status: 'default' | 'custom' | 'running' | 'completed' | 'cancelled';
     progress?: number; // as a percentage
-    creationDate?: Date;
-    startedDate?: Date;
-    finishedDate?: Date;
+    createdAt?: Date;
+    startedAt?: Date;
+    finishedAt?: Date;
     notify?: boolean;
     users?: string[];
 }

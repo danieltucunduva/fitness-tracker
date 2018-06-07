@@ -40,8 +40,8 @@ export class NewSprintComponent implements OnInit {
     this.sprintService.getAvailableSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => {
-        this.sprints = response.sort(this.compareSprintDuration);
-        const recommendedSprint = response.find(element => {
+        this.sprints = response.data.docs.sort(this.compareSprintDuration);
+        const recommendedSprint = this.sprints.find(element => {
           return element.name === 'Pomodoro';
         });
         this.newSprintForm.get('selectedSprint').setValue(recommendedSprint._id);
