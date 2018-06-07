@@ -49,26 +49,6 @@ exports.createUser = async function (req, res, next) {
 
 exports.loginUser = async function (req, res, next) {
 
-  // var user = {
-  //   username: 'daniel',
-  //   password: '123456'
-  // }
-
-  // return res.status(200).json({
-  //   status: 200,
-  //   data: user,
-  //   message: "Success: login"
-  // });
-
-  // if (!req.body._id) {
-  //   return res.status(400).json({
-  //     status: 400.,
-  //     message: "Id must be present"
-  //   })
-  // }
-
-  // var id = req.body._id;
-
   console.log(req.body)
 
   var user = {
@@ -138,10 +118,11 @@ exports.removeUser = async function (req, res, next) {
   var id = req.params.id;
 
   try {
-    var deleted = await userService.deleteUser(id)
-    return res.status(204).json({
-      status: 204,
-      message: "Succes: sprint deleted"
+    var deleted = await userService.deleteUser(id);
+    return res.status(200).json({
+      status: 200,
+      data: true,
+      message: "Success: user deleted"
     })
   } catch (e) {
     return res.status(400).json({

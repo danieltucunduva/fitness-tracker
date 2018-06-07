@@ -30,7 +30,6 @@ export class AuthenticationService {
             .post('http://localhost:3000/api/users', this.user)
             .pipe(map(response => response.json()))
             .subscribe((signupResponse) => {
-                console.log(signupResponse.status === 201);
                 if (signupResponse.status === 201) {
                     this.login({
                         username: signupResponse.data.username,
@@ -88,17 +87,20 @@ export class AuthenticationService {
     }
 
     deleteLoggedUser(): void {
-        if (this.user === null) {
+        if (this.user === null || this.user._id === null) {
             return;
         } else {
             this.http
-                .post('http://localhost:3000/api/delete-user', this.user)
+                .delete(`http://localhost:3000/api/users/${this.user._id}`)
                 .pipe(map(response => response.json()))
                 .subscribe(response => {
-                    if (response.n === 1) {
+                    if (response.status === 200) {
                         this.authenticationChange.next(false);
                         this.router.navigate(['signup']);
+                    } else {
                     }
+                }, error => {
+                    console.log('Delete user: error');
                 });
         }
     }

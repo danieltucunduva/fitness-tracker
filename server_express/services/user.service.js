@@ -82,16 +82,16 @@ exports.updateUser = async function (user) {
 }
 
 exports.deleteUser = async function (id) {
-
+  console.log(id);
   try {
-    var deleted = await userModel.remove({
+    var deleted = await userModel.deleteOne({
       _id: id
-    })
+    });
     if (deleted.result.n === 0) {
-      throw Error("Todo Could not be deleted")
+      throw Error("Delete user: user could not be deleted")
     }
-    return deleted
+    return deleted;
   } catch (e) {
-    throw Error("Error Occured while Deleting the Todo")
+    throw Error("Delete user: failure")
   }
 }
