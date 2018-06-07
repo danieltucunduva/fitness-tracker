@@ -26,23 +26,74 @@ exports.getUsers = async function (req, res, next) {
 }
 
 exports.createUser = async function (req, res, next) {
-  var todo = {
-    title: req.body.title,
-    description: req.body.description,
-    status: req.body.status
+  console.log(req.body);
+  var user = {
+    username: req.body.username,
+    password: req.body.password
   }
 
   try {
-    var createdTodo = await userService.createUser(todo)
+    var createdUser = await userService.createUser(user)
     return res.status(201).json({
       status: 201,
-      data: createdTodo,
-      message: "Succesfully Created sprint"
+      data: createdUser,
+      message: "Create user: success"
     })
   } catch (e) {
     return res.status(400).json({
       status: 400,
-      message: "Todo Creation was Unsuccesfull"
+      message: "Create user: failure"
+    })
+  }
+}
+
+exports.loginUser = async function (req, res, next) {
+
+  // var user = {
+  //   username: 'daniel',
+  //   password: '123456'
+  // }
+
+  // return res.status(200).json({
+  //   status: 200,
+  //   data: user,
+  //   message: "Success: login"
+  // });
+
+  // if (!req.body._id) {
+  //   return res.status(400).json({
+  //     status: 400.,
+  //     message: "Id must be present"
+  //   })
+  // }
+
+  // var id = req.body._id;
+
+  console.log(req.body)
+
+  var user = {
+    username: req.body.username,
+    password: req.body.password
+  }
+
+  try {
+    var userFound = await userService.loginUser(user);
+    if (userFound) {
+      return res.status(200).json({
+        status: 200,
+        data: userFound,
+        message: "Login: success"
+      });
+    } else {
+      return res.status(406).json({
+        status: 406,
+        message: "Login: invalid"
+      });
+    }
+  } catch (e) {
+    return res.status(400).json({
+      status: 400,
+      message: e.message
     })
   }
 }

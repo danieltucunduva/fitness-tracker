@@ -9,32 +9,50 @@ exports.getUsers = async function (query, page, limit) {
     limit
   }
   try {
-    var todos = await userModel.paginate(query, options)
-    return todos;
+    var users = await userModel.paginate(query, options)
+    return users;
   } catch (e) {
     throw Error('Error while Paginating Todos')
   }
 }
 
-exports.createUser = async function (todo) {
+exports.createUser = async function (user) {
 
-  var newTodo = new userModel({
-    title: todo.title,
-    description: todo.description,
-    date: new Date(),
-    status: todo.status
+  var newUser = new userModel({
+    username: user.username,
+    password: user.password,
+    createdAt: new Date(),
+    sharedSprints: []
   })
 
   try {
-    var savedTodo = await newTodo.save()
-    return savedTodo;
+    var savedUser = await newUser.save()
+    console.log(savedUser);
+    return savedUser;
   } catch (e) {
-    throw Error("Error while Creating Todo")
+    throw Error("Error creating user")
   }
 }
 
-exports.updateUser = async function (todo) {
-  var id = todo.id
+exports.loginUser = async function (user) {
+  try {
+    var user = await userModel.findOne({
+      username: user.username,
+      password: user.password
+    });
+  } catch (e) {
+    throw Error("Login: user not found")
+  }
+
+  if (user) {
+    return user;
+  } else {
+    return false;
+  }
+}
+
+exports.updateUser = async function (user) {
+  var id = user.id
 
   try {
     var oldTodo = await userModel.findById(id);
@@ -48,9 +66,9 @@ exports.updateUser = async function (todo) {
 
   console.log(oldTodo)
 
-  oldTodo.title = todo.title
-  oldTodo.description = todo.description
-  oldTodo.status = todo.status
+  oldTodo.title = user.title
+  oldTodo.description = user.description
+  oldTodo.status = user.status
 
 
   console.log(oldTodo)

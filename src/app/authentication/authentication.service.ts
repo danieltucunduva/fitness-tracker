@@ -21,30 +21,27 @@ export class AuthenticationService {
 
 
     registerUser(authenticationData: AuthenticationData): void {
+        this.user = {
+            _id: null,
+            username: authenticationData.username,
+            password: authenticationData.password
+        };
         this.http
-            .post('http://localhost:3000/api/users/check', authenticationData.username)
+            .post('http://localhost:3000/api/users', this.user)
             .pipe(map(response => response.json()))
-            .subscribe(response => {
-                if (response) {
-                    this.usernameAvailableChange.next(true);
-                    this.user = {
-                        _id: null,
-                        username: authenticationData.username,
-                        password: authenticationData.password,
-                        birthdate: authenticationData.birthdate,
-                        creationDate: new Date(),
-                        shared_sprints: []
-                    };
-                    this.http.post('http://localhost:3000/api/users', this.user).subscribe((signupResponse) => {
-                        if (signupResponse.ok) {
-                            this.login(authenticationData);
-                        }
+            .subscribe((signupResponse) => {
+                console.log(signupResponse.status === 201);
+                if (signupResponse.status === 201) {
+                    this.login({
+                        username: signupResponse.data.username,
+                        password: signupResponse.data.password
                     });
                 } else {
-                    this.usernameAvailableChange.next(false);
+                    this.user = null;
                 }
             });
     }
+
 
     login(authenticationData: AuthenticationData): void {
         this.user = {
@@ -53,23 +50,22 @@ export class AuthenticationService {
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:3000/api/login', this.user)
+            .post('http://localhost:3000/api/users/login', this.user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
-                if (response.length === 1
-                    && response[0].username === this.user.username
-                    && response[0].password === this.user.password
-                ) {
+                if (response.status === 200) {
                     this.invalidLoginChange.next(false);
-                    this.user = response[0];
+                    this.user = response.data;
                     this.authenticationChange.next(true);
                     this.router.navigate(['sprint']);
                 } else {
+                }
+            },
+                error => {
                     this.invalidLoginChange.next(true);
                     this.user = null;
                     this.authenticationChange.next(false);
-                }
-            });
+                });
     }
 
     logout(): boolean {
