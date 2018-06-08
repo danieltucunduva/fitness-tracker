@@ -4,6 +4,9 @@
  * Module dependencies.
  */
 
+const express = require('express');
+const path = require('path');
+
 var app = require('../app');
 var debug = require('debug')('todoapp:server');
 var http = require('http');
@@ -88,3 +91,14 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+
+
+const app_ng = express();
+// Serve only the static files form the dist directory
+app_ng.use(express.static(__dirname + '../../../dist/sprint'));
+app_ng.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname + '../../../dist/sprint/index.html'));
+});
+// Start the app by listening on the default Heroku port
+app_ng.listen(process.env.PORT || 8080);
