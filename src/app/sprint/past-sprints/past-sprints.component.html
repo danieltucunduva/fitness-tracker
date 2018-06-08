@@ -1,6 +1,6 @@
 <div fxLayoutAlign="center center">
   <mat-form-field fxFlex="30%">
-    <input matInput (keyup)="onApplyPastSprintsTableFilter($event.target.value)" placeholder="Filter">
+    <input matInput (keyup)="onApplyPastSprintsTableFilter($event.target.value)" placeholder="Filter by length, status, date or description">
   </mat-form-field>
 </div>
 
@@ -18,16 +18,16 @@
 
   <ng-container matColumnDef="startedDate">
     <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10em;"> Date </th>
-    <td mat-cell *matCellDef="let element"> {{ element.startedAt | date:"MM/dd/yy" }} </td>
+    <td mat-cell *matCellDef="let element"> {{ element.startedAt | date:"yyyy-MM-dd" }} </td>
   </ng-container>
 
   <ng-container matColumnDef="startedTime">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10em;"> Start </th>
+    <th mat-header-cell *matHeaderCellDef style="width: 10em;"> Start </th>
     <td mat-cell *matCellDef="let element"> {{ element.startedAt | date:"HH:mm:ss" }} </td>
   </ng-container>
 
   <ng-container matColumnDef="finishedTime">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10em;"> Finish </th>
+    <th mat-header-cell *matHeaderCellDef style="width: 10em;"> Finish </th>
     <td mat-cell *matCellDef="let element"> {{ element.finishedAt | date:"HH:mm:ss" }} </td>
   </ng-container>
 

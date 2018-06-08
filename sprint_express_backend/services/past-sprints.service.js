@@ -3,10 +3,10 @@ var pastSprintModel = require('../models/past-sprint.model')
 _this = this
 
 
-exports.getPastSprints = async function (query, page, limit) {
+exports.getPastSprints = async function (query) {
   var options = {
-    page,
-    limit
+    page: 1,
+    limit: 10000
   }
   try {
     var pastSprintsFound = await pastSprintModel.paginate(query, options);

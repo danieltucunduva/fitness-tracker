@@ -76,11 +76,9 @@ exports.getPastSprints = async function (req, res, next) {
   var userId = req.body.userId;
   console.log(userId);
 
-  var page = req.query.page ? req.query.page : 1
-  var limit = req.query.limit ? req.query.limit : 10;
-
   try {
-    var pastSprints = await pastSprintService.getPastSprints({user: userId}, page, limit)
+    var pastSprints = await pastSprintService.getPastSprints({user: userId});
+    console.log(pastSprints);
     return res.status(200).json({
       status: 200,
       data: pastSprints,

@@ -38,6 +38,18 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.dataSource.sortingDataAccessor = (item, property) => {
+      switch (property) {
+        case 'startedDate': return new Date(item.startedAt);
+        default: return item[property];
+      }
+    };
+    this.dataSource.filterPredicate = (data: ISprint, filter: string) => (
+      this.getSprintFullName(data).trim().toLowerCase().includes(filter) ||
+      this.getStatus(data).trim().toLowerCase().includes(filter) ||
+      data.description.trim().toLowerCase().includes(filter) ||
+      data.startedAt.toString().trim().toLowerCase().includes(filter)
+    );
   }
 
   getSprintFullName(sprint: ISprint): string {

@@ -13,7 +13,7 @@ export class AuthenticationService {
     authenticationChange = new Subject<boolean>();
     usernameAvailableChange = new Subject<boolean>();
     invalidLoginChange = new Subject<boolean>();
-    private user: User = null;
+    // private user: User = null;
 
     constructor(
         private http: Http,
@@ -21,13 +21,13 @@ export class AuthenticationService {
 
 
     registerUser(authenticationData: AuthenticationData): void {
-        this.user = {
+        const newUser: User = {
             _id: null,
             username: authenticationData.username,
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:3000/api/users', this.user)
+            .post('http://localhost:3000/api/users', newUser)
             .pipe(map(response => response.json()))
             .subscribe((signupResponse) => {
                 if (signupResponse.status === 201) {
@@ -35,8 +35,6 @@ export class AuthenticationService {
                         username: signupResponse.data.username,
                         password: signupResponse.data.password
                     });
-                } else {
-                    this.user = null;
                 }
             }, error => {
                 if (error.status === 409) {
@@ -47,18 +45,18 @@ export class AuthenticationService {
 
 
     login(authenticationData: AuthenticationData): void {
-        this.user = {
+        const user: User = {
             _id: null,
             username: authenticationData.username,
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:3000/api/users/login', this.user)
+            .post('http://localhost:3000/api/users/login', user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 if (response.status === 200) {
                     this.invalidLoginChange.next(false);
-                    this.user = response.data;
+                    localStorage.setItem('currentUser', JSON.stringify(response.data));
                     this.authenticationChange.next(true);
                     this.router.navigate(['sprint']);
                 } else {
@@ -66,36 +64,59 @@ export class AuthenticationService {
             },
                 error => {
                     this.invalidLoginChange.next(true);
-                    this.user = null;
+                    localStorage.removeItem('currentUser');
                     this.authenticationChange.next(false);
                 });
     }
 
     logout(): boolean {
-        this.user = null;
+        localStorage.removeItem('currentUser');
         this.authenticationChange.next(false);
         this.router.navigate(['login']);
-        return this.user === null;
+        return localStorage.getItem('currentUser') === '';
     }
 
     getUserId(): string {
-        return { ...this.user }._id;
+        const user = JSON.parse(localStorage.getItem('currentUser')) as User;
+        return user._id;
     }
 
     getUserName(): string {
-        return { ...this.user }.username;
+        const user = JSON.parse(localStorage.getItem('currentUser')) as User;
+        return user.username;
     }
+
 
     isAuthenticated(): boolean {
-        return this.user != null;
+        if (localStorage.getItem('currentUser')) {
+            // logged in so return true
+            this.authenticationChange.next(true);
+            return true;
+        } else {
+            // not logged return false
+            return false;
+        }
     }
 
+    // getUserId(): string {
+    //     return { ...this.user }._id;
+    // }
+
+    // getUserName(): string {
+    //     return { ...this.user }.username;
+    // }
+
+    // isAuthenticated(): boolean {
+    //     return this.user != null;
+    // }
+
     deleteLoggedUser(): void {
-        if (this.user === null || this.user._id === null) {
+        const user = JSON.parse(localStorage.getItem('currentUser')) as User;
+        if (user === null || user._id === null) {
             return;
         } else {
             this.http
-                .delete(`http://localhost:3000/api/users/${this.user._id}`)
+                .delete(`http://localhost:3000/api/users/${user._id}`)
                 .pipe(map(response => response.json()))
                 .subscribe(response => {
                     if (response.status === 200) {

@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from
 import { AuthenticationService } from './authentication.service';
 
 @Injectable()
-export class AuthenticationGuard implements CanActivate {
+export class AuthenticationGuardGuest implements CanActivate {
 
     constructor(private authenticationService: AuthenticationService, private router: Router) { }
 
@@ -11,9 +11,24 @@ export class AuthenticationGuard implements CanActivate {
         if (this.authenticationService.isAuthenticated()) {
             return true;
         } else {
-            // return true here to shortcircuit route guard
             this.router.navigate(['login']);
             return false;
+        }
+    }
+
+}
+
+@Injectable()
+export class AuthenticationGuardLoggedIn implements CanActivate {
+
+    constructor(private authenticationService: AuthenticationService, private router: Router) { }
+
+    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+        if (this.authenticationService.isAuthenticated()) {
+            this.router.navigate(['sprint']);
+            return false;
+        } else {
+            return true;
         }
     }
 
