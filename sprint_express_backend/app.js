@@ -15,9 +15,13 @@ var app = express();
 var mongoose = require('mongoose')
 mongoose.Promise = bluebird
 const db_URL = 'mongodb://localhost:27017/db_sprint';
-mongoose.connect(db_URL, { useMongoClient: true })
+
+var db_uri = 'mongodb://sprint-admin:12admin@ds153380.mlab.com:53380/db_sprint'
+
+
+mongoose.connect(db_uri, { useMongoClient: true })
   .then(() => { console.log(`Succesfully Connected to the Mongodb Database  at URL : ${db_URL}`) })
-  .catch(() => { console.log(`Error Connecting to the Mongodb Database at URL : ${db_URL}`) })
+  .catch(() => { console.log(`Error Connecting to the Mongodb Database at URL : ${db_uri}`) })
 
 
 app.use(function (req, res, next) {
