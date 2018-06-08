@@ -1,9 +1,3 @@
-/*
-mongod --config="C:\MongoDB\mongo.config"
-mongo --port 27017 --host localhost
-cd server_express ; npm start
-*/
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
