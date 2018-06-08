@@ -4,9 +4,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Useful commands (Windows PowerShell)
 
-`mongod --config="C:\MongoDB\mongo.config"`
-`mongo --port 27017 --host localhost`
-`cd sprint_express_backend ; npm start`
+` mongod --config="C:\MongoDB\mongo.config" `
+` mongo --port 27017 --host localhost `
+` cd sprint_express_backend ; npm start `
 
 ## Development server
 

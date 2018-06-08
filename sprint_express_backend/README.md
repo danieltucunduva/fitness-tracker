@@ -1,10 +1,9 @@
 # Sprint-express-server
-A simple API made with NodeJS, ExpressJS and MongoDB. Can be used as a back-end for the Angular Sprint app.
 
-## Project Setup
+A minimal API made with NodeJS, ExpressJS and MongoDB. Back-end for the Angular Sprint app.
 
-Run `npm install` to install all the dependencies.
+## Useful commands
 
-Run `npm install -g nodemon` to install Nodemon globally.
-
-Run `npm start` to run the NodeJS Server.
+` npm install `
+` npm install -g nodemon`
+` npm start `
