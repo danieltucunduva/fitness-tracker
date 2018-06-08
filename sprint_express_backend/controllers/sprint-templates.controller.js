@@ -66,7 +66,7 @@ exports.getOneSprintTemplate = async function (req, res, next) {
 
 //   if (!req.body._id) {
 //     return res.status(400).json({
-//       status: 400.,
+//       status: 400,
 //       message: "Id must be present"
 //     })
 //   }
@@ -91,7 +91,7 @@ exports.getOneSprintTemplate = async function (req, res, next) {
 //     })
 //   } catch (e) {
 //     return res.status(400).json({
-//       status: 400.,
+//       status: 400,
 //       message: e.message
 //     })
 //   }

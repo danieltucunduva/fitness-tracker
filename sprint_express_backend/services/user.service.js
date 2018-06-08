@@ -17,6 +17,20 @@ exports.getUsers = async function (query, page, limit) {
   }
 }
 
+exports.usernameAvailable = async function (username) {
+  try {
+    var existingUser = await userModel.findOne({username: username})
+    if (existingUser) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  } catch (e) {
+    throw Error('User service: error at usernameAvailable')
+  }
+}
+
 exports.createUser = async function (user) {
 
   var newUser = new userModel({

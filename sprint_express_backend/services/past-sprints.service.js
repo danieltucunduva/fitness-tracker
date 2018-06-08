@@ -19,10 +19,6 @@ exports.getPastSprints = async function (query, page, limit) {
 
 exports.createPastSprint = async function (pastSprint) {
 
-  console.log('---///---');
-  console.log(pastSprint);
-  console.log('---///---');
-
   var newPastSprint = new pastSprintModel({
     name: pastSprint.name,
     duration: pastSprint.duration,
@@ -35,14 +31,8 @@ exports.createPastSprint = async function (pastSprint) {
     startedAt: pastSprint.startedAt,
     finishedAt: pastSprint.finishedAt
   });
-
-
-  console.log('---///---');
-  console.log(newPastSprint);
-  console.log('---///---');
-
   try {
-    var savedPastSprint = await newPastSprint.save()
+    var savedPastSprint = await newPastSprint.save();
     return savedPastSprint;
   } catch (e) {
     throw Error("Create past sprint: service error")

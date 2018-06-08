@@ -26,13 +26,28 @@ exports.getUsers = async function (req, res, next) {
 }
 
 exports.createUser = async function (req, res, next) {
-  var user = {
+
+  if (!req.body.username || !req.body.password) {
+    return res.status(400).json({
+      status: 400,
+      message: "Create user: error"
+    });
+  }
+
+  var newUser = {
     username: req.body.username,
     password: req.body.password
   }
 
   try {
-    var createdUser = await userService.createUser(user)
+    var usernameAvailable = await userService.usernameAvailable(newUser.username);
+    if (!usernameAvailable) {
+      return res.status(409).json({
+        status: 409,
+        message: "Username already exists"
+      })
+    }
+    var createdUser = await userService.createUser(newUser);
     return res.status(201).json({
       status: 201,
       data: createdUser,
@@ -41,7 +56,7 @@ exports.createUser = async function (req, res, next) {
   } catch (e) {
     return res.status(400).json({
       status: 400,
-      message: "Create user: failure"
+      message: "Create user: error"
     })
   }
 }
@@ -81,7 +96,7 @@ exports.updateUser = async function (req, res, next) {
 
   if (!req.body._id) {
     return res.status(400).json({
-      status: 400.,
+      status: 400,
       message: "Id must be present"
     })
   }
@@ -106,7 +121,7 @@ exports.updateUser = async function (req, res, next) {
     })
   } catch (e) {
     return res.status(400).json({
-      status: 400.,
+      status: 400,
       message: e.message
     })
   }

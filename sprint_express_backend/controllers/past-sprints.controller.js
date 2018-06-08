@@ -1,5 +1,17 @@
 var pastSprintService = require('../services/past-sprints.service')
 
+const notifier = require('node-notifier');
+
+const notificationOptions = {
+  title: '≡Sprint',
+  message: 'Your sprint is finished.',
+  wait: true,
+  icon: __dirname + '\\notif_icon\\logo_square.png',
+  sound: true,
+  timeout: 120,
+  closeLabel: 'Ok'
+};
+
 _this = this
 
 
@@ -29,6 +41,23 @@ exports.createPastSprint = async function (req, res, next) {
 
   try {
     var createdPastSprint = await pastSprintService.createPastSprint(req.body);
+    if (createdPastSprint.status === 'completed' && createdPastSprint.notify === true) {
+      console.log(__dirname + '/notif_icon/logo_square.png');
+      notifier.notify(notificationOptions,
+        function (err, data) {
+          // Will also wait until notification is closed.
+          // console.log('Waited');
+          // console.log(err, data);
+        }
+      );
+      notifier.on('timeout', function () {
+        // console.log('Notification timed out!');
+      });
+      notifier.on('click', function () {
+        // console.log('Notification clicked!');
+      });
+    }
+
     return res.status(201).json({
       status: 201,
       data: createdPastSprint,
@@ -69,7 +98,7 @@ exports.getPastSprints = async function (req, res, next) {
 
 //   if (!req.body._id) {
 //     return res.status(400).json({
-//       status: 400.,
+//       status: 400,
 //       message: "Id must be present"
 //     })
 //   }
@@ -94,7 +123,7 @@ exports.getPastSprints = async function (req, res, next) {
 //     })
 //   } catch (e) {
 //     return res.status(400).json({
-//       status: 400.,
+//       status: 400,
 //       message: e.message
 //     })
 //   }

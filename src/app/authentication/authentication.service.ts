@@ -38,6 +38,10 @@ export class AuthenticationService {
                 } else {
                     this.user = null;
                 }
+            }, error => {
+                if (error.status === 409) {
+                    this.usernameAvailableChange.next(false);
+                }
             });
     }
 

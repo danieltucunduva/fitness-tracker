@@ -10,12 +10,12 @@
     <app-new-sprint></app-new-sprint>
     <app-logged-user-name></app-logged-user-name>
   </mat-tab>
-  <mat-tab label="Templates">
+  <!-- <mat-tab label="Templates">
     <app-sprint-template></app-sprint-template>
     <div style="width: 100%; text-align: center;">
       <button class="import-sprint-template" type="submit" mat-raised-button color="primary" (click)="onClickImportSprintTemplate()">Import existing template...</button>
     </div>
     <app-logged-user-name></app-logged-user-name>
-  </mat-tab>
+  </mat-tab> -->
 </mat-tab-group>
 <app-current-sprint (sprintStop)="sprintStop()" *ngIf="ongoingSprint"></app-current-sprint>

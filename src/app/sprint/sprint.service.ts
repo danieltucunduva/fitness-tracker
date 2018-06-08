@@ -88,7 +88,6 @@ export class SprintService {
      * Retrieves past sprints of logged user
      */
     getPastSprints(): Observable<any> {
-        console.log(this.authenticationService.getUserId());
         return this.http.post('http://localhost:3000/api/past-sprints/', { userId: this.authenticationService.getUserId() });
     }
 
