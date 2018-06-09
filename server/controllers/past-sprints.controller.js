@@ -6,7 +6,7 @@ const notificationOptions = {
   title: '≡Sprint',
   message: 'Your sprint is finished.',
   wait: true,
-  icon: __dirname + '\\notif_icon\\logo_square.png',
+  icon: __dirname + '\\notif_icon\\logo_square_white.jpg',
   sound: true,
   timeout: 120,
   closeLabel: 'Ok'
@@ -42,7 +42,6 @@ exports.createPastSprint = async function (req, res, next) {
   try {
     var createdPastSprint = await pastSprintService.createPastSprint(req.body);
     if (createdPastSprint.status === 'completed' && createdPastSprint.notify === true) {
-      console.log(__dirname + '/notif_icon/logo_square.png');
       notifier.notify(notificationOptions,
         function (err, data) {
           // Will also wait until notification is closed.

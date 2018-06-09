@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node server.js",
+    "start": "node ./server/bin/www.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -16,12 +16,12 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "^6.0.8",
-    "@angular/compiler-cli": "^6.0.4",
     "@angular/animations": "^6.0.4",
     "@angular/cdk": "^6.2.1",
+    "@angular/cli": "^6.0.8",
     "@angular/common": "^6.0.4",
     "@angular/compiler": "^6.0.4",
+    "@angular/compiler-cli": "^6.0.4",
     "@angular/core": "^6.0.4",
     "@angular/flex-layout": "^6.0.0-beta.16",
     "@angular/forms": "^6.0.4",
@@ -40,7 +40,6 @@
     "mongodb": "^3.1.0-beta4",
     "node-notifier": "^5.2.1",
     "path": "^0.12.7",
-    "restify-cors-middleware": "^1.1.1",
     "rxjs": "^6.2.0",
     "rxjs-compat": "^6.2.0",
     "zone.js": "^0.8.26"
