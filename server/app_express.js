@@ -5,7 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var api = require('./server/routes/api.route')
+var api = require('./routes/api.route')
 
 var bluebird = require('bluebird')
 
