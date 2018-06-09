@@ -19,7 +19,6 @@ export class AuthenticationService {
         private http: Http,
         private router: Router) { }
 
-
     registerUser(authenticationData: AuthenticationData): void {
         const newUser: User = {
             _id: null,
@@ -42,7 +41,6 @@ export class AuthenticationService {
                 }
             });
     }
-
 
     login(authenticationData: AuthenticationData): void {
         const user: User = {
@@ -69,10 +67,10 @@ export class AuthenticationService {
                 });
     }
 
-    logout(): boolean {
+    logout(redirectTo: string = 'login'): boolean {
         localStorage.removeItem('currentUser');
         this.authenticationChange.next(false);
-        this.router.navigate(['login']);
+        this.router.navigate([redirectTo]);
         return localStorage.getItem('currentUser') === '';
     }
 
@@ -86,7 +84,6 @@ export class AuthenticationService {
         return user.username;
     }
 
-
     isAuthenticated(): boolean {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
@@ -98,32 +95,17 @@ export class AuthenticationService {
         }
     }
 
-    // getUserId(): string {
-    //     return { ...this.user }._id;
-    // }
-
-    // getUserName(): string {
-    //     return { ...this.user }.username;
-    // }
-
-    // isAuthenticated(): boolean {
-    //     return this.user != null;
-    // }
-
     deleteLoggedUser(): void {
         const user = JSON.parse(localStorage.getItem('currentUser')) as User;
         if (user === null || user._id === null) {
+            this.logout();
             return;
         } else {
             this.http
                 .delete(`http://localhost:3000/api/users/${user._id}`)
                 .pipe(map(response => response.json()))
                 .subscribe(response => {
-                    if (response.status === 200) {
-                        this.authenticationChange.next(false);
-                        this.router.navigate(['signup']);
-                    } else {
-                    }
+                    this.logout('signup');
                 }, error => {
                     console.log('Delete user: error');
                 });
