@@ -4,30 +4,28 @@
  * creates ExpressJS backend API server on port 3000
  */
 
-const app_express = require('./server/app_express');
-const debug = require('debug')('sprint-ng:server');
-const http = require('http');
-const api_port = 3000;
+const appExpress = require('./server/app_express')
+const http = require('http')
+const apiPort = 3000
 
-app_express.set('port', api_port);
+appExpress.set('port', apiPort)
 
-const server = http.createServer(app_express);
+const server = http.createServer(appExpress)
 
-server.listen(api_port);
-
+server.listen(apiPort)
 
 /**
  * creates ExpressJS frontend Angular server on environment port, or 8080 (Heroku default)
  */
 
-const express = require('express');
-const path = require('path');
-const app_ng = express();
+const express = require('express')
+const path = require('path')
+const appNg = express()
 
-app_ng.use(express.static(__dirname + '/dist/sprint'));
+appNg.use(express.static(path.join(__dirname, '/dist/sprint')))
 
-app_ng.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname + '/dist/sprint/index.html'));
-});
+appNg.get('/*', function (req, res) {
+  res.sendFile(path.join(path.join(__dirname, '/dist/sprint/index.html')))
+})
 
-app_ng.listen(process.env.PORT || 8080);
+appNg.listen(process.env.PORT || 8080)
