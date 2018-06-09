@@ -7,13 +7,14 @@ import { AuthenticationData } from './authentication-data.model';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
     authenticationChange = new Subject<boolean>();
     usernameAvailableChange = new Subject<boolean>();
     invalidLoginChange = new Subject<boolean>();
-    // private user: User = null;
+    baseApiUrl = environment.baseApiUrl;
 
     constructor(
         private http: Http,
@@ -26,7 +27,7 @@ export class AuthenticationService {
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:8080/api/users', newUser)
+            .post(this.baseApiUrl + 'users', newUser)
             .pipe(map(response => response.json()))
             .subscribe((signupResponse) => {
                 if (signupResponse.status === 201) {
@@ -49,7 +50,7 @@ export class AuthenticationService {
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:8080/api/users/login', user)
+            .post(this.baseApiUrl + 'users/login', user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 if (response.status === 200) {
@@ -102,7 +103,7 @@ export class AuthenticationService {
             return;
         } else {
             this.http
-                .delete(`http://localhost:8080/api/users/${user._id}`)
+                .delete(this.baseApiUrl + `users/${user._id}`)
                 .pipe(map(response => response.json()))
                 .subscribe(response => {
                     this.logout('signup');

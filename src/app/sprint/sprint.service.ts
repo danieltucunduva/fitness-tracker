@@ -10,6 +10,8 @@ import { ISprint } from './sprint.model';
 import { User } from '../authentication/user.model';
 import { AuthenticationService } from '../authentication/authentication.service';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -18,6 +20,7 @@ export class SprintService {
     pastSprintsChanged = new Subject<boolean>();
     availableSprintsChanged = new Subject<boolean>();
     private sprints: ISprint[] = [];
+    baseApiUrl = environment.baseApiUrl;
 
     private runningSprint: ISprint;
     private pastSprints: ISprint[] = [];
@@ -29,7 +32,7 @@ export class SprintService {
 
     startSprint(selectedId: string, notify: boolean, description: string) {
         this.http
-            .get(`http://localhost:8080/api/sprint-templates/${selectedId}`)
+            .get(this.baseApiUrl + `sprint-templates/${selectedId}`)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
                 const sprintSelected = response.data;
@@ -69,7 +72,7 @@ export class SprintService {
         this.runningSprint.user = this.authenticationService.getUserId();
         this.runningSprint.progress = progress;
         this.http
-            .post('http://localhost:8080/api/past-sprints/new', this.runningSprint)
+            .post(this.baseApiUrl + 'past-sprints/new', this.runningSprint)
             .subscribe((response) => {
                 if (response.ok) {
                     this.runningSprint = null;
@@ -81,18 +84,18 @@ export class SprintService {
     }
 
     getAvailableSprints(): Observable<any> {
-        return this.http.get('http://localhost:8080/api/sprint-templates/', this.authenticationService.getUserId());
+        return this.http.get(this.baseApiUrl + 'sprint-templates/', this.authenticationService.getUserId());
     }
 
     /**
      * Retrieves past sprints of logged user
      */
     getPastSprints(): Observable<any> {
-        return this.http.post('http://localhost:8080/api/past-sprints/', { userId: this.authenticationService.getUserId() });
+        return this.http.post(this.baseApiUrl + 'past-sprints/', { userId: this.authenticationService.getUserId() });
     }
 
     getDefaultSprint(): Observable<any> {
-        return this.http.get('http://localhost:8080/api/sprints/default-sprint');
+        return this.http.get(this.baseApiUrl + 'sprints/default-sprint');
     }
 
     createSharedSprintTemplate(userId: string, name: string, duration: number): void {
@@ -104,7 +107,7 @@ export class SprintService {
             status: 'custom',
             duration: duration,
         };
-        this.http.post('http://localhost:8080/api/sprints/create-template', newSprint)
+        this.http.post(this.baseApiUrl + 'sprints/create-template', newSprint)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
                 this.availableSprintsChanged.next(true);
