@@ -29,7 +29,7 @@ export class SprintService {
 
     startSprint(selectedId: string, notify: boolean, description: string) {
         this.http
-            .get(`http://localhost:3000/api/sprint-templates/${selectedId}`)
+            .get(`http://localhost:8080/api/sprint-templates/${selectedId}`)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
                 const sprintSelected = response.data;
@@ -69,7 +69,7 @@ export class SprintService {
         this.runningSprint.user = this.authenticationService.getUserId();
         this.runningSprint.progress = progress;
         this.http
-            .post('http://localhost:3000/api/past-sprints/new', this.runningSprint)
+            .post('http://localhost:8080/api/past-sprints/new', this.runningSprint)
             .subscribe((response) => {
                 if (response.ok) {
                     this.runningSprint = null;
@@ -81,18 +81,18 @@ export class SprintService {
     }
 
     getAvailableSprints(): Observable<any> {
-        return this.http.get('http://localhost:3000/api/sprint-templates/', this.authenticationService.getUserId());
+        return this.http.get('http://localhost:8080/api/sprint-templates/', this.authenticationService.getUserId());
     }
 
     /**
      * Retrieves past sprints of logged user
      */
     getPastSprints(): Observable<any> {
-        return this.http.post('http://localhost:3000/api/past-sprints/', { userId: this.authenticationService.getUserId() });
+        return this.http.post('http://localhost:8080/api/past-sprints/', { userId: this.authenticationService.getUserId() });
     }
 
     getDefaultSprint(): Observable<any> {
-        return this.http.get('http://localhost:3000/api/sprints/default-sprint');
+        return this.http.get('http://localhost:8080/api/sprints/default-sprint');
     }
 
     createSharedSprintTemplate(userId: string, name: string, duration: number): void {
@@ -104,7 +104,7 @@ export class SprintService {
             status: 'custom',
             duration: duration,
         };
-        this.http.post('http://localhost:3000/api/sprints/create-template', newSprint)
+        this.http.post('http://localhost:8080/api/sprints/create-template', newSprint)
             .pipe(map((response) => response.json()))
             .subscribe((response) => {
                 this.availableSprintsChanged.next(true);

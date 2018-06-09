@@ -26,7 +26,7 @@ export class AuthenticationService {
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:3000/api/users', newUser)
+            .post('http://localhost:8080/api/users', newUser)
             .pipe(map(response => response.json()))
             .subscribe((signupResponse) => {
                 if (signupResponse.status === 201) {
@@ -49,7 +49,7 @@ export class AuthenticationService {
             password: authenticationData.password
         };
         this.http
-            .post('http://localhost:3000/api/users/login', user)
+            .post('http://localhost:8080/api/users/login', user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 if (response.status === 200) {
@@ -102,7 +102,7 @@ export class AuthenticationService {
             return;
         } else {
             this.http
-                .delete(`http://localhost:3000/api/users/${user._id}`)
+                .delete(`http://localhost:8080/api/users/${user._id}`)
                 .pipe(map(response => response.json()))
                 .subscribe(response => {
                     this.logout('signup');
