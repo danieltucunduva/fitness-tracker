@@ -6,7 +6,7 @@
 
 const appExpress = require('./server/app_express')
 const http = require('http')
-const apiPort = 8080
+const apiPort = process.env.PORT || 8080
 
 appExpress.set('port', apiPort)
 
