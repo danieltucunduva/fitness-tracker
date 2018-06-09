@@ -4,9 +4,6 @@
  * Module dependencies.
  */
 
-const express = require('express');
-const path = require('path');
-
 var app = require('../app');
 var debug = require('debug')('todoapp:server');
 var http = require('http');
@@ -93,6 +90,9 @@ function onListening() {
 }
 
 
+
+const express = require('express');
+const path = require('path');
 
 const app_ng = express();
 // Serve only the static files form the dist directory
