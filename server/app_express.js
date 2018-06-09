@@ -16,8 +16,8 @@ var mongoose = require('mongoose')
 mongoose.Promise = bluebird
 const db_URL = 'mongodb://localhost:27017/db_sprint';
 
-var db_uri = 'mongodb://sprint-admin:12admin@ds153380.mlab.com:53380/db_sprint'
-
+var db_uri = process.env.MONGODB_URI
+console.log('(Environment variable) Database URI: ' + db_uri);
 
 mongoose.connect(db_uri, { useMongoClient: true })
   .then(() => { console.log(`Succesfully Connected to the Mongodb Database  at URL : ${db_URL}`) })
