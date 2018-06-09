@@ -14,14 +14,24 @@ var app = express()
 var mongoose = require('mongoose')
 mongoose.Promise = bluebird
 
-// const DB_URI = 'mongodb://sprint-admin:12admin@ds153380.mlab.com:53380/db_sprint'
+var DB_URI_LOCAL
+try {
+  const environmentVariables = require('./.environment_variables')
+  DB_URI_LOCAL = environmentVariables.DB_URI
+} catch (ex) {
+  console.log('Environment variables local file not found')
+}
 
 const ENV_DB_URI = process.env.MONGODB_URI
 
-const DB_URI = ENV_DB_URI || 'mongodb://heroku_ffrx76p6:7851i9mg0o6l66uv8kc7at5v1i@ds153890.mlab.com:53890/heroku_ffrx76p6'
+if (!ENV_DB_URI && !DB_URI_LOCAL) {
+  throw new Error('Database URI is missing, local and environment options are both undefined')
+}
+
+const DB_URI = ENV_DB_URI || DB_URI_LOCAL
 
 console.log('ENV_DB_URI: ' + ENV_DB_URI)
-console.log('DB_URI: ' + DB_URI)
+console.log('DB_URI:     ' + DB_URI)
 
 mongoose.connect(DB_URI, { useMongoClient: true })
   .then(() => { console.log(`Succesfully Connected to the Mongodb Database at URI: ${DB_URI}`) })
