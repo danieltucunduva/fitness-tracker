@@ -111,10 +111,14 @@ export class AuthenticationService {
     localStorage.setItem("authenticated", "true");
   }
 
-  logout(redirectTo: string = "login"): boolean {
+  logout(): boolean {
     localStorage.clear();
     this.authenticationChange.next(false);
-    this.router.navigate([""]);
+    this.auth0.logout({
+      returnTo: "http://localhost:4200",
+      clientID: "dKajDy1efqYyWs9xMEctdhvn0bwDsVHY"
+    });
+
     return localStorage.getItem("currentUser") === "";
   }
 
@@ -153,7 +157,7 @@ export class AuthenticationService {
         .pipe(map(response => response.json()))
         .subscribe(
           response => {
-            this.logout("");
+            this.logout();
           },
           error => {
             console.log("Delete user: error");
