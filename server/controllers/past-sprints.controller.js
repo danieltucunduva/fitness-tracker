@@ -41,6 +41,9 @@ exports.createPastSprint = async function (req, res, next) {
 
   try {
     var createdPastSprint = await pastSprintService.createPastSprint(req.body);
+    console.log('!!!!!!!!!!!!!');
+    console.log(createdPastSprint);
+    console.log('!!!!!!!!!!!!!');
     if (createdPastSprint.status === 'completed' && createdPastSprint.notify === true) {
       notifier.notify(notificationOptions,
         function (err, data) {
@@ -76,7 +79,9 @@ exports.getPastSprints = async function (req, res, next) {
   console.log(userId);
 
   try {
-    var pastSprints = await pastSprintService.getPastSprints({user: userId});
+    var pastSprints = await pastSprintService.getPastSprints({
+      user: userId
+    });
     console.log(pastSprints);
     return res.status(200).json({
       status: 200,
