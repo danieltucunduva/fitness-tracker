@@ -37,6 +37,37 @@ _this = this
 //   }
 // }
 
+/**
+   * @swagger
+   * /api/past-sprints/new:
+   *   post:
+   *     tags:
+   *      - past-sprints
+   *     parameters:
+   *       - name: PastSprint
+   *         description: Past Sprint
+   *         in: body
+   *         required: true
+   *         schema:
+   *           $ref: '#/definitions/PastSprint'
+   *     description: Create a new PastSprint
+   *     produces:
+   *      - application/json
+   *     responses:
+   *       201:
+   *         description: created
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: number
+   *             data:
+   *               $ref: '#/definitions/PastSprint'
+   *             message:
+   *               type: string  
+   *       400:
+   *         description: bad request
+   */
 exports.createPastSprint = async function (req, res, next) {
 
   try {
@@ -74,6 +105,53 @@ exports.createPastSprint = async function (req, res, next) {
 }
 
 
+/**
+   * @swagger
+   * /api/past-sprints:
+   *   post:
+   *     tags:
+   *      - past-sprints
+   *     parameters:
+   *       - name: userId
+   *         description: Sprint id
+   *         in: body
+   *         required: true
+   *         schema:
+   *           type: object
+   *           properties:
+   *             userId:
+   *               type: string
+   *     description: Get list of PastSprint
+   *     produces:
+   *      - application/json
+   *     responses:
+   *       200:
+   *         description: ok
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: number
+   *             data:
+   *               type: object
+   *               properties:
+   *                 docs:
+   *                   type: array
+   *                   items:
+   *                     $ref: '#/definitions/PastSprint'
+   *                 total:
+   *                   type: number 
+   *                 limit:
+   *                   type: number
+   *                 page:
+   *                   type: number
+   *                 pages:
+   *                   type: number
+   *             message:
+   *               type: string  
+   *       400:
+   *         description: bad Request
+   */
 exports.getPastSprints = async function (req, res, next) {
   var userId = req.body.userId;
   console.log(userId);

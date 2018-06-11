@@ -25,6 +25,39 @@ exports.getUsers = async function (req, res, next) {
   }
 }
 
+/**
+   * @swagger
+   * /api/users:
+   *   post:
+   *     tags:
+   *      - users
+   *     parameters:
+   *       - name: user
+   *         description: User
+   *         in: body
+   *         required: true
+   *         schema:
+   *           $ref: '#/definitions/User'
+   *     description: Create a new user
+   *     produces:
+   *      - application/json
+   *     responses:
+   *       201:
+   *         description: created
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: number
+   *             data:
+   *               $ref: '#/definitions/User'
+   *             message:
+   *               type: string  
+   *       400:
+   *         description: bad request
+   *       409:
+   *         description: conflict
+   */
 exports.createUser = async function (req, res, next) {
 
   if (!req.body.username || !req.body.password) {
@@ -61,6 +94,39 @@ exports.createUser = async function (req, res, next) {
   }
 }
 
+/**
+   * @swagger
+   * /api/users/login:
+   *   post:
+   *     tags:
+   *      - users
+   *     parameters:
+   *       - name: user
+   *         description: User
+   *         in: body
+   *         required: true
+   *         schema:
+   *           $ref: '#/definitions/User'
+   *     description: Log in a user
+   *     produces:
+   *      - application/json
+   *     responses:
+   *       200:
+   *         description: ok
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: number
+   *             data:
+   *               $ref: '#/definitions/User'
+   *             message:
+   *               type: string  
+   *       400:
+   *         description: bad request
+   *       406:
+   *         description: not acceptable
+   */
 exports.loginUser = async function (req, res, next) {
 
   console.log(req.body)
@@ -92,6 +158,36 @@ exports.loginUser = async function (req, res, next) {
   }
 }
 
+/**
+   * @swagger
+   * /api/users/{id}:
+   *   delete:
+   *     tags:
+   *      - users
+   *     parameters:
+   *       - name: id
+   *         description: User id
+   *         in: path
+   *         required: true
+   *         type: string
+   *     description: Delete user by id
+   *     produces:
+   *      - application/json
+   *     responses:
+   *       200:
+   *         description: ok
+   *         schema:
+   *           type: object
+   *           properties:
+   *             status:
+   *               type: number
+   *             data:
+   *               type: boolean
+   *             message:
+   *               type: string  
+   *       400:
+   *         description: bad request
+   */
 exports.updateUser = async function (req, res, next) {
 
   if (!req.body._id) {
