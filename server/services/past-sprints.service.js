@@ -1,7 +1,6 @@
-var pastSprintModel = require('../models/past-sprint.model')
+var PastSprintModel = require('../models/past-sprint.model')
 
-_this = this
-
+// const _this = this
 
 exports.getPastSprints = async function (query) {
   var options = {
@@ -9,17 +8,15 @@ exports.getPastSprints = async function (query) {
     limit: 10000
   }
   try {
-    var pastSprintsFound = await pastSprintModel.paginate(query, options);
-    console.log(pastSprintsFound);
-    return pastSprintsFound;
+    var pastSprintsFound = await PastSprintModel.paginate(query, options)
+    return pastSprintsFound
   } catch (e) {
     throw Error('Error while Paginating Todos')
   }
 }
 
 exports.createPastSprint = async function (pastSprint) {
-
-  var newPastSprint = new pastSprintModel({
+  var newPastSprint = new PastSprintModel({
     name: pastSprint.name,
     duration: pastSprint.duration,
     status: pastSprint.status,
@@ -30,12 +27,12 @@ exports.createPastSprint = async function (pastSprint) {
     createdAt: new Date(),
     startedAt: pastSprint.startedAt,
     finishedAt: pastSprint.finishedAt
-  });
+  })
   try {
-    var savedPastSprint = await newPastSprint.save();
-    return savedPastSprint;
+    var savedPastSprint = await newPastSprint.save()
+    return savedPastSprint
   } catch (e) {
-    throw Error("Create past sprint: service error")
+    throw Error('Create past sprint: service error')
   }
 }
 
@@ -43,13 +40,13 @@ exports.updateSprint = async function (todo) {
   var id = todo.id
 
   try {
-    var oldTodo = await pastSprintModel.findById(id);
+    var oldTodo = await PastSprintModel.findById(id)
   } catch (e) {
-    throw Error("Error occured while Finding the Todo")
+    throw Error('Error occured while Finding the Todo')
   }
 
   if (!oldTodo) {
-    return false;
+    return false
   }
 
   console.log(oldTodo)
@@ -58,28 +55,26 @@ exports.updateSprint = async function (todo) {
   oldTodo.description = todo.description
   oldTodo.status = todo.status
 
-
   console.log(oldTodo)
 
   try {
     var savedTodo = await oldTodo.save()
-    return savedTodo;
+    return savedTodo
   } catch (e) {
-    throw Error("And Error occured while updating the Todo");
+    throw Error('And Error occured while updating the Todo')
   }
 }
 
 exports.deleteTodo = async function (id) {
-
   try {
-    var deleted = await pastSprintModel.remove({
+    var deleted = await PastSprintModel.remove({
       _id: id
     })
     if (deleted.result.n === 0) {
-      throw Error("Todo Could not be deleted")
+      throw Error('Todo Could not be deleted')
     }
     return deleted
   } catch (e) {
-    throw Error("Error Occured while Deleting the Todo")
+    throw Error('Error Occured while Deleting the Todo')
   }
 }

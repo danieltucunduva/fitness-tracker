@@ -3,7 +3,6 @@ var pastSprintModel = require('../models/past-sprint.model')
 
 _this = this
 
-
 exports.getUsers = async function (query, page, limit) {
   var options = {
     page,
@@ -11,7 +10,7 @@ exports.getUsers = async function (query, page, limit) {
   }
   try {
     var users = await userModel.paginate(query, options)
-    return users;
+    return users
   } catch (e) {
     throw Error('Error while Paginating Todos')
   }
@@ -19,12 +18,13 @@ exports.getUsers = async function (query, page, limit) {
 
 exports.usernameAvailable = async function (username) {
   try {
-    var existingUser = await userModel.findOne({username: username})
+    var existingUser = await userModel.findOne({
+      username: username
+    })
     if (existingUser) {
-      return false;
-    }
-    else {
-      return true;
+      return false
+    } else {
+      return true
     }
   } catch (e) {
     throw Error('User service: error at usernameAvailable')
@@ -32,7 +32,6 @@ exports.usernameAvailable = async function (username) {
 }
 
 exports.createUser = async function (user) {
-
   var newUser = new userModel({
     username: user.username,
     password: user.password,
@@ -42,27 +41,26 @@ exports.createUser = async function (user) {
 
   try {
     var savedUser = await newUser.save()
-    console.log(savedUser);
-    return savedUser;
+    console.log(savedUser)
+    return savedUser
   } catch (e) {
-    throw Error("Error creating user")
+    throw Error('Error creating user')
   }
 }
 
 exports.loginUser = async function (user) {
   try {
-    var user = await userModel.findOne({
+    var loginUser = await userModel.findOne({
       username: user.username,
       password: user.password
-    });
+    })
+    if (loginUser) {
+      return user
+    } else {
+      return false
+    }
   } catch (e) {
-    throw Error("Login: user not found")
-  }
-
-  if (user) {
-    return user;
-  } else {
-    return false;
+    throw Error('Login: user not found')
   }
 }
 
@@ -70,13 +68,13 @@ exports.updateUser = async function (user) {
   var id = user.id
 
   try {
-    var oldTodo = await userModel.findById(id);
+    var oldTodo = await userModel.findById(id)
   } catch (e) {
-    throw Error("Error occured while Finding the Todo")
+    throw Error('Error occured while Finding the Todo')
   }
 
   if (!oldTodo) {
-    return false;
+    return false
   }
 
   console.log(oldTodo)
@@ -85,32 +83,33 @@ exports.updateUser = async function (user) {
   oldTodo.description = user.description
   oldTodo.status = user.status
 
-
   console.log(oldTodo)
 
   try {
     var savedTodo = await oldTodo.save()
-    return savedTodo;
+    return savedTodo
   } catch (e) {
-    throw Error("And Error occured while updating the Todo");
+    throw Error('And Error occured while updating the Todo')
   }
 }
 
 exports.deleteUser = async function (id) {
-  console.log(id);
+  console.log(id)
   try {
     var deleted = await userModel.deleteOne({
       _id: id
-    });
+    })
     if (deleted.result.n === 0) {
-      throw Error("Delete user: user could not be deleted")
+      throw Error('Delete user: user could not be deleted')
     } else {
-      var deleteAllPastSprints = await pastSprintModel.deleteMany({user: id}, err => {
-        console.log(err);
-      });
-      return deleted;
+      var deleteAllPastSprints = await pastSprintModel.deleteMany({
+        user: id
+      }, err => {
+        console.log(err)
+      })
+      return deleted
     }
   } catch (e) {
-    throw Error("Delete user: failure")
+    throw Error('Delete user: failure')
   }
 }

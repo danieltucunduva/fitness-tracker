@@ -1,26 +1,11 @@
 var pastSprintService = require('../services/past-sprints.service')
 
-const notifier = require('node-notifier');
-
-const notificationOptions = {
-  title: '≡Sprint',
-  message: 'Your sprint is finished.',
-  wait: true,
-  icon: __dirname + '\\notif_icon\\logo_square_white.jpg',
-  sound: true,
-  timeout: 120,
-  closeLabel: 'Ok'
-};
-
-_this = this
-
+// const _this = this
 
 // exports.getSprints = async function (req, res, next) {
 
 //   var page = req.query.page ? req.query.page : 1
 //   var limit = req.query.limit ? req.query.limit : 10;
-
-//   console.log(page, limit)
 
 //   try {
 //     var todos = await pastSprintService.getSprints({}, page, limit)
@@ -38,61 +23,38 @@ _this = this
 // }
 
 exports.createPastSprint = async function (req, res, next) {
-
   try {
-    var createdPastSprint = await pastSprintService.createPastSprint(req.body);
-    console.log('!!!!!!!!!!!!!');
-    console.log(createdPastSprint);
-    console.log('!!!!!!!!!!!!!');
-    if (createdPastSprint.status === 'completed' && createdPastSprint.notify === true) {
-      notifier.notify(notificationOptions,
-        function (err, data) {
-          // Will also wait until notification is closed.
-          // console.log('Waited');
-          // console.log(err, data);
-        }
-      );
-      notifier.on('timeout', function () {
-        // console.log('Notification timed out!');
-      });
-      notifier.on('click', function () {
-        // console.log('Notification clicked!');
-      });
-    }
-
+    var createdPastSprint = await pastSprintService.createPastSprint(req.body)
     return res.status(201).json({
       status: 201,
       data: createdPastSprint,
-      message: "Create past sprint: success"
+      message: 'Create past sprint: success'
     })
   } catch (e) {
     return res.status(400).json({
       status: 400,
-      message: "Create past sprint: failure"
+      message: 'Create past sprint: failure'
     })
   }
 }
 
-
 exports.getPastSprints = async function (req, res, next) {
-  var userId = req.body.userId;
-  console.log(userId);
+  var userId = req.body.userId
 
   try {
     var pastSprints = await pastSprintService.getPastSprints({
       user: userId
-    });
-    console.log(pastSprints);
+    })
     return res.status(200).json({
       status: 200,
       data: pastSprints,
-      message: "Past sprints: success retrieving"
-    });
+      message: 'Past sprints: success retrieving'
+    })
   } catch (e) {
     return res.status(400).json({
       status: 400,
       message: e.message
-    });
+    })
   }
 }
 
@@ -106,8 +68,6 @@ exports.getPastSprints = async function (req, res, next) {
 //   }
 
 //   var id = req.body._id;
-
-//   console.log(req.body)
 
 //   var todo = {
 //     id,

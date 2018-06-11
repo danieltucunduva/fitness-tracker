@@ -33,14 +33,15 @@ const DB_URI = ENV_DB_URI || DB_URI_LOCAL
 console.log('ENV_DB_URI: ' + ENV_DB_URI)
 console.log('DB_URI:     ' + DB_URI)
 
-mongoose.connect(DB_URI, {
+mongoose
+  .connect(DB_URI, {
     useMongoClient: true
   })
   .then(() => {
-    console.log(`Succesfully Connected to the Mongodb Database at URI: ${DB_URI}`)
+    console.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`)
   })
   .catch(() => {
-    console.log(`Error Connecting to the Mongodb Database at URI: ${DB_URI}`)
+    console.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`)
   })
 
 app.use(function (req, res, next) {

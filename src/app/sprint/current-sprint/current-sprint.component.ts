@@ -29,6 +29,16 @@ export class CurrentSprintComponent implements OnInit {
         if (this.progressSpinnerValue >= 100) {
           clearInterval(this.timer);
           this.sprintService.finishSprint(true, this.progressSpinnerValue);
+          if (this.sprintService.getRunningSprint().notify) {
+            const notification = new Notification('≡Sprint', {
+              body: 'Your sprint is finished.',
+              icon: './assets/logo.png',
+              dir: 'auto'
+            });
+            setTimeout(function () {
+              notification.close();
+            }, 10000);
+          }
           const dialogRef = this.dialog.open(SprintDialogComponent, {
             data: {
               type: 'sprint-finished',
