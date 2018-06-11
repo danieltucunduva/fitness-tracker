@@ -11,9 +11,10 @@
     </mat-card>
   </section>
   <footer fxLayoutAlign="center center" fxLayout="column">
-    Developed in Angular 6 by Daniel Correa Tucunduva
-    <br>
-    <br>
-    <strong>version 0.0.1</strong>
+    <app-version-tag> </app-version-tag>
+    <div>
+      <a href="mailto:daniel.tucunduva@gmail.com?subject=Sprint bug report" class="report-bug" type="submit" mat-button color="primary"
+        (click)="onClickReportBug() ">Report bug</a>
+    </div>
   </footer>
 </div>
