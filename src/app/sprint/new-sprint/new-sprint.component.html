@@ -17,9 +17,9 @@
           <mat-error *ngIf="newSprintForm.get('description').hasError('required')">Required</mat-error>
         </mat-form-field>
       </mat-card-content>
-      <!-- <mat-checkbox fxLayoutAlign="center" name="notify" color="primary" formControlName="notify">
+      <mat-checkbox fxLayoutAlign="center" name="notify" color="primary" formControlName="notify">
         Notify when completed
-      </mat-checkbox> -->
+      </mat-checkbox>
       <mat-card-actions fxLayoutAlign="center">
         <button type="submit" mat-raised-button color="primary" [disabled]="!newSprintForm.valid">Start</button>
       </mat-card-actions>

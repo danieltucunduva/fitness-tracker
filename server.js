@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * creates ExpressJS backend API server on port 3000
+ * creates ExpressJS backend API server
  */
 
 const appExpress = require('./server/app_express')
