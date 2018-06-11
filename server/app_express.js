@@ -33,9 +33,15 @@ const DB_URI = ENV_DB_URI || DB_URI_LOCAL
 console.log('ENV_DB_URI: ' + ENV_DB_URI)
 console.log('DB_URI:     ' + DB_URI)
 
-mongoose.connect(DB_URI, { useMongoClient: true })
-  .then(() => { console.log(`Succesfully Connected to the Mongodb Database at URI: ${DB_URI}`) })
-  .catch(() => { console.log(`Error Connecting to the Mongodb Database at URI: ${DB_URI}`) })
+mongoose.connect(DB_URI, {
+    useMongoClient: true
+  })
+  .then(() => {
+    console.log(`Succesfully Connected to the Mongodb Database at URI: ${DB_URI}`)
+  })
+  .catch(() => {
+    console.log(`Error Connecting to the Mongodb Database at URI: ${DB_URI}`)
+  })
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
@@ -52,7 +58,9 @@ app.set('view engine', 'ejs')
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({
+  extended: false
+}))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
