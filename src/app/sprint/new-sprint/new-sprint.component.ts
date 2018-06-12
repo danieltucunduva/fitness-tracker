@@ -11,11 +11,11 @@ import { AuthenticationService } from '../../authentication/authentication.servi
   styleUrls: ['./new-sprint.component.css']
 })
 export class NewSprintComponent implements OnInit {
-  notify = false;
-  disableNotificationCheckbox = false;
+  showNotificationCheckbox = false;
   newSprintForm = new FormGroup({
     selectedSprint: new FormControl('', { validators: [Validators.required] }),
-    notify: new FormControl({ value: this.notify, disabled: this.disableNotificationCheckbox }, {}),
+    notify: new FormControl('', {}),
+    notifyDisabled: new FormControl({ value: false, disabled: true }, {}),
     description: new FormControl('', { validators: [Validators.required] })
   });
   sprints: ISprint[] = [];
@@ -34,6 +34,13 @@ export class NewSprintComponent implements OnInit {
         this.getAvailableSprints();
       }
     });
+    if ('Notification' in window) {
+      Notification.requestPermission(permission => {
+        if (permission === 'granted') {
+          this.showNotificationCheckbox = true;
+        }
+      });
+    }
   }
 
 
@@ -63,31 +70,6 @@ export class NewSprintComponent implements OnInit {
 
   getSprintFullName(sprint: ISprint): string {
     return this.sprintService.getFullName(sprint);
-  }
-
-
-  showNotificationCheckbox(): boolean {
-    return 'Notification' in window;
-  }
-
-
-  onClickCheckboxNotifyWhenFinished(input: string) {
-    this.newSprintForm.get('notify').setValue(false);
-    if ('Notification' in window) {
-      Notification.requestPermission(permission => {
-        console.log(permission);
-        console.log(input);
-        if (permission === 'granted') {
-          if (input === 'on') {
-            this.notify = true;
-          }
-          this.disableNotificationCheckbox = false;
-        } else {
-          this.notify = false;
-          this.disableNotificationCheckbox = true;
-        }
-      });
-    }
   }
 
 

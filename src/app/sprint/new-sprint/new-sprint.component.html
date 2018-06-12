@@ -17,11 +17,12 @@
           <mat-error *ngIf="newSprintForm.get('description').hasError('required')">Required</mat-error>
         </mat-form-field>
       </mat-card-content>
-      <mat-checkbox *ngIf="showNotificationCheckbox()" fxLayoutAlign="center" name="notify" color="primary" formControlName="notify"
-        (input)="onClickCheckboxNotifyWhenFinished($event.target.value)">
+      <mat-checkbox *ngIf="!showNotificationCheckbox" fxLayoutAlign="center" color="primary" formControlName="notifyDisabled">
+        <mat-hint *ngIf="!showNotificationCheckbox" class="disabled-checkbox">Notifications disabled by browser</mat-hint>
+      </mat-checkbox>
+      <mat-checkbox *ngIf="showNotificationCheckbox" fxLayoutAlign="center" color="primary" formControlName="notify">
         Notify when completed
       </mat-checkbox>
-      <mat-hint *ngIf="showNotificationCheckbox() && disableNotificationCheckbox">You blocked notifications</mat-hint>
       <mat-card-actions fxLayoutAlign="center">
         <button type="submit" mat-raised-button color="primary" [disabled]="!newSprintForm.valid">Start</button>
       </mat-card-actions>

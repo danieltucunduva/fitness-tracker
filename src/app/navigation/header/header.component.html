@@ -15,8 +15,8 @@
     <a class='app-name' routerLink="/">≡Sprint</a>
   </div>
   <div fxHide.gt-xs fxFlex fxLayout fxLayoutAlign="center center">
-      <a class='app-name' style="cursor: default">≡Sprint</a>
-    </div>
+    <a class='app-name' style="cursor: default">≡Sprint</a>
+  </div>
   <div fxFlex fxLayout fxLayoutAlign="end">
     <div fxLayout fxLayoutAlign="flex-end">
       <a *ngIf="!isAuthenticated" routerLink="/signup" fxHide.xs>Signup</a>
@@ -25,4 +25,5 @@
       <a *ngIf="isAuthenticated" style="cursor: pointer" (click)="onClickLogout()" fxHide.xs>Logout</a>
     </div>
   </div>
+  <audio src="./assets/notification.wav"></audio>
 </mat-toolbar>

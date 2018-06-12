@@ -67,7 +67,9 @@ export class SprintService {
      * @param progress
      */
     finishSprint(completed: boolean, progress: number): void {
-        this.runningSprint.finishedAt = new Date();
+        if (!this.runningSprint.finishedAt) {
+            this.runningSprint.finishedAt = new Date();
+        }
         this.runningSprint.status = completed ? 'completed' : 'cancelled';
         this.runningSprint.user = this.authenticationService.getUserId();
         this.runningSprint.progress = progress;

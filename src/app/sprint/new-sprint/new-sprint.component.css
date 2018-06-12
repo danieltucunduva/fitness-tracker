@@ -5,3 +5,8 @@
 mat-form-field, mat-checkbox{
     padding-bottom: 0.5em;
 }
+
+.disabled-checkbox {
+    font-size: 9pt;
+    line-height: 1.5em;
+}
