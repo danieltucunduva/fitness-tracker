@@ -18,12 +18,14 @@ export class AuthenticationService {
   usernameAvailableChange = new Subject<boolean>();
   invalidLoginChange = new Subject<boolean>();
   baseApiUrl = environment.baseApiUrl;
+  authenticationRedirectUrl = environment.authenticationRedirectUrl;
+  logoutRedirectUrl = environment.logoutRedirectUrl;
 
   auth0 = new auth0.WebAuth({
     clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j',
     domain: 'sprint-ng.auth0.com',
     audience: 'https://sprint-ng.auth0.com/api/v2/',
-    redirectUri: 'https://sprint-ng.herokuapp.com/callback',
+    redirectUri: this.authenticationRedirectUrl,
     responseType: 'token id_token',
     scope: 'openid profile email user_metadata app_metadata picture user_id'
   });
@@ -114,7 +116,7 @@ export class AuthenticationService {
     localStorage.clear();
     this.authenticationChange.next(false);
     this.auth0.logout({
-      returnTo: 'https://sprint-ng.herokuapp.com/',
+      returnTo: this.logoutRedirectUrl,
       clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j'
     });
 
