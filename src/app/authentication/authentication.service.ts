@@ -160,7 +160,7 @@ export class AuthenticationService {
             console.log('Delete user: error');
             console.log(error);
           }, () => {
-            this.dataDeleted.next(true);
+            this.router.navigate(['sprint']);
           }
         );
     }
