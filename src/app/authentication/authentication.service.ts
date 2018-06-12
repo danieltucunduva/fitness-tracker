@@ -14,6 +14,7 @@ import * as auth0 from 'auth0-js';
 @Injectable()
 export class AuthenticationService {
   authenticationChange = new Subject<boolean>();
+  dataDeleted = new Subject<boolean>();
   usernameAvailableChange = new Subject<boolean>();
   invalidLoginChange = new Subject<boolean>();
   baseApiUrl = environment.baseApiUrl;
@@ -155,10 +156,11 @@ export class AuthenticationService {
         .pipe(map(response => response.json()))
         .subscribe(
           response => {
-            this.logout();
+            this.dataDeleted.next(true);
           },
           error => {
             console.log('Delete user: error');
+            console.log(error);
           }
         );
     }
