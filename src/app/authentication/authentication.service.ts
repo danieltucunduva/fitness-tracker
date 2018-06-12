@@ -22,7 +22,7 @@ export class AuthenticationService {
     clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j',
     domain: 'sprint-ng.auth0.com',
     audience: 'https://sprint-ng.auth0.com/api/v2/',
-    redirectUri: 'http://localhost:8080/callback',
+    redirectUri: 'https://sprint-ng.herokuapp.com/callback',
     responseType: 'token id_token',
     scope: 'openid profile email user_metadata app_metadata picture user_id'
   });
@@ -113,7 +113,7 @@ export class AuthenticationService {
     localStorage.clear();
     this.authenticationChange.next(false);
     this.auth0.logout({
-      returnTo: 'http://localhost:8080',
+      returnTo: 'https://sprint-ng.herokuapp.com/',
       clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j'
     });
 
