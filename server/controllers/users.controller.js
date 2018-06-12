@@ -21,6 +21,39 @@ exports.getUsers = async function (req, res, next) {
   }
 }
 
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     tags:
+ *      - users
+ *     parameters:
+ *       - name: user
+ *         description: User
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     description: Create a new user
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       201:
+ *         description: created
+ *         schema:
+ *           type: object
+ *           properties:
+ *             status:
+ *               type: number
+ *             data:
+ *               $ref: '#/definitions/User'
+ *             message:
+ *               type: string
+ *       400:
+ *         description: bad request
+ *       409:
+ *         description: conflict
+ */
 exports.createUser = async function (req, res, next) {
   if (!req.body.username || !req.body.password) {
     return res.status(400).json({
@@ -56,6 +89,39 @@ exports.createUser = async function (req, res, next) {
   }
 }
 
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     tags:
+ *      - users
+ *     parameters:
+ *       - name: user
+ *         description: User
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     description: Log in a user
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: ok
+ *         schema:
+ *           type: object
+ *           properties:
+ *             status:
+ *               type: number
+ *             data:
+ *               $ref: '#/definitions/User'
+ *             message:
+ *               type: string
+ *       400:
+ *         description: bad request
+ *       406:
+ *         description: not acceptable
+ */
 exports.loginUser = async function (req, res, next) {
   console.log(req.body)
 
@@ -105,38 +171,6 @@ exports.userId = async function (req, res, next) {
         message: 'User: invalid'
       })
     }
-  } catch (e) {
-    return res.status(400).json({
-      status: 400,
-      message: e.message
-    })
-  }
-}
-
-exports.updateUser = async function (req, res, next) {
-  if (!req.body._id) {
-    return res.status(400).json({
-      status: 400,
-      message: 'Id must be present'
-    })
-  }
-
-  var id = req.body._id
-
-  var todo = {
-    id,
-    title: req.body.title ? req.body.title : null,
-    description: req.body.description ? req.body.description : null,
-    status: req.body.status ? req.body.status : null
-  }
-
-  try {
-    var updatedTodo = await userService.updateUser(todo)
-    return res.status(200).json({
-      status: 200,
-      data: updatedTodo,
-      message: 'Success: sprint updated'
-    })
   } catch (e) {
     return res.status(400).json({
       status: 400,
