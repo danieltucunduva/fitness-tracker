@@ -107,24 +107,16 @@ exports.updateUser = async function (user) {
   }
 }
 
-exports.deleteUser = async function (userId) {
+exports.deleteData = async function (userId) {
   try {
-    var deleted = await UserModel.deleteOne({
-      _id: userId
+    const pastSprintsDeleted = await pastSprintModel.deleteMany({
+      user: userId
+    }, err => {
+      console.log(err)
+      throw Error('Delete data: past sprints could not be deleted')
     })
-    if (deleted.result.n === 0) {
-      throw Error('Delete user: user could not be deleted')
-    } else {
-      const pastSprintsDeleted = await pastSprintModel.deleteMany({
-        user: userId
-      }, err => {
-        console.log(err)
-        throw Error('Delete user: past sprints could not be deleted')
-      })
-      console.log(pastSprintsDeleted.result)
-      return deleted
-    }
+    return pastSprintsDeleted
   } catch (e) {
-    throw Error('Delete user: failure')
+    throw Error('Delete data: failure')
   }
 }
