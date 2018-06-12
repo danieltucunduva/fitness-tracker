@@ -109,13 +109,13 @@ exports.updateUser = async function (user) {
 
 exports.deleteData = async function (userId) {
   try {
-    const pastSprintsDeleted = await pastSprintModel.deleteMany({
+    await pastSprintModel.deleteMany({
       user: userId
     }, err => {
       console.log(err)
       throw Error('Delete data: past sprints could not be deleted')
     })
-    return pastSprintsDeleted
+    return true
   } catch (e) {
     throw Error('Delete data: failure')
   }

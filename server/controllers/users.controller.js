@@ -148,10 +148,10 @@ exports.updateUser = async function (req, res, next) {
 exports.deleteUser = async function (req, res, next) {
   const userId = req.params.username
   try {
-    await userService.deleteData(userId)
+    const success = await userService.deleteData(userId)
     return res.status(200).json({
       status: 200,
-      data: true,
+      data: success,
       message: 'Success: data deleted'
     })
   } catch (e) {
