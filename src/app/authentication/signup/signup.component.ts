@@ -20,10 +20,9 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private dialog: MatDialog)
-  { 
-     this.authenticationService.login();
-    }
+    private dialog: MatDialog) {
+    this.authenticationService.login();
+  }
 
   ngOnInit() {
     this.maxDate = new Date();

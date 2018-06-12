@@ -155,12 +155,12 @@ export class AuthenticationService {
         .delete(this.baseApiUrl + `users/${id}`)
         .pipe(map(response => response.json()))
         .subscribe(
-          response => {
-            this.dataDeleted.next(true);
-          },
+          response => { },
           error => {
             console.log('Delete user: error');
             console.log(error);
+          }, () => {
+            this.dataDeleted.next(true);
           }
         );
     }
