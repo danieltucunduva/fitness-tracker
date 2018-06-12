@@ -156,10 +156,7 @@ export class AuthenticationService {
         .pipe(map(response => response.json()))
         .subscribe(
           response => { },
-          error => {
-            console.log('Delete user: error');
-            console.log(error);
-          }, () => {
+          error => { }, () => {
             this.router.navigate(['sprint']);
           }
         );
