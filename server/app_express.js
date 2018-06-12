@@ -21,11 +21,12 @@ try {
 } catch (ex) {
   console.log('Environment variables local file not found')
 }
-
 const ENV_DB_URI = process.env.MONGODB_URI
 
 if (!ENV_DB_URI && !DB_URI_LOCAL) {
-  throw new Error('Database URI is missing, local and environment options are both undefined')
+  throw new Error(
+    'Database URI is missing, local and environment options are both undefined'
+  )
 }
 
 const DB_URI = ENV_DB_URI || DB_URI_LOCAL
@@ -34,34 +35,43 @@ console.log('ENV_DB_URI: ' + ENV_DB_URI)
 console.log('DB_URI:     ' + DB_URI)
 
 mongoose
-  .connect(DB_URI, {
-    useMongoClient: true
-  })
+  .connect(
+    DB_URI, {
+      useMongoClient: true
+    }
+  )
   .then(() => {
-    console.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`)
+    console.log(
+      `Succesfully Connected to the Mongodb Database at URI: ${DB_URI}`
+    )
   })
   .catch(() => {
-    console.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`)
+    console.log(`Error Connecting to the Mongodb Database at URI: ${DB_URI}`)
   })
 
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  )
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
   next()
 })
 
 // view engine setup
-// app.set('views', path.join(__dirname, 'views'))
-// app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
 // uncomment after placing your favicon in /public
 // app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({
-  extended: false
-}))
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+)
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
