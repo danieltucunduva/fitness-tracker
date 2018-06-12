@@ -107,15 +107,8 @@ exports.updateUser = async function (user) {
   }
 }
 
-exports.deleteUser = async function (username) {
+exports.deleteUser = async function (userId) {
   try {
-    var user = await UserModel.findOne({
-      username: username
-    })
-    if (!user) {
-      throw Error('Delete user: user not found')
-    }
-    const userId = user._id
     var deleted = await UserModel.deleteOne({
       _id: userId
     })
@@ -126,6 +119,7 @@ exports.deleteUser = async function (username) {
         user: userId
       }, err => {
         console.log(err)
+        throw Error('Delete user: past sprints could not be deleted')
       })
       console.log(pastSprintsDeleted.result)
       return deleted

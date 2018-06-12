@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 
 const jwt = require('express-jwt')
-const jwtAuthz = require('express-jwt-authz')
 const jwksRsa = require('jwks-rsa')
 
 // Authentication middleware. When used, the
