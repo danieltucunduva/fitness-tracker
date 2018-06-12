@@ -19,10 +19,10 @@ export class AuthenticationService {
   baseApiUrl = environment.baseApiUrl;
 
   auth0 = new auth0.WebAuth({
-    clientID: 'dKajDy1efqYyWs9xMEctdhvn0bwDsVHY',
-    domain: 'sprint-shcool.auth0.com',
-    audience: 'https://sprint-shcool.auth0.com/api/v2/',
-    redirectUri: 'http://localhost:4200/callback',
+    clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j',
+    domain: 'sprint-ng.auth0.com',
+    audience: 'https://sprint-ng.auth0.com/api/v2/',
+    redirectUri: 'http://localhost:8080/callback',
     responseType: 'token id_token',
     scope: 'openid profile email user_metadata app_metadata picture user_id'
   });
@@ -113,8 +113,8 @@ export class AuthenticationService {
     localStorage.clear();
     this.authenticationChange.next(false);
     this.auth0.logout({
-      returnTo: 'http://localhost:4200',
-      clientID: 'dKajDy1efqYyWs9xMEctdhvn0bwDsVHY'
+      returnTo: 'http://localhost:8080',
+      clientID: '492tUkLs7lAxnYAYwyDmLL7gaWbQbM9j'
     });
 
     return localStorage.getItem('currentUser') === '';

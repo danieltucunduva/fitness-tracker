@@ -1,34 +1,34 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
 
-import { WelcomeComponent } from "./welcome/welcome.component";
-import { SignupComponent } from "./authentication/signup/signup.component";
-import { LoginComponent } from "./authentication/login/login.component";
-import { SprintComponent } from "./sprint/sprint.component";
+import { WelcomeComponent } from './welcome/welcome.component';
+import { SignupComponent } from './authentication/signup/signup.component';
+import { LoginComponent } from './authentication/login/login.component';
+import { SprintComponent } from './sprint/sprint.component';
 import {
   AuthenticationGuardGuest,
   AuthenticationGuardLoggedIn
-} from "./authentication/authentication.guard";
-import { CallbackComponent } from "./authentication/callback/callback.component";
+} from './authentication/authentication.guard';
+import { CallbackComponent } from './authentication/callback/callback.component';
 
 const routes: Routes = [
-  { path: "", component: WelcomeComponent },
+  { path: '', component: WelcomeComponent },
   {
-    path: "signup",
+    path: 'signup',
     component: SignupComponent,
     canActivate: [AuthenticationGuardLoggedIn]
   },
   {
-    path: "login",
+    path: 'login',
     component: LoginComponent,
     canActivate: [AuthenticationGuardLoggedIn]
   },
   {
-    path: "sprint",
+    path: 'sprint',
     component: SprintComponent,
     canActivate: [AuthenticationGuardGuest]
   },
-  { path: "callback", component: CallbackComponent }
+  { path: 'callback', component: CallbackComponent }
 ];
 
 @NgModule({
@@ -36,4 +36,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: [AuthenticationGuardGuest, AuthenticationGuardLoggedIn]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
