@@ -14,7 +14,7 @@ export class NewSprintComponent implements OnInit {
   showNotificationCheckbox = false;
   newSprintForm = new FormGroup({
     selectedSprint: new FormControl('', { validators: [Validators.required] }),
-    notify: new FormControl('', {}),
+    notify: new FormControl({ value: true }, {}),
     notifyDisabled: new FormControl({ value: false, disabled: true }, {}),
     description: new FormControl('', { validators: [Validators.required] })
   });

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
 import { environment } from '../../environments/environment';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,6 +16,7 @@ export class AuthenticationService {
     usernameAvailableChange = new Subject<boolean>();
     invalidLoginChange = new Subject<boolean>();
     baseApiUrl = environment.baseApiUrl;
+    loggedUserId: string;
 
     constructor(
         private http: Http,
@@ -77,20 +79,11 @@ export class AuthenticationService {
 
     getUserId(): string {
         const user = JSON.parse(localStorage.getItem('currentUser')) as User;
-        if (user === null) {
-            this.logout();
+        if (user) {
+            return user._id;
+        } else {
             return null;
         }
-        this.http
-            .post(this.baseApiUrl + 'users/id', user)
-            .pipe(map(response => response.json()))
-            .subscribe(response => {
-                if (response.status === 200) {
-                    return response.data;
-                }
-            }, error => {
-                return null;
-            });
     }
 
     getUserName(): string {
@@ -100,11 +93,9 @@ export class AuthenticationService {
 
     isAuthenticated(): boolean {
         if (localStorage.getItem('currentUser')) {
-            // logged in so return true
             this.authenticationChange.next(true);
             return true;
         } else {
-            // not logged return false
             return false;
         }
     }
@@ -116,7 +107,7 @@ export class AuthenticationService {
             return;
         }
         this.http
-            .delete(this.baseApiUrl + `users/:${this.getUserId()}`)
+            .delete(this.baseApiUrl + `users/${user.username}`)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 this.logout('signup');

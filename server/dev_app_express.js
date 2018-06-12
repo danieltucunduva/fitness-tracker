@@ -66,11 +66,6 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/api', api)
-app.use(express.static(path.join(__dirname, '../dist/sprint')))
-
-app.get('/*', function (req, res) {
-  res.sendFile(path.join(path.join(__dirname, '/dist/sprint/index.html')))
-})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -44,6 +44,7 @@ export class SprintService {
                 };
                 this.runningSprint._id = null;
                 this.runningSprint.status = 'running';
+                this.runningSprint.user = this.authenticationService.getUserId();
                 this.sprintChanged.next({ ...this.runningSprint });
             });
     }

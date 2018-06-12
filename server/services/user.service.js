@@ -1,7 +1,5 @@
-var userModel = require('../models/user.model')
+var UserModel = require('../models/user.model')
 var pastSprintModel = require('../models/past-sprint.model')
-
-_this = this
 
 exports.getUsers = async function (query, page, limit) {
   var options = {
@@ -9,7 +7,7 @@ exports.getUsers = async function (query, page, limit) {
     limit
   }
   try {
-    var users = await userModel.paginate(query, options)
+    var users = await UserModel.paginate(query, options)
     return users
   } catch (e) {
     throw Error('Error while Paginating Todos')
@@ -18,7 +16,7 @@ exports.getUsers = async function (query, page, limit) {
 
 exports.usernameAvailable = async function (username) {
   try {
-    var existingUser = await userModel.findOne({
+    var existingUser = await UserModel.findOne({
       username: username
     })
     if (existingUser) {
@@ -32,7 +30,7 @@ exports.usernameAvailable = async function (username) {
 }
 
 exports.createUser = async function (user) {
-  var newUser = new userModel({
+  var newUser = new UserModel({
     username: user.username,
     password: user.password,
     createdAt: new Date(),
@@ -50,12 +48,12 @@ exports.createUser = async function (user) {
 
 exports.loginUser = async function (user) {
   try {
-    var loginUser = await userModel.findOne({
+    var loginUser = await UserModel.findOne({
       username: user.username,
       password: user.password
     })
     if (loginUser) {
-      return user
+      return loginUser
     } else {
       return false
     }
@@ -66,7 +64,7 @@ exports.loginUser = async function (user) {
 
 exports.userId = async function (user) {
   try {
-    var userFound = await userModel.findOne({
+    var userFound = await UserModel.findOne({
       username: user.username,
       password: user.password
     })
@@ -84,7 +82,7 @@ exports.updateUser = async function (user) {
   var id = user.id
 
   try {
-    var oldTodo = await userModel.findById(id)
+    var oldTodo = await UserModel.findById(id)
   } catch (e) {
     throw Error('Error occured while Finding the Todo')
   }
@@ -109,20 +107,27 @@ exports.updateUser = async function (user) {
   }
 }
 
-exports.deleteUser = async function (id) {
-  console.log(id)
+exports.deleteUser = async function (username) {
   try {
-    var deleted = await userModel.deleteOne({
-      _id: id
+    var user = await UserModel.findOne({
+      username: username
+    })
+    if (!user) {
+      throw Error('Delete user: user not found')
+    }
+    const userId = user._id
+    var deleted = await UserModel.deleteOne({
+      _id: userId
     })
     if (deleted.result.n === 0) {
       throw Error('Delete user: user could not be deleted')
     } else {
-      await pastSprintModel.deleteMany({
-        user: id
+      const pastSprintsDeleted = await pastSprintModel.deleteMany({
+        user: userId
       }, err => {
         console.log(err)
       })
+      console.log(pastSprintsDeleted.result)
       return deleted
     }
   } catch (e) {
