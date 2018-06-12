@@ -27,8 +27,13 @@ export class SprintService {
   constructor(
     private http: Http,
     private router: Router,
-    private authenticationService: AuthenticationService
-  ) { }
+    private authenticationService: AuthenticationService) {
+    this.authenticationService.pastSprintsChanged.subscribe(changed => {
+      if (changed) {
+        this.pastSprintsChanged.next(true);
+      }
+    });
+  }
 
   startSprint(selectedId: string, notify: boolean, description: string) {
     const headers = new Headers();

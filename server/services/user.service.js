@@ -1,5 +1,5 @@
 var UserModel = require('../models/user.model')
-var pastSprintModel = require('../models/past-sprint.model')
+var PastSprintModel = require('../models/past-sprint.model')
 
 exports.getUsers = async function (query, page, limit) {
   var options = {
@@ -109,14 +109,18 @@ exports.updateUser = async function (user) {
 
 exports.deleteData = async function (userId) {
   try {
-    await pastSprintModel.deleteMany({
+    const deleted = await PastSprintModel.deleteMany({
       user: userId
     }, err => {
-      console.log(err)
-      throw Error('Delete data: past sprints could not be deleted')
+      if (err) {
+        console.log('Delete data: service error')
+        console.log(err)
+      }
     })
-    return true
+    console.log('Delete data: ' + deleted.result.n + ' past sprints deleted')
+    return deleted.result.n
   } catch (e) {
-    throw Error('Delete data: failure')
+    console.log('Delete data: past sprints could not be deleted')
+    console.log(e)
   }
 }

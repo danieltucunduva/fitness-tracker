@@ -29,8 +29,8 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
     this.sprintService.getPastSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => this.dataSource.data = response.data.docs);
-    this.authenticationService.dataDeleted.subscribe(deleted => {
-      if (deleted) {
+    this.sprintService.pastSprintsChanged.subscribe(changed => {
+      if (changed) {
         this.sprintService.getPastSprints()
           .pipe(map(response => response.json()))
           .subscribe(response => this.dataSource.data = response.data.docs);

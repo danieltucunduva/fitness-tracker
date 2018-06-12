@@ -10,10 +10,12 @@ import { Http } from '@angular/http';
 import { environment } from '../../environments/environment';
 
 import * as auth0 from 'auth0-js';
+import { SprintService } from '../sprint/sprint.service';
 
 @Injectable()
 export class AuthenticationService {
   authenticationChange = new Subject<boolean>();
+  pastSprintsChanged = new Subject<boolean>();
   dataDeleted = new Subject<boolean>();
   usernameAvailableChange = new Subject<boolean>();
   invalidLoginChange = new Subject<boolean>();
@@ -35,7 +37,9 @@ export class AuthenticationService {
   userProfile: any;
   accessToken: string;
   authenticated: boolean;
-  constructor(private http: Http, private router: Router) { }
+  constructor(
+    private http: Http,
+    private router: Router) { }
 
   registerUser(authenticationData: AuthenticationData): void {
     const newUser: User = {
@@ -158,8 +162,9 @@ export class AuthenticationService {
         .pipe(map(response => response.json()))
         .subscribe(
           response => { },
-          error => { }, () => {
-            this.router.navigate(['sprint']);
+          error => { },
+          () => {
+            this.pastSprintsChanged.next(true);
           }
         );
     }
