@@ -92,11 +92,11 @@ exports.userId = async function (req, res, next) {
     password: req.body.password
   }
   try {
-    var userFound = await userService.loginUser(user)
-    if (userFound) {
+    var userId = await userService.userId(user)
+    if (userId) {
       return res.status(200).json({
         status: 200,
-        data: userFound._id,
+        data: userId,
         message: 'User id: success'
       })
     } else {

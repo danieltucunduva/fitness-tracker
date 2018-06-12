@@ -85,8 +85,9 @@ export class AuthenticationService {
             .post(this.baseApiUrl + 'users/id', user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
+                console.log(response.data);
                 if (response.status === 200) {
-                    return response.body.data;
+                    return response.data;
                 }
             }, error => {
                 return null;

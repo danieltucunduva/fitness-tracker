@@ -64,6 +64,22 @@ exports.loginUser = async function (user) {
   }
 }
 
+exports.userId = async function (user) {
+  try {
+    var userFound = await userModel.findOne({
+      username: user.username,
+      password: user.password
+    })
+    if (userFound) {
+      return userFound._id
+    } else {
+      return false
+    }
+  } catch (e) {
+    throw Error('User id: user not found')
+  }
+}
+
 exports.updateUser = async function (user) {
   var id = user.id
 
