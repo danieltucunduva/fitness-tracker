@@ -85,7 +85,6 @@ export class AuthenticationService {
             .post(this.baseApiUrl + 'users/id', user)
             .pipe(map(response => response.json()))
             .subscribe(response => {
-                console.log(response.data);
                 if (response.status === 200) {
                     return response.data;
                 }
@@ -117,7 +116,7 @@ export class AuthenticationService {
             return;
         }
         this.http
-            .delete(this.baseApiUrl + `users/${this.getUserId()}`)
+            .delete(this.baseApiUrl + `users/:${this.getUserId()}`)
             .pipe(map(response => response.json()))
             .subscribe(response => {
                 this.logout('signup');
