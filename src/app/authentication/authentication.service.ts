@@ -77,7 +77,20 @@ export class AuthenticationService {
 
     getUserId(): string {
         const user = JSON.parse(localStorage.getItem('currentUser')) as User;
-        return user._id;
+        if (user === null) {
+            this.logout();
+            return null;
+        }
+        this.http
+            .post(this.baseApiUrl + 'users/id', user)
+            .pipe(map(response => response.json()))
+            .subscribe(response => {
+                if (response.status === 200) {
+                    return response.body.data;
+                }
+            }, error => {
+                return null;
+            });
     }
 
     getUserName(): string {
@@ -98,18 +111,18 @@ export class AuthenticationService {
 
     deleteLoggedUser(): void {
         const user = JSON.parse(localStorage.getItem('currentUser')) as User;
-        if (user === null || user._id === null) {
+        if (user === null) {
             this.logout();
             return;
-        } else {
-            this.http
-                .delete(this.baseApiUrl + `users/${user._id}`)
-                .pipe(map(response => response.json()))
-                .subscribe(response => {
-                    this.logout('signup');
-                }, error => {
-                    console.log('Delete user: error');
-                });
         }
+        this.http
+            .delete(this.baseApiUrl + `users/${this.getUserId()}`)
+            .pipe(map(response => response.json()))
+            .subscribe(response => {
+                this.logout('signup');
+            }, error => {
+                console.log('Delete user: error');
+            });
+
     }
 }

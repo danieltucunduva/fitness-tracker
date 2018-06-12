@@ -102,7 +102,7 @@ exports.deleteUser = async function (id) {
     if (deleted.result.n === 0) {
       throw Error('Delete user: user could not be deleted')
     } else {
-      var deleteAllPastSprints = await pastSprintModel.deleteMany({
+      await pastSprintModel.deleteMany({
         user: id
       }, err => {
         console.log(err)
