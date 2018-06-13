@@ -41,6 +41,8 @@
     "ejs": "^2.5.9",
     "eslint": "^4.19.1",
     "express": "^4.16.3",
+    "graylog-loging": "^1.1.1",
+    "graylog2": "^0.2.1",
     "hammerjs": "^2.0.8",
     "hoek": "^5.0.3",
     "moment": "^2.22.2",
