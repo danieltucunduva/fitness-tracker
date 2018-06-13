@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { SprintDialogComponent } from '../sprint-dialog/sprint-dialog.component';
+import { SprintFinishedDialogComponent } from './sprint-finished-dialog/sprint-finished-dialog.component';
+import { StopSprintDialogComponent } from './stop-sprint-dialog/stop-sprint-dialog.component';
 import { SprintService } from '../sprint.service';
 
 @Component({
@@ -28,12 +29,7 @@ export class CurrentSprintComponent implements OnInit {
         if (this.progressSpinnerValue >= 100) {
           clearInterval(this.timer);
           this.sprintService.finishSprint(true, this.progressSpinnerValue);
-          const dialogRef = this.dialog.open(SprintDialogComponent, {
-            data: {
-              type: 'sprint-finished',
-              sprint: this.sprintService.getRunningSprint()
-            }
-          });
+          const dialogRef = this.dialog.open(SprintFinishedDialogComponent, { data: { sprint: this.sprintService.getRunningSprint() } });
           if (this.sprintService.getRunningSprint().notify) {
             const notification = new Notification('≡Sprint', {
               body: 'Your sprint is finished.',
@@ -54,7 +50,7 @@ export class CurrentSprintComponent implements OnInit {
 
   onClickStopSprint() {
     clearInterval(this.timer);
-    const dialogRef = this.dialog.open(SprintDialogComponent, { data: { type: 'cancel-sprint' } });
+    const dialogRef = this.dialog.open(StopSprintDialogComponent);
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
         this.sprintService.finishSprint(false, this.progressSpinnerValue);

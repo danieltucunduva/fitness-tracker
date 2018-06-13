@@ -15,7 +15,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { SprintDialogComponent } from './sprint/sprint-dialog/sprint-dialog.component';
+import { SprintFinishedDialogComponent } from './sprint/current-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './welcome/terms-dialog/terms-dialog.component';
 import { DeleteDataDialogComponent } from './sprint/past-sprints/delete-data-dialog/delete-data-dialog.component';
@@ -24,8 +24,8 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import { SprintTemplateComponent } from './sprint/sprint-template/sprint-template.component';
 import { VersionTagComponent } from './welcome/version-tag/version-tag.component';
+import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -40,12 +40,12 @@ registerLocaleData(localeFr, 'fr');
     WelcomeComponent,
     HeaderComponent,
     SidenavListComponent,
-    SprintDialogComponent,
+    SprintFinishedDialogComponent,
     TermsDialogComponent,
     LoggedUserNameComponent,
-    SprintTemplateComponent,
     VersionTagComponent,
-    DeleteDataDialogComponent
+    DeleteDataDialogComponent,
+    StopSprintDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -63,6 +63,6 @@ registerLocaleData(localeFr, 'fr');
     { provide: LOCALE_ID, useValue: 'fr' }
   ],
   bootstrap: [AppComponent],
-  entryComponents: [SprintDialogComponent, TermsDialogComponent, DeleteDataDialogComponent]
+  entryComponents: [TermsDialogComponent, StopSprintDialogComponent, SprintFinishedDialogComponent, DeleteDataDialogComponent]
 })
 export class AppModule { }

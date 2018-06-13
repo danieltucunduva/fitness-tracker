@@ -1,0 +1,17 @@
+<span>
+  <h1 mat-dialog-title fxLayoutAlign="center center">Sprint finished</h1>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h3>
+      {{ sprintName }}
+    </h3>
+    <span class="finished-text">
+      Started: {{ sprintStart.getHours() }}h{{ sprintStart.getMinutes() }}min{{ sprintStart.getSeconds() }}s
+      <br> Completed: {{ sprintFinish.getHours() }}h{{ sprintFinish.getMinutes() }}min{{ sprintFinish.getSeconds() }}s
+    </span>
+    <br>
+    <br>
+  </div>
+  <mat-dialog-actions fxLayoutAlign="center center">
+    <button mat-raised-button [mat-dialog-close]="false" color="primary">✔</button>
+  </mat-dialog-actions>
+</span>

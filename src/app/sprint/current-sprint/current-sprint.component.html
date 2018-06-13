@@ -2,8 +2,9 @@
   <h1>Progress</h1>
   <mat-progress-spinner mode="determinate" [value]="progressSpinnerValue"></mat-progress-spinner>
   <h1>{{ progressSpinnerValue }}%</h1>
-  <p *ngIf="progressSpinnerValue < 100">Keep going!</p>
+  <p *ngIf="progressSpinnerValue < 100">Focus fully on your task</p>
   <p *ngIf="progressSpinnerValue >= 100">Good job!</p>
+  <br>
   <button mat-raised-button color="accent" (click)="onClickStopSprint()" [disabled]="progressSpinnerValue >= 100">Stop</button>
 </section>
 

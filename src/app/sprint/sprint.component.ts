@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { SprintService } from './sprint.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { MatDialog } from '@angular/material';
-import { SprintDialogComponent } from './sprint-dialog/sprint-dialog.component';
+import { SprintFinishedDialogComponent } from './current-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
 import { DeleteDataDialogComponent } from './past-sprints/delete-data-dialog/delete-data-dialog.component';
 
 @Component({
@@ -57,10 +57,6 @@ export class SprintComponent implements OnInit {
         this.authenticationService.deleteLoggedUser();
       }
     });
-  }
-
-  onClickImportSprintTemplate() {
-    const dialogRef = this.dialog.open(SprintDialogComponent, { data: { type: 'import-sprint-template' } });
   }
 
 }

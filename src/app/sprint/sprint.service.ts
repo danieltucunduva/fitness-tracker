@@ -66,9 +66,6 @@ export class SprintService {
   }
 
   getFullName(sprint: ISprint): string {
-    if (sprint.status === 'custom' && !sprint.duration) {
-      return sprint.name + '...';
-    }
     return sprint.duration < 120
       ? sprint.name + ' (' + (sprint.duration || '') + 's)'
       : sprint.name + ' (' + (sprint.duration / 60 || '') + 'min)';
@@ -150,38 +147,6 @@ export class SprintService {
     });
   }
 
-  createSharedSprintTemplate(
-    userId: string,
-    name: string,
-    duration: number
-  ): void {
-    const newSprint: ISprint = {
-      _id: null,
-      user: userId,
-      name: name,
-      description: 'template',
-      status: 'custom',
-      duration: duration
-    };
-    const headers = new Headers();
-    headers.append(
-      'Authorization',
-      `Bearer ${localStorage.getItem('accessToken')}`
-    );
-    this.http
-      .post(this.baseApiUrl + 'sprints/create-template', newSprint, {
-        headers: headers
-      })
-      .pipe(map(response => response.json()))
-      .subscribe(
-        response => {
-          this.availableSprintsChanged.next(true);
-        },
-        err => {
-          this.errorManager(err);
-        }
-      );
-  }
   errorManager(e) {
     alert(e.statusText);
     if (e.status === 401) {
