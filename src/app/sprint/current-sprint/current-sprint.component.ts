@@ -23,38 +23,6 @@ export class CurrentSprintComponent implements OnInit {
     const shortSprint = this.sprintService.getRunningSprint().duration < 180 ? true : false;
     const percentStepSize = shortSprint ? 1 : 0.1;
     const timeFactor = shortSprint ? 10 : 1;
-
-    // this.timer = window.setInterval(
-    //       () => {
-    //         if (this.progressSpinnerValue >= 100) {
-    //           clearInterval(this.timer);
-    //           this.sprintService.getRunningSprint().finishedAt = new Date();
-    //           const dialogRef = this.dialog.open(SprintDialogComponent, {
-    //             data: {
-    //               type: 'sprint-finished',
-    //               sprint: { ...this.sprintService.getRunningSprint() }
-    //             }
-    //           });
-    //           if (this.sprintService.getRunningSprint().notify) {
-    //             document.getElementsByTagName('audio')[0].play();
-    //             const notification = new Notification('≡Sprint', {
-    //               body: 'Your sprint is finished.',
-    //               icon: './assets/logo_square_white.jpg',
-    //               dir: 'auto'
-    //             });
-    //           }
-    //           setTimeout(() => {
-    //             this.sprintService.finishSprint(true, this.progressSpinnerValue);
-    //           }, 2000);
-    //         } else {
-    //           this.progressSpinnerValue = Number.parseFloat((this.progressSpinnerValue + percentStepSize).toFixed(1));
-    //         }
-    //       }, this.sprintService.getRunningSprint().duration * timeFactor
-    //     );
-
-
-
-
     this.timer = window.setInterval(
       () => {
         if (this.progressSpinnerValue >= 100) {

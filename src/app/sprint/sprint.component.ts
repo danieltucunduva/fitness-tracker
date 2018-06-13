@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { SprintService } from './sprint.service';
-import { ISprint } from './sprint.model';
-import { Router } from '@angular/router';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { MatDialog } from '@angular/material';
 import { SprintDialogComponent } from './sprint-dialog/sprint-dialog.component';
+import { DeleteDataDialogComponent } from './delete-data-dialog/delete-data-dialog.component';
 
 @Component({
   selector: 'app-sprint',
@@ -52,8 +50,8 @@ export class SprintComponent implements OnInit {
     this.ongoingSprint = false;
   }
 
-  onClickDeleteUser() {
-    const dialogRef = this.dialog.open(SprintDialogComponent, { data: { type: 'delete-user' } });
+  onClickDeleteData() {
+    const dialogRef = this.dialog.open(DeleteDataDialogComponent, { data: { type: 'delete-user' } });
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
         this.authenticationService.deleteLoggedUser();
