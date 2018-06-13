@@ -1,8 +1,11 @@
 <span>
   <h1 mat-dialog-title fxLayoutAlign="center center">{{ dialogTitle }}</h1>
   <p>The only information concerning your user that we store are your past sprints. We do not store information about your user
-    itself.</p>
-  <p>Delete and logout to eliminate all records.</p>
+    itself.
+  </p>
+  <p>
+    Delete to eliminate all records.
+  </p>
   <mat-dialog-actions fxLayoutAlign="center center">
     <button mat-raised-button [mat-dialog-close]="true" color="{{yesButtonColor === 0 ? 'accent' : 'warn'}}">{{ yesButtonText }}</button>
     <button mat-raised-button [mat-dialog-close]="false" color="primary">{{ noButtonText }}</button>

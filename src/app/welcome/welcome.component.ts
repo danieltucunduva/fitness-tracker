@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { TermsDialogComponent } from '../authentication/signup/terms-dialog/terms-dialog.component';
+import { TermsDialogComponent } from '../welcome/terms-dialog/terms-dialog.component';
 
 @Component({
   selector: 'app-welcome',
