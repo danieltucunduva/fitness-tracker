@@ -1,6 +1,13 @@
 var UserModel = require('../models/user.model')
 var pastSprintModel = require('../models/past-sprint.model')
 
+// const _this = this
+var graylog2 = require("graylog2");
+var logger = new graylog2.graylog({
+  servers: [
+      { 'host': '127.0.0.1', port: 12201 },
+  ],
+});
 exports.getUsers = async function (query, page, limit) {
   var options = {
     page,
@@ -39,7 +46,7 @@ exports.createUser = async function (user) {
 
   try {
     var savedUser = await newUser.save()
-    console.log(savedUser)
+    logger.log(savedUser)
     return savedUser
   } catch (e) {
     throw Error('Error creating user')
@@ -91,13 +98,13 @@ exports.updateUser = async function (user) {
     return false
   }
 
-  console.log(oldTodo)
+  logger.log(oldTodo)
 
   oldTodo.title = user.title
   oldTodo.description = user.description
   oldTodo.status = user.status
 
-  console.log(oldTodo)
+  logger.log(oldTodo)
 
   try {
     var savedTodo = await oldTodo.save()
@@ -125,9 +132,9 @@ exports.deleteUser = async function (username) {
       const pastSprintsDeleted = await pastSprintModel.deleteMany({
         user: userId
       }, err => {
-        console.log(err)
+        logger.log(err)
       })
-      console.log(pastSprintsDeleted.result)
+      logger.log(pastSprintsDeleted.result)
       return deleted
     }
   } catch (e) {

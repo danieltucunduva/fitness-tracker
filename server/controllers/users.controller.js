@@ -1,10 +1,17 @@
 var userService = require('../services/user.service')
 
+// const _this = this
+var graylog2 = require("graylog2");
+var logger = new graylog2.graylog({
+  servers: [
+      { 'host': '127.0.0.1', port: 12201 },
+  ],
+});
 exports.getUsers = async function (req, res, next) {
   var page = req.query.page ? req.query.page : 1
   var limit = req.query.limit ? req.query.limit : 10
 
-  console.log(page, limit)
+  logger.log(page, limit)
 
   try {
     var todos = await userService.getUsers({}, page, limit)
@@ -57,7 +64,7 @@ exports.createUser = async function (req, res, next) {
 }
 
 exports.loginUser = async function (req, res, next) {
-  console.log(req.body)
+  logger.log(req.body)
 
   var user = {
     username: req.body.username,
