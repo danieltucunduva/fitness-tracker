@@ -22,14 +22,12 @@ import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './authentication/signup/terms-dialog/terms-dialog.component';
 import { DeleteDataDialogComponent } from './sprint/delete-data-dialog/delete-data-dialog.component';
 import { SprintService } from './sprint/sprint.service';
-import { environment } from '../environments/environment';
 import { LoggedUserNameComponent } from './authentication/logged-user-name/logged-user-name.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { SprintTemplateComponent } from './sprint/sprint-template/sprint-template.component';
 import { VersionTagComponent } from './version-tag/version-tag.component';
-import { CallbackComponent } from './authentication/callback/callback.component';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -51,7 +49,6 @@ registerLocaleData(localeFr, 'fr');
     LoggedUserNameComponent,
     SprintTemplateComponent,
     VersionTagComponent,
-    CallbackComponent,
     DeleteDataDialogComponent
   ],
   imports: [
