@@ -1,7 +1,6 @@
 var mongoose = require('mongoose')
 var mongoosePaginate = require('mongoose-paginate')
 
-
 /**
  * @swagger
  * definitions:
@@ -23,12 +22,12 @@ var mongoosePaginate = require('mongoose-paginate')
  *         type: string
  */
 var sprintTemplateSchema = new mongoose.Schema({
-    name: String,
-    duration: Number,
-    status: String,
+  name: String,
+  duration: Number,
+  status: String
 })
 
-sprintTemplateSchema.plugin(mongoosePaginate);
-const sprintTemplateModel = mongoose.model('sprint_template', sprintTemplateSchema);
+sprintTemplateSchema.plugin(mongoosePaginate)
+const sprintTemplateModel = mongoose.model('sprint_template', sprintTemplateSchema)
 
-module.exports = sprintTemplateModel;
+module.exports = sprintTemplateModel
