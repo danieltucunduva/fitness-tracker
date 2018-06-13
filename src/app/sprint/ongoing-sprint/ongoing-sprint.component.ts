@@ -5,11 +5,11 @@ import { StopSprintDialogComponent } from './stop-sprint-dialog/stop-sprint-dial
 import { SprintService } from '../sprint.service';
 
 @Component({
-  selector: 'app-current-sprint',
-  templateUrl: './current-sprint.component.html',
-  styleUrls: ['./current-sprint.component.css']
+  selector: 'app-ongoing-sprint',
+  templateUrl: './ongoing-sprint.component.html',
+  styleUrls: ['./ongoing-sprint.component.css']
 })
-export class CurrentSprintComponent implements OnInit {
+export class OngoingSprintComponent implements OnInit {
   progressSpinnerValue = 0;
   timer = 0;
   @Output() sprintStop = new EventEmitter<void>();

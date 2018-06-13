@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { SprintService } from './sprint.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { MatDialog } from '@angular/material';
-import { SprintFinishedDialogComponent } from './current-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
+import { SprintFinishedDialogComponent } from './ongoing-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
 import { DeleteDataDialogComponent } from './past-sprints/delete-data-dialog/delete-data-dialog.component';
 
 @Component({

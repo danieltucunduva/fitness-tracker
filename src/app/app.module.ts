@@ -8,14 +8,14 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { SprintComponent } from './sprint/sprint.component';
-import { CurrentSprintComponent } from './sprint/current-sprint/current-sprint.component';
+import { OngoingSprintComponent } from './sprint/ongoing-sprint/ongoing-sprint.component';
 import { NewSprintComponent } from './sprint/new-sprint/new-sprint.component';
 import { PastSprintsComponent } from './sprint/past-sprints/past-sprints.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-import { SprintFinishedDialogComponent } from './sprint/current-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
+import { SprintFinishedDialogComponent } from './sprint/ongoing-sprint/sprint-finished-dialog/sprint-finished-dialog.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './welcome/terms-dialog/terms-dialog.component';
 import { DeleteDataDialogComponent } from './sprint/past-sprints/delete-data-dialog/delete-data-dialog.component';
@@ -25,7 +25,7 @@ import { LoggedUserNameComponent } from './authentication/logged-user-name/logge
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { VersionTagComponent } from './welcome/version-tag/version-tag.component';
-import { StopSprintDialogComponent } from './sprint/current-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
+import { StopSprintDialogComponent } from './sprint/ongoing-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
 
 
 registerLocaleData(localeFr, 'fr');
@@ -34,7 +34,7 @@ registerLocaleData(localeFr, 'fr');
   declarations: [
     AppComponent,
     SprintComponent,
-    CurrentSprintComponent,
+    OngoingSprintComponent,
     NewSprintComponent,
     PastSprintsComponent,
     WelcomeComponent,

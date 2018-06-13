@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurrentSprintComponent } from './current-sprint.component';
+import { OngoingSprintComponent } from './ongoing-sprint.component';
 
-describe('CurrentSprintComponent', () => {
-  let component: CurrentSprintComponent;
-  let fixture: ComponentFixture<CurrentSprintComponent>;
+describe('OngoingSprintComponent', () => {
+  let component: OngoingSprintComponent;
+  let fixture: ComponentFixture<OngoingSprintComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CurrentSprintComponent]
+      declarations: [OngoingSprintComponent]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentSprintComponent);
+    fixture = TestBed.createComponent(OngoingSprintComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
