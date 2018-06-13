@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material';
-import { SprintService } from '../sprint.service';
+import { SprintService } from '../../sprint.service';
 
 @Component({
   selector: 'app-delete-data-dialog',

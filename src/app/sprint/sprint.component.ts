@@ -4,7 +4,7 @@ import { SprintService } from './sprint.service';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { MatDialog } from '@angular/material';
 import { SprintDialogComponent } from './sprint-dialog/sprint-dialog.component';
-import { DeleteDataDialogComponent } from './delete-data-dialog/delete-data-dialog.component';
+import { DeleteDataDialogComponent } from './past-sprints/delete-data-dialog/delete-data-dialog.component';
 
 @Component({
   selector: 'app-sprint',

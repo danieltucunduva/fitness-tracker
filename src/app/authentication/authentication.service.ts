@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from './user.model';
-import { AuthenticationData } from './authentication-data.model';
 import { Router } from '@angular/router';
 import { Http } from '@angular/http';
 
@@ -40,29 +38,6 @@ export class AuthenticationService {
   constructor(
     private http: Http,
     private router: Router) { }
-
-  registerUser(authenticationData: AuthenticationData): void {
-    const newUser: User = {
-      _id: null,
-      username: authenticationData.username,
-      password: authenticationData.password
-    };
-    this.http
-      .post(this.baseApiUrl + 'users', newUser)
-      .pipe(map(response => response.json()))
-      .subscribe(
-        signupResponse => {
-          if (signupResponse.status === 201) {
-            this.login();
-          }
-        },
-        error => {
-          if (error.status === 409) {
-            this.usernameAvailableChange.next(false);
-          }
-        }
-      );
-  }
 
   login() {
     // Auth0 authorize request

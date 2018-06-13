@@ -18,7 +18,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { SprintDialogComponent } from './sprint/sprint-dialog/sprint-dialog.component';
 import { AuthenticationService } from './authentication/authentication.service';
 import { TermsDialogComponent } from './welcome/terms-dialog/terms-dialog.component';
-import { DeleteDataDialogComponent } from './sprint/delete-data-dialog/delete-data-dialog.component';
+import { DeleteDataDialogComponent } from './sprint/past-sprints/delete-data-dialog/delete-data-dialog.component';
 import { SprintService } from './sprint/sprint.service';
 import { LoggedUserNameComponent } from './authentication/logged-user-name/logged-user-name.component';
 
