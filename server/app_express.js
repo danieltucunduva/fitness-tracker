@@ -6,25 +6,36 @@ const bodyParser = require('body-parser')
 const api = require('./routes/api.route')
 const bluebird = require('bluebird')
 const mongoose = require('mongoose')
-const graylog = require('graylog-loging')
-const graylog2 = require('graylog2')
 
 const app = express()
 
-// log management
-var logger = new graylog2.graylog({
-  servers: [{
-    host: '127.0.0.1',
-    port: 12201
-  }]
-})
-// http logs
-graylog.init({
-  graylogPort: 12201,
-  graylogHostname: '127.0.0.1'
-})
-
-console.log(logger)
+// /////////////////////////////////////////////////
+/**
+ * To use Graylog (local server)
+ */
+// const graylog = require('graylog-loging')
+// const graylog2 = require('graylog2')
+// // log management
+// var logger = new graylog2.graylog({
+//   servers: [{
+//     host: '127.0.0.1',
+//     port: 12201
+//   }]
+// })
+// // http logs
+// graylog.init({
+//   graylogPort: 12201,
+//   graylogHostname: '127.0.0.1'
+// })
+// app.use(graylog.logResponse)
+// app.use(graylog.logRequest)
+// app.use(graylog.handleErrors)
+// /////////////////////////////////////////////////
+/**
+ * To use the console (for the Heroku deploy)
+ */
+const logger = console
+// /////////////////////////////////////////////////
 
 mongoose.Promise = bluebird
 
@@ -36,7 +47,10 @@ try {
   logger.log('Environment variables local file not found')
 }
 
-DB_URI_LOCAL = 'mongodb:// localhost:27017/db_sprint'
+/**
+ * To use a local database
+ */
+// DB_URI_LOCAL = 'mongodb:// localhost:27017/db_sprint'
 
 const ENV_DB_URI = process.env.MONGODB_URI
 
@@ -80,9 +94,6 @@ app.set('views', path.join(__dirname, 'views'))
 app.set('view engine', 'ejs')
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
-app.use(graylog.logResponse)
-app.use(graylog.logRequest)
-app.use(graylog.handleErrors)
 
 app.use(bodyParser.json())
 app.use(
