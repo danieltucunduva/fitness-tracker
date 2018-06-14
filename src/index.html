@@ -7,7 +7,7 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="favicon.png">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <script>
@@ -18,7 +18,7 @@
         l = console,
         m = Math,
         z = 'postMessage',
-        x = 'HackTimer.js by turuslan: ',
+        x = 'HackTimer.js',
         v = 'Initialisation failed',
         p = 0,
         r = 'hasOwnProperty',
@@ -95,13 +95,13 @@
           w.onerror = function (e) {
             l.log(e)
           };
-          l.log(x + 'Initialisation succeeded')
         } catch (e) {
           l.log(x + v);
           l.error(e)
         }
       } else l.log(x + v + ' - HTML5 Web Worker is not supported')
     })('HackTimerWorker.min.js');
+
   </script>
 </head>
 

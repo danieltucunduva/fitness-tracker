@@ -1,8 +1,8 @@
-<mat-tab-group *ngIf="!ongoingSprint" [(selectedIndex)]="tabIndex">
+<mat-tab-group *ngIf="!ongoingSprint">
   <mat-tab label="Past Sprints">
     <app-past-sprints></app-past-sprints>
     <div style="width: 100%; text-align: center;">
-      <button class="delete-user" type="submit" mat-button color="warn" (click)="onClickDeleteUser()">Delete user and all associated data</button>
+      <button class="delete-user" type="submit" mat-button color="warn" (click)="onClickDeleteData()">Delete all data</button>
     </div>
     <app-logged-user-name></app-logged-user-name>
   </mat-tab>
@@ -18,4 +18,4 @@
     <app-logged-user-name></app-logged-user-name>
   </mat-tab> -->
 </mat-tab-group>
-<app-current-sprint (sprintStop)="sprintStop()" *ngIf="ongoingSprint"></app-current-sprint>
+<app-ongoing-sprint (sprintStop)="sprintStop()" *ngIf="ongoingSprint"></app-ongoing-sprint>

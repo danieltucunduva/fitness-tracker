@@ -29,6 +29,13 @@ export class PastSprintsComponent implements OnInit, AfterViewInit {
     this.sprintService.getPastSprints()
       .pipe(map(response => response.json()))
       .subscribe(response => this.dataSource.data = response.data.docs);
+    this.sprintService.pastSprintsChanged.subscribe(changed => {
+      if (changed) {
+        this.sprintService.getPastSprints()
+          .pipe(map(response => response.json()))
+          .subscribe(response => this.dataSource.data = response.data.docs);
+      }
+    });
   }
 
   onApplyPastSprintsTableFilter(filterValue: string): void {

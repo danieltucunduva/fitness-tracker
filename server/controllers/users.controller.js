@@ -1,5 +1,6 @@
 var userService = require('../services/user.service')
 
+<<<<<<< HEAD
 // const _this = this
 var graylog2 = require("graylog2");
 var logger = new graylog2.graylog({
@@ -154,12 +155,49 @@ exports.updateUser = async function (req, res, next) {
 
 exports.deleteUser = async function (req, res, next) {
   const username = req.params.username
+=======
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     tags:
+ *      - users
+ *     parameters:
+ *       - name: user
+ *         description: User
+ *         in: body
+ *         required: true
+ *         schema:
+ *           $ref: '#/definitions/User'
+ *     description: Log in a user
+ *     produces:
+ *      - application/json
+ *     responses:
+ *       200:
+ *         description: ok
+ *         schema:
+ *           type: object
+ *           properties:
+ *             status:
+ *               type: number
+ *             data:
+ *               $ref: '#/definitions/User'
+ *             message:
+ *               type: string
+ *       400:
+ *         description: bad request
+ *       406:
+ *         description: not acceptable
+ */
+exports.deleteData = async function (req, res, next) {
+  const userId = req.params.username
+>>>>>>> b111674f92e35e747f7d4e2f20f3f8cd260fd128
   try {
-    await userService.deleteUser(username)
+    const sprintsDeleted = await userService.deleteData(userId)
     return res.status(200).json({
       status: 200,
-      data: true,
-      message: 'Success: user deleted'
+      data: sprintsDeleted,
+      message: 'Success: data deleted'
     })
   } catch (e) {
     return res.status(400).json({
