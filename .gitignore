@@ -42,5 +42,5 @@ testem.log
 Thumbs.db
 
 # swagger file
-server/swagger/docs
+server/swagger/docs/api-docs.json
 server/swagger/node_modules

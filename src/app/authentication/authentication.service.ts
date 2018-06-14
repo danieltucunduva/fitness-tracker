@@ -8,7 +8,7 @@ import { Http } from '@angular/http';
 import { environment } from '../../environments/environment';
 
 import * as auth0 from 'auth0-js';
-import { SprintService } from '../sprint/sprint.service';
+import { Headers } from '@angular/http';
 
 @Injectable()
 export class AuthenticationService {
@@ -131,17 +131,23 @@ export class AuthenticationService {
     if (id === null) {
       this.logout();
       return;
-    } else {
-      this.http
-        .delete(this.baseApiUrl + `users/${id}`)
-        .pipe(map(response => response.json()))
-        .subscribe(
-          response => { },
-          error => { },
-          () => {
-            this.pastSprintsChanged.next(true);
-          }
-        );
     }
+    const headers = new Headers();
+    headers.append(
+      'Authorization',
+      `Bearer ${localStorage.getItem('accessToken')}`
+    );
+    this.http
+      .delete(this.baseApiUrl + `users/${id}`, { headers: headers })
+      .pipe(map(response => response.json()))
+      .subscribe(
+        response => { },
+        error => { },
+        () => {
+          this.pastSprintsChanged.next(true);
+        }
+      );
   }
+
 }
+
