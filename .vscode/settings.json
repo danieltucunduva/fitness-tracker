@@ -1,5 +1,11 @@
 {
-    "workbench.colorTheme": "Visual Studio Dark",
-    "workbench.editor.enablePreview": false,
-    "editor.formatOnSave": true
+  "workbench.colorTheme": "Visual Studio Dark",
+  "workbench.editor.enablePreview": false,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true,
+  "[typescript]": {
+    "editor.formatOnSave": true,
+    "editor.formatOnPaste": true
+  },
 }

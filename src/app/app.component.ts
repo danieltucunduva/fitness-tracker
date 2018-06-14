@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AuthenticationService } from './authentication/authentication.service';
 import { trigger, state, style, transition, animate, keyframes, query, group } from '@angular/animations';
 
-
 @Component({
   selector: 'app-root',
   animations: [

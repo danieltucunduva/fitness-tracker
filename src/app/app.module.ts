@@ -27,7 +27,6 @@ import localeFr from '@angular/common/locales/fr';
 import { VersionTagComponent } from './welcome/version-tag/version-tag.component';
 import { StopSprintDialogComponent } from './sprint/ongoing-sprint/stop-sprint-dialog/stop-sprint-dialog.component';
 
-
 registerLocaleData(localeFr, 'fr');
 
 @NgModule({
