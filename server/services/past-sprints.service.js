@@ -10,6 +10,7 @@ var logger = new graylog2.graylog({
 });
 
 exports.getPastSprints = async function (query) {
+
   var options = {
     page: 1,
     limit: 10000

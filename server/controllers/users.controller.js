@@ -7,7 +7,6 @@ var logger = new graylog2.graylog({
       { 'host': '127.0.0.1', port: 12201 },
   ],
 });
-
 exports.getUsers = async function (req, res, next) {
   var page = req.query.page ? req.query.page : 1
   var limit = req.query.limit ? req.query.limit : 10

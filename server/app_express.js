@@ -10,14 +10,30 @@ var logger = new graylog2.graylog({
 });
 //http logs
 var graylog = require('graylog-loging');
-var graylog = require('graylog-loging');
 graylog.init({
   graylogPort: 12201,
   graylogHostname: '127.0.0.1'
 });
 
+
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
+// const _this = this
+
+//log management
+var graylog2 = require("graylog2");
+var logger = new graylog2.graylog({
+  servers: [
+      { 'host': '127.0.0.1', port: 12201 },
+  ],
+});
+//http logs
+var graylog = require('graylog-loging');
+var graylog = require('graylog-loging');
+graylog.init({
+  graylogPort: 12201,
+  graylogHostname: '127.0.0.1'
+});
 
 var api = require('./routes/api.route')
 
