@@ -1,7 +1,6 @@
 var express = require('express')
 var path = require('path')
-// var favicon = require('serve-favicon')
-var logger = require('morgan')
+var favicon = require('serve-favicon')
 var cookieParser = require('cookie-parser')
 var bodyParser = require('body-parser')
 
@@ -13,13 +12,27 @@ var app = express()
 
 var mongoose = require('mongoose')
 mongoose.Promise = bluebird
-
+//log management
+var graylog2 = require("graylog2");
+var logger = new graylog2.graylog({
+  servers: [{
+    'host': '127.0.0.1',
+    port: 12201
+  }, ],
+});
+//http logs
+var graylog = require('graylog-loging');
+var graylog = require('graylog-loging');
+graylog.init({
+  graylogPort: 12201,
+  graylogHostname: '127.0.0.1'
+});
 var DB_URI_LOCAL
 try {
   const environmentVariables = require('./.environment_variables')
   DB_URI_LOCAL = environmentVariables.DB_URI
 } catch (ex) {
-  console.log('Environment variables local file not found')
+  logger.log('Environment variables local file not found')
 }
 
 const ENV_DB_URI = process.env.MONGODB_URI
@@ -30,18 +43,18 @@ if (!ENV_DB_URI && !DB_URI_LOCAL) {
 
 const DB_URI = ENV_DB_URI || DB_URI_LOCAL
 
-console.log('ENV_DB_URI: ' + ENV_DB_URI)
-console.log('DB_URI:     ' + DB_URI)
+logger.log('ENV_DB_URI: ' + ENV_DB_URI)
+logger.log('DB_URI:     ' + DB_URI)
 
 mongoose
   .connect(DB_URI, {
     useMongoClient: true
   })
   .then(() => {
-    console.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`)
+    logger.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`)
   })
   .catch(() => {
-    console.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`)
+    logger.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`)
   })
 
 app.use(function (req, res, next) {
@@ -56,8 +69,11 @@ app.use(function (req, res, next) {
 // app.set('view engine', 'ejs')
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'))
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
+app.use(graylog.logResponse);
+app.use(graylog.logRequest);
+app.use(graylog.handleErrors)
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
   extended: false

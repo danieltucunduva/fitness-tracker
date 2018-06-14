@@ -13,3 +13,5 @@ appExpress.set('port', apiPort)
 const server = http.createServer(appExpress)
 
 server.listen(apiPort)
+
+console.log('Magic happens in port ' + apiPort)

@@ -1,8 +1,16 @@
 var PastSprintModel = require('../models/past-sprint.model')
 
 // const _this = this
+//log management
+var graylog2 = require("graylog2");
+var logger = new graylog2.graylog({
+  servers: [
+      { 'host': '127.0.0.1', port: 12201 },
+  ],
+});
 
 exports.getPastSprints = async function (query) {
+
   var options = {
     page: 1,
     limit: 10000
@@ -49,13 +57,13 @@ exports.updateSprint = async function (todo) {
     return false
   }
 
-  console.log(oldTodo)
+  logger.log(oldTodo)
 
   oldTodo.title = todo.title
   oldTodo.description = todo.description
   oldTodo.status = todo.status
 
-  console.log(oldTodo)
+  logger.log(oldTodo)
 
   try {
     var savedTodo = await oldTodo.save()

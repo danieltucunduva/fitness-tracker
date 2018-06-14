@@ -1,4 +1,4 @@
-var userService = require('../services/user.service')
+var userService = require("../services/user.service");
 
 /**
  * @swagger
@@ -31,19 +31,19 @@ var userService = require('../services/user.service')
  *       400:
  *         description: bad request
  */
-exports.deleteData = async function (req, res, next) {
-  const userId = req.params.username
+exports.deleteData = async function(req, res, next) {
+  const userId = req.params.username;
   try {
-    const sprintsDeleted = await userService.deleteData(userId)
+    const sprintsDeleted = await userService.deleteData(userId);
     return res.status(200).json({
       status: 200,
       data: sprintsDeleted,
-      message: 'Success: data deleted'
-    })
+      message: "Success: data deleted"
+    });
   } catch (e) {
     return res.status(400).json({
       status: 400,
       message: e.message
-    })
+    });
   }
-}
+};
