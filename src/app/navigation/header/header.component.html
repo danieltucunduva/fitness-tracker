@@ -19,8 +19,7 @@
   </div>
   <div fxFlex fxLayout fxLayoutAlign="end">
     <div fxLayout fxLayoutAlign="flex-end">
-      <a *ngIf="!isAuthenticated" routerLink="/signup" fxHide.xs>Signup</a>
-      <a *ngIf="!isAuthenticated" routerLink="/login" fxHide.xs>Login</a>
+      <a *ngIf="!isAuthenticated" (click)="login()" style="cursor: pointer" fxHide.xs>Login</a>
       <a *ngIf="isAuthenticated" routerLink="/sprint" fxHide.xs>Sprints</a>
       <a *ngIf="isAuthenticated" style="cursor: pointer" (click)="onClickLogout()" fxHide.xs>Logout</a>
     </div>
