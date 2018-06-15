@@ -1,32 +1,35 @@
-var express = require('express')
-var path = require('path')
-var favicon = require('serve-favicon')
-var cookieParser = require('cookie-parser')
-var bodyParser = require('body-parser')
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
 
-var api = require('./routes/api.route')
+const api = require('./routes/api.route')
 
-var bluebird = require('bluebird')
+const bluebird = require('bluebird')
 
-var app = express()
+const app = express()
 
-var mongoose = require('mongoose')
+const mongoose = require('mongoose')
 mongoose.Promise = bluebird
-//log management
-var graylog2 = require("graylog2");
-var logger = new graylog2.graylog({
+
+// log management
+const graylog2 = require('graylog2')
+const Graylog2 = graylog2.graylog
+const logger = new Graylog2({
   servers: [{
-    'host': '127.0.0.1',
+    host: '127.0.0.1',
     port: 12201
-  }, ],
-});
-//http logs
-var graylog = require('graylog-loging');
-var graylog = require('graylog-loging');
+  }]
+})
+
+// http logs
+const graylog = require('graylog-loging')
 graylog.init({
   graylogPort: 12201,
   graylogHostname: '127.0.0.1'
-});
+})
+
 var DB_URI_LOCAL
 try {
   const environmentVariables = require('./.environment_variables')
@@ -34,6 +37,11 @@ try {
 } catch (ex) {
   logger.log('Environment variables local file not found')
 }
+
+/**
+ * To use a local database
+ */
+// DB_URI_LOCAL = 'mongodb:// localhost:27017/db_sprint'
 
 const ENV_DB_URI = process.env.MONGODB_URI
 
@@ -69,9 +77,9 @@ app.use(function (req, res, next) {
 // app.set('view engine', 'ejs')
 
 // uncomment after placing your favicon in /public
-app.use(favicon(path.join(__dirname, 'public', 'favicon.png')));
-app.use(graylog.logResponse);
-app.use(graylog.logRequest);
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
+app.use(graylog.logResponse)
+app.use(graylog.logRequest)
 app.use(graylog.handleErrors)
 
 app.use(bodyParser.json())
@@ -85,7 +93,7 @@ app.use('/api', api)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
-  var err = new Error('Not Found')
+  const err = new Error('Not Found')
   err.status = 404
   next(err)
 })

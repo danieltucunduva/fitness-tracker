@@ -1,27 +1,5 @@
 var pastSprintService = require('../services/past-sprints.service')
 
-// const _this = this
-
-// exports.getSprints = async function (req, res, next) {
-
-//   var page = req.query.page ? req.query.page : 1
-//   var limit = req.query.limit ? req.query.limit : 10;
-
-//   try {
-//     var todos = await pastSprintService.getSprints({}, page, limit)
-//     return res.status(200).json({
-//       status: 200,
-//       data: todos,
-//       message: "Succesfully Todos Recieved"
-//     });
-//   } catch (e) {
-//     return res.status(400).json({
-//       status: 400,
-//       message: e.message
-//     });
-//   }
-// }
-
 /**
  * @swagger
  * /api/past-sprints/new:
@@ -72,19 +50,9 @@ exports.createPastSprint = async function (req, res, next) {
 /**
  * @swagger
  * /api/past-sprints:
- *   post:
+ *   get:
  *     tags:
  *      - past-sprints
- *     parameters:
- *       - name: userId
- *         description: Sprint id
- *         in: body
- *         required: true
- *         schema:
- *           type: object
- *           properties:
- *             userId:
- *               type: string
  *     description: Get list of PastSprint
  *     produces:
  *      - application/json
@@ -117,8 +85,7 @@ exports.createPastSprint = async function (req, res, next) {
  *         description: bad Request
  */
 exports.getPastSprints = async function (req, res, next) {
-  var userId = req.body.userId
-
+  const userId = req.get('User')
   try {
     var pastSprints = await pastSprintService.getPastSprints({
       user: userId

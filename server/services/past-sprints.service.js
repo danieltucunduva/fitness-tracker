@@ -1,30 +1,43 @@
-var PastSprintModel = require('../models/past-sprint.model')
+const PastSprintModel = require('../models/past-sprint.model')
 
-// const _this = this
-//log management
-var graylog2 = require("graylog2");
-var logger = new graylog2.graylog({
-  servers: [
-      { 'host': '127.0.0.1', port: 12201 },
-  ],
-});
+let USE_CONSOLE_FOR_LOGGING
+try {
+  const environmentVariables = require('../.environment_variables')
+  USE_CONSOLE_FOR_LOGGING = environmentVariables.USE_CONSOLE_FOR_LOGGING
+} catch (ex) {
+  console.log('Environment variables local file not found')
+}
+
+let logger
+if (USE_CONSOLE_FOR_LOGGING) {
+  logger = console
+} else {
+  const graylog2 = require('graylog2')
+  const Graylog2 = graylog2.graylog
+  logger = new Graylog2({
+    servers: [{
+      host: '127.0.0.1',
+      port: 12201
+    }]
+  })
+}
 
 exports.getPastSprints = async function (query) {
-
-  var options = {
+  const options = {
     page: 1,
     limit: 10000
   }
   try {
-    var pastSprintsFound = await PastSprintModel.paginate(query, options)
+    const pastSprintsFound = await PastSprintModel.paginate(query, options)
     return pastSprintsFound
   } catch (e) {
-    throw Error('Error while Paginating Todos')
+    logger.log('Get past sprints: service exception')
+    logger.log(e)
   }
 }
 
 exports.createPastSprint = async function (pastSprint) {
-  var newPastSprint = new PastSprintModel({
+  const newPastSprint = new PastSprintModel({
     name: pastSprint.name,
     duration: pastSprint.duration,
     status: pastSprint.status,
@@ -37,52 +50,44 @@ exports.createPastSprint = async function (pastSprint) {
     finishedAt: pastSprint.finishedAt
   })
   try {
-    var savedPastSprint = await newPastSprint.save()
+    const savedPastSprint = await newPastSprint.save()
     return savedPastSprint
   } catch (e) {
-    throw Error('Create past sprint: service error')
+    logger.log('Create past sprint: service exception')
+    logger.log(e)
   }
 }
 
-exports.updateSprint = async function (todo) {
-  var id = todo.id
+// exports.updateSprint = async function (sprint) {
+//   const sprintId = sprint._id
+//   let storedSprint = null
+//   try {
+//     storedSprint = await PastSprintModel.findById(sprintId)
+//     if (!storedSprint) {
+//       return false
+//     }
+//     storedSprint.title = sprint.title
+//     storedSprint.description = sprint.description
+//     storedSprint.status = sprint.status
+//   } catch (e) {
+//   }
+//   try {
+//     const updatedSprint = await storedSprint.save()
+//     return updatedSprint
+//   } catch (e) {
+//   }
+// }
 
-  try {
-    var oldTodo = await PastSprintModel.findById(id)
-  } catch (e) {
-    throw Error('Error occured while Finding the Todo')
-  }
-
-  if (!oldTodo) {
-    return false
-  }
-
-  logger.log(oldTodo)
-
-  oldTodo.title = todo.title
-  oldTodo.description = todo.description
-  oldTodo.status = todo.status
-
-  logger.log(oldTodo)
-
-  try {
-    var savedTodo = await oldTodo.save()
-    return savedTodo
-  } catch (e) {
-    throw Error('And Error occured while updating the Todo')
-  }
-}
-
-exports.deleteTodo = async function (id) {
-  try {
-    var deleted = await PastSprintModel.remove({
-      _id: id
-    })
-    if (deleted.result.n === 0) {
-      throw Error('Todo Could not be deleted')
-    }
-    return deleted
-  } catch (e) {
-    throw Error('Error Occured while Deleting the Todo')
-  }
-}
+// exports.deleteSprint = async function (sprintId) {
+//   let deleted = null
+//   try {
+//     deleted = await PastSprintModel.remove({
+//       _id: sprintId
+//     })
+//   } catch (e) {
+//   }
+//   if (deleted.result.n === 0) {
+//     throw Error('Delete sprint: sprint could not be deleted')
+//   }
+//   return deleted
+// }

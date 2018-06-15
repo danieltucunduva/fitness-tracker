@@ -127,11 +127,14 @@ export class SprintService {
     const headers = new Headers();
     headers.append(
       'Authorization',
-      `Bearer ${localStorage.getItem('accessToken')}`
+      `Bearer ${localStorage.getItem('accessToken')}`,
     );
-    return this.http.post(
+    headers.append(
+      'User',
+      `${this.authenticationService.getUserId()}`
+    );
+    return this.http.get(
       this.baseApiUrl + 'past-sprints/',
-      { userId: this.authenticationService.getUserId() },
       { headers: headers }
     );
   }

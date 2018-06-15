@@ -1,94 +1,50 @@
-var SprintTemplate = require("../models/sprint-template.model");
+const SprintTemplate = require('../models/sprint-template.model')
 
-_this = this;
+let USE_CONSOLE_FOR_LOGGING
+try {
+  const environmentVariables = require('../.environment_variables')
+  USE_CONSOLE_FOR_LOGGING = environmentVariables.USE_CONSOLE_FOR_LOGGING
+} catch (ex) {
+  console.log('Environment variables local file not found')
+}
 
-//log management
-var graylog2 = require("graylog2");
-var logger = new graylog2.graylog({
-  servers: [{ host: "127.0.0.1", port: 12201 }]
-});
+let logger
+if (USE_CONSOLE_FOR_LOGGING) {
+  logger = console
+} else {
+  const graylog2 = require('graylog2')
+  const Graylog2 = graylog2.graylog
+  logger = new Graylog2({
+    servers: [{
+      host: '127.0.0.1',
+      port: 12201
+    }]
+  })
+}
 
-exports.getSprintTemplates = async function(query, page, limit) {
-  var options = {
+exports.getSprintTemplates = async function (query, page, limit) {
+  const options = {
     page,
     limit
-  };
+  }
   try {
-    var SprintTemplates = await SprintTemplate.paginate(query, options);
-    return SprintTemplates;
+    const SprintTemplates = await SprintTemplate.paginate(query, options)
+    return SprintTemplates
   } catch (e) {
-    throw Error("Sprint template: service error");
+    logger.log('Get sprint templates: service exception')
+    logger.log(e)
   }
-};
+}
 
-exports.getOneSprintTemplate = async function(SprintTemplateId) {
+exports.getOneSprintTemplate = async function (SprintTemplateId) {
   try {
-    var SprintTemplateFound = await SprintTemplate.findById(SprintTemplateId);
-  } catch (e) {
-    throw Error("Sprint template: service error");
-  }
-
-  if (!SprintTemplateFound) {
-    return false;
-  }
-  return SprintTemplateFound;
-};
-
-exports.createSprint = async function(todo) {
-  var newTodo = new SprintTemplate({
-    title: todo.title,
-    description: todo.description,
-    date: new Date(),
-    status: todo.status
-  });
-
-  try {
-    var savedTodo = await newTodo.save();
-    return savedTodo;
-  } catch (e) {
-    throw Error("Error while Creating Todo");
-  }
-};
-
-exports.updateSprint = async function(todo) {
-  var id = todo.id;
-
-  try {
-    var oldTodo = await SprintTemplate.findById(id);
-  } catch (e) {
-    throw Error("Error occured while Finding the Todo");
-  }
-
-  if (!oldTodo) {
-    return false;
-  }
-
-  logger.log(oldTodo);
-
-  oldTodo.title = todo.title;
-  oldTodo.description = todo.description;
-  oldTodo.status = todo.status;
-
-  console.log(oldTodo);
-
-  try {
-    var savedTodo = await oldTodo.save();
-    return savedTodo;
-  } catch (e) {
-    throw Error("And Error occured while updating the Todo");
-  }
-};
-
-exports.deleteTodo = async function(id) {
-  try {
-    var deleted = await SprintTemplate.remove({
-      _id: id
-    });
-    if (deleted.result.n === 0) {
-      throw Error("Todo Could not be deleted");
+    const SprintTemplateFound = await SprintTemplate.findById(SprintTemplateId)
+    if (!SprintTemplateFound) {
+      return false
     }
-    return deleted;
+    return SprintTemplateFound
   } catch (e) {
-    throw Error("Error Occured while Deleting the Todo");
+    logger.log('Get one sprint template: service exception')
+    logger.log(e)
   }
-};
+}
