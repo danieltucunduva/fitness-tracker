@@ -1,51 +1,6 @@
-<<<<<<< HEAD
-var express = require("express");
-var path = require("path");
-// var favicon = require('serve-favicon')
-//log management
-var graylog2 = require("graylog2");
-var logger = new graylog2.graylog({
-  servers: [{ host: "127.0.0.1", port: 12201 }]
-});
-//http logs
-var graylog = require("graylog-loging");
-graylog.init({
-  graylogPort: 12201,
-  graylogHostname: "127.0.0.1"
-});
-
-var cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
-// const _this = this
-
-//log management
-var graylog2 = require("graylog2");
-var logger = new graylog2.graylog({
-  servers: [{ host: "127.0.0.1", port: 12201 }]
-});
-//http logs
-var graylog = require("graylog-loging");
-var graylog = require("graylog-loging");
-graylog.init({
-  graylogPort: 12201,
-  graylogHostname: "127.0.0.1"
-});
-
-var api = require("./routes/api.route");
-
-var bluebird = require("bluebird");
-
-var app = express();
-
-var mongoose = require("mongoose");
-mongoose.Promise = bluebird;
-
-var DB_URI_LOCAL;
-=======
 const express = require('express')
 const path = require('path')
 const favicon = require('serve-favicon')
-const logger = require('morgan')
 const cookieParser = require('cookie-parser')
 const bodyParser = require('body-parser')
 const api = require('./routes/api.route')
@@ -53,104 +8,125 @@ const bluebird = require('bluebird')
 const mongoose = require('mongoose')
 
 const app = express()
+
+// /////////////////////////////////////////////////
+/**
+ * To use Graylog (local server)
+ */
+// const graylog = require('graylog-loging')
+// const graylog2 = require('graylog2')
+// // log management
+// var logger = new graylog2.graylog({
+//   servers: [{
+//     host: '127.0.0.1',
+//     port: 12201
+//   }]
+// })
+// // http logs
+// graylog.init({
+//   graylogPort: 12201,
+//   graylogHostname: '127.0.0.1'
+// })
+// app.use(graylog.logResponse)
+// app.use(graylog.logRequest)
+// app.use(graylog.handleErrors)
+// /////////////////////////////////////////////////
+/**
+ * To use the console (for the Heroku deploy)
+ */
+const logger = console
+// /////////////////////////////////////////////////
+
 mongoose.Promise = bluebird
 
 var DB_URI_LOCAL
->>>>>>> master
 try {
-  const environmentVariables = require("./.environment_variables");
-  DB_URI_LOCAL = environmentVariables.DB_URI;
+  const environmentVariables = require('./.environment_variables')
+  DB_URI_LOCAL = environmentVariables.DB_URI
 } catch (ex) {
-  logger.log("Environment variables local file not found");
+  logger.log('Environment variables local file not found')
 }
 
-DB_URI_LOCAL = "mongodb://localhost:27017/db_sprint";
+/**
+ * To use a local database
+ */
+// DB_URI_LOCAL = 'mongodb:// localhost:27017/db_sprint'
 
-const ENV_DB_URI = process.env.MONGODB_URI;
+const ENV_DB_URI = process.env.MONGODB_URI
 
 if (!ENV_DB_URI && !DB_URI_LOCAL) {
   throw new Error(
-    "Database URI is missing, local and environment options are both undefined"
-  );
+    'Database URI is missing, local and environment options are both undefined'
+  )
 }
 
-const DB_URI = ENV_DB_URI || DB_URI_LOCAL;
+const DB_URI = ENV_DB_URI || DB_URI_LOCAL
 
-logger.log("ENV_DB_URI: " + ENV_DB_URI);
-logger.log("DB_URI:     " + DB_URI);
+logger.log('ENV_DB_URI: ' + ENV_DB_URI)
+logger.log('DB_URI:     ' + DB_URI)
 
 mongoose
   .connect(
-    DB_URI,
-    {
+    DB_URI, {
       useMongoClient: true
     }
   )
   .then(() => {
-    logger.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`);
+    logger.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`)
+    console.log(logger.log(`Succesfully Connected to the Mongo database at URI: ${DB_URI}`))
   })
   .catch(() => {
-    logger.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`);
-  });
+    logger.log(`Error Connecting to the Mongo database at URI: ${DB_URI}`)
+  })
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*')
   res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  )
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  next()
+})
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+//  view engine setup
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 
-// uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(graylog.logResponse);
-app.use(graylog.logRequest);
-app.use(graylog.handleErrors);
+app.use(favicon(path.join(__dirname, 'public', 'favicon.png')))
 
-app.use(bodyParser.json());
+app.use(bodyParser.json())
 app.use(
   bodyParser.urlencoded({
     extended: false
   })
-);
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
+)
+app.use(cookieParser())
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use("/api", api);
-app.use(express.static(path.join(__dirname, "../dist/sprint")));
+app.use('/api', api)
+app.use(express.static(path.join(__dirname, '../dist/sprint')))
 
-app.get("/callback", function(req, res, next) {
-  console.log("ROUTING: GET: /callback");
-  res.sendFile(path.join(__dirname, "../dist/sprint/index.html"));
-});
+app.get('/callback', function (req, res, next) {
+  console.log('ROUTING: GET: /callback')
+  res.sendFile(path.join(__dirname, '../dist/sprint/index.html'))
+})
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
+//  catch 404 and forward to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found')
+  err.status = 404
+  next(err)
+})
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-<<<<<<< HEAD
-  res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
-=======
+//  error handler
+app.use(function (err, req, res, next) {
+  //  set locals, only providing error in development
   res.locals.message = err.message
   res.locals.error = err
->>>>>>> master
+  //  render the error page
+  res.status(err.status || 500)
+  res.render('error')
+})
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render("error");
-});
-
-module.exports = app;
+module.exports = app
