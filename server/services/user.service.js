@@ -11,7 +11,7 @@ try {
 const ENV_USE_CONSOLE_FOR_LOGGING = process.env.USE_CONSOLE_FOR_LOGGING
 
 let logger
-if (USE_CONSOLE_FOR_LOGGING || ENV_USE_CONSOLE_FOR_LOGGING) {
+if (USE_CONSOLE_FOR_LOGGING || ENV_USE_CONSOLE_FOR_LOGGING === 'true') {
   logger = console
 } else {
   const graylog2 = require('graylog2')
