@@ -2,8 +2,8 @@ var userService = require("../services/user.service");
 
 /**
  * @swagger
- * /api/users/login:
- *   post:
+ * /api/users/:username:
+ *   delete:
  *     tags:
  *      - users
  *     parameters:
@@ -12,8 +12,8 @@ var userService = require("../services/user.service");
  *         in: body
  *         required: true
  *         schema:
- *           $ref: '#/definitions/User'
- *     description: Log in a user
+ *           type: string
+ *     description: Deletes all data concerning a user
  *     produces:
  *      - application/json
  *     responses:
@@ -25,13 +25,11 @@ var userService = require("../services/user.service");
  *             status:
  *               type: number
  *             data:
- *               $ref: '#/definitions/User'
+ *               type: number
  *             message:
  *               type: string
  *       400:
  *         description: bad request
- *       406:
- *         description: not acceptable
  */
 exports.deleteData = async function(req, res, next) {
   const userId = req.params.username;

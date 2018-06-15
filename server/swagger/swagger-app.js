@@ -11,8 +11,8 @@ const PORT_SERVER = 3010
 var options = {
   swaggerDefinition: {
     info: {
-      title: 'Sprints', // Title (required)
-      version: '0.0.2' // Version (required)
+      title: 'Sprint', // Title (required)
+      version: '0.2' // Version (required)
     },
     host: `localhost:${PORT_API}`
   },

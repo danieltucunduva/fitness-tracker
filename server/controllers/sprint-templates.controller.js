@@ -6,7 +6,7 @@ var sprintTemplateService = require('../services/sprint-template.service')
  *   get:
  *     tags:
  *      - sprint-templates
- *     description: Get list of SprintTemplate
+ *     description: Get all SprintTemplates available
  *     produces:
  *      - application/json
  *     responses:
@@ -58,7 +58,7 @@ exports.getSprintTemplates = async function (req, res, next) {
 
 /**
  * @swagger
- * /api/sprint-templates/{id}:
+ * /api/sprint-templates/:id:
  *   get:
  *     tags:
  *      - sprint-templates
@@ -68,7 +68,7 @@ exports.getSprintTemplates = async function (req, res, next) {
  *         in: path
  *         required: true
  *         type: string
- *     description: Get SprintTemplate by id
+ *     description: Get one SprintTemplate by id
  *     produces:
  *      - application/json
  *     responses:
@@ -87,7 +87,7 @@ exports.getSprintTemplates = async function (req, res, next) {
  *       400:
  *         description: bad Request
  */
-exports.getOneSprintTemplate = async function (req, res, next) {
+exports.getOneSprintTemplateById = async function (req, res, next) {
   try {
     var sprintTemplate = await sprintTemplateService.getOneSprintTemplate(req.params.id)
     return res.status(200).json({

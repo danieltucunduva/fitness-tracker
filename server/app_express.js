@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var express = require("express");
 var path = require("path");
 // var favicon = require('serve-favicon')
@@ -40,6 +41,22 @@ var mongoose = require("mongoose");
 mongoose.Promise = bluebird;
 
 var DB_URI_LOCAL;
+=======
+const express = require('express')
+const path = require('path')
+const favicon = require('serve-favicon')
+const logger = require('morgan')
+const cookieParser = require('cookie-parser')
+const bodyParser = require('body-parser')
+const api = require('./routes/api.route')
+const bluebird = require('bluebird')
+const mongoose = require('mongoose')
+
+const app = express()
+mongoose.Promise = bluebird
+
+var DB_URI_LOCAL
+>>>>>>> master
 try {
   const environmentVariables = require("./.environment_variables");
   DB_URI_LOCAL = environmentVariables.DB_URI;
@@ -123,8 +140,13 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
+<<<<<<< HEAD
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
+=======
+  res.locals.message = err.message
+  res.locals.error = err
+>>>>>>> master
 
   // render the error page
   res.status(err.status || 500);

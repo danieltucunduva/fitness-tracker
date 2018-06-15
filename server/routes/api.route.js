@@ -29,6 +29,6 @@ var users = require('./api/users.route')
 
 router.use('/past-sprints', checkJwt, pastSprints)
 router.use('/sprint-templates', checkJwt, sprintTemplates)
-router.use('/users', users)
+router.use('/users', checkJwt, users)
 
 module.exports = router
